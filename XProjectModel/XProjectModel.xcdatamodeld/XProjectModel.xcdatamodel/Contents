@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Curso" representedClassName="Curso" syncable="YES">
         <attribute name="cantidadPalabras" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="curso" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -56,11 +56,11 @@
         <relationship name="palabraAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PalabraAvance" inverseName="usuario" inverseEntity="PalabraAvance" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Curso" positionX="-7625" positionY="-2313" width="128" height="135"/>
-        <element name="Oracion" positionX="-8064" positionY="-2367" width="128" height="120"/>
-        <element name="Palabra" positionX="-7893" positionY="-2385" width="128" height="165"/>
-        <element name="Usuario" positionX="-7758" positionY="-2061" width="128" height="120"/>
-        <element name="PalabraAvance" positionX="-8082" positionY="-2088" width="128" height="165"/>
-        <element name="CursoAvance" positionX="-7416" positionY="-2106" width="128" height="165"/>
+        <element name="Curso" positionX="-7751" positionY="-2286" width="128" height="135"/>
+        <element name="CursoAvance" positionX="-7920" positionY="-2316" width="128" height="165"/>
+        <element name="Oracion" positionX="-7580" positionY="-2100" width="128" height="120"/>
+        <element name="Palabra" positionX="-7758" positionY="-2127" width="128" height="165"/>
+        <element name="PalabraAvance" positionX="-7920" positionY="-2109" width="128" height="165"/>
+        <element name="Usuario" positionX="-8129" positionY="-2127" width="128" height="120"/>
     </elements>
 </model>

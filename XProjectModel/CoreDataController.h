@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SDCoreDataController : NSObject
+@interface CoreDataController : NSObject
 
 + (id)sharedInstance;
 

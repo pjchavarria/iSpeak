@@ -78,7 +78,7 @@
 		CEC1724E1743F14300C3F8E7 /* lesson-review-seleccionar-opcion-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC172341743F14300C3F8E7 /* lesson-review-seleccionar-opcion-4@2x.png */; };
 		CEC172501743F14300C3F8E7 /* login-button-blue-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC172361743F14300C3F8E7 /* login-button-blue-normal@2x.png */; };
 		CEC172511743F14300C3F8E7 /* login-button-blue-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC172371743F14300C3F8E7 /* login-button-blue-pressed@2x.png */; };
-		CED6608B17453522008BD312 /* SDCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6608A17453522008BD312 /* SDCoreDataController.m */; };
+		CED6608B17453522008BD312 /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = CED6608A17453522008BD312 /* CoreDataController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,8 +173,8 @@
 		CEC172341743F14300C3F8E7 /* lesson-review-seleccionar-opcion-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lesson-review-seleccionar-opcion-4@2x.png"; path = "Resources/lesson-review-seleccionar-opcion-4@2x.png"; sourceTree = "<group>"; };
 		CEC172361743F14300C3F8E7 /* login-button-blue-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-button-blue-normal@2x.png"; path = "Resources/login-button-blue-normal@2x.png"; sourceTree = "<group>"; };
 		CEC172371743F14300C3F8E7 /* login-button-blue-pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "login-button-blue-pressed@2x.png"; path = "Resources/login-button-blue-pressed@2x.png"; sourceTree = "<group>"; };
-		CED6608917453522008BD312 /* SDCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDCoreDataController.h; sourceTree = "<group>"; };
-		CED6608A17453522008BD312 /* SDCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCoreDataController.m; sourceTree = "<group>"; };
+		CED6608917453522008BD312 /* CoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataController.h; sourceTree = "<group>"; };
+		CED6608A17453522008BD312 /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,8 +326,8 @@
 				04BE9697174456AC006B551E /* ManagedObjects */,
 				3A8BD9FA17428B21009C56DC /* DTO */,
 				3AEEA7DE17301B2B00C5FEB0 /* XProjectModel.xcdatamodeld */,
-				CED6608917453522008BD312 /* SDCoreDataController.h */,
-				CED6608A17453522008BD312 /* SDCoreDataController.m */,
+				CED6608917453522008BD312 /* CoreDataController.h */,
+				CED6608A17453522008BD312 /* CoreDataController.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -510,7 +510,7 @@
 				CEC172171743F12200C3F8E7 /* LessonReviewViewController.m in Sources */,
 				CEC172181743F12200C3F8E7 /* LessonFinishViewController.m in Sources */,
 				CEC172191743F12200C3F8E7 /* LoginViewController.m in Sources */,
-				CED6608B17453522008BD312 /* SDCoreDataController.m in Sources */,
+				CED6608B17453522008BD312 /* CoreDataController.m in Sources */,
 				CE76F636174547A600B0A534 /* Curso.m in Sources */,
 				CE76F639174547D400B0A534 /* Oracion.m in Sources */,
 				CE76F63C174547D500B0A534 /* Palabra.m in Sources */,
