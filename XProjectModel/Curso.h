@@ -1,15 +1,15 @@
 //
 //  Curso.h
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/14/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Nivel, Palabra;
+@class Palabra;
 
 @interface Curso : NSManagedObject
 
@@ -17,10 +17,10 @@
 @property (nonatomic, retain) NSNumber * cantidadPalabras;
 @property (nonatomic, retain) NSNumber * curso;
 @property (nonatomic, retain) NSString * nombre;
+@property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSNumber * palabrasCompletas;
 @property (nonatomic, retain) NSNumber * tiempoEstudiando;
-@property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) Nivel *nivel;
+@property (nonatomic, retain) NSNumber * palabrasComenzadas;
 @property (nonatomic, retain) NSSet *palabras;
 @end
 

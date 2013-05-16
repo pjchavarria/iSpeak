@@ -52,6 +52,30 @@
 
 @end
 
+@interface PalabraAvanceParse : NSObject
+
++ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabraAvance;
++ (BOOL) deletePalabraAvance:(NSString *)palabraAvanceID;
++ (BOOL) updatePalabraAvance: (PalabraAvanceDTO *)palabraAvance;
++ (void) selectPalabraAvance:(NSString *)palabraAvanceID;
++ (void) selectPalabraAvanceAll;
++ (void) selectPalabraAvanceAllByUserID:(NSString *)userID;
++ (void) selectPalabraAvanceByUserID:(NSString *)userID PalabraID:(NSString *)palabraID;
+
+@end
+
+@interface CursoAvanceParse : NSObject
+
++ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance;
++ (BOOL) deleteCursoAvance:(NSString *)cursoAvanceID;
++ (BOOL) updateCursoAvance: (CursoAvanceDTO *)cursoAvance;
++ (void) selectCursoAvance:(NSString *)cursoAvanceID;
++ (void) selectCursoAvanceAll;
++ (void) selectCursoAvanceAllByUserID:(NSString *)userID;
++ (void) selectCursoAvanceByUserID:(NSString *)userID CursoID:(NSString *)cursoID;
+
+@end
+
 @interface OracionParse : NSObject
 
 + (BOOL)insertOracion:(OracionDTO *)oracion;

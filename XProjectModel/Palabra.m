@@ -1,8 +1,8 @@
 //
 //  Palabra.m
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/14/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -14,15 +14,12 @@
 @implementation Palabra
 
 @dynamic audio;
-@dynamic avance;
-@dynamic estado;
-@dynamic palabra;
-@dynamic prioridad;
-@dynamic traduccion;
-@dynamic ultimaFechaRepaso;
-@dynamic tipoPalabra;
 @dynamic objectId;
+@dynamic palabra;
+@dynamic tipoPalabra;
+@dynamic traduccion;
 @dynamic curso;
 @dynamic oraciones;
+@dynamic palabraAvance;
 
 @end

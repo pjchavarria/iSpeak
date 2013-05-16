@@ -15,7 +15,7 @@
 
 @implementation UsuarioParse
 
-+ (BOOL)insertUsuario:(UsuarioDTO *)user{
++ (BOOL) insertUsuario:(UsuarioDTO *)user{
     
     
     PFObject *userToInsert = [PFObject objectWithClassName:@"Usuario"];
@@ -57,7 +57,7 @@
     return YES;
     
 }
-+(BOOL) updateUsuario: (UsuarioDTO *)user{
++ (BOOL) updateUsuario: (UsuarioDTO *)user{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
     
@@ -111,7 +111,6 @@
   
     
 }
-
 + (void) selectUsuarioAll{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
@@ -149,7 +148,6 @@
    
     
 }
-
 + (void) validateUsuario:(NSString *)username Password:(NSString *)password
 {
     
@@ -179,18 +177,13 @@
 @end
 
 @implementation CursoParse
-+ (BOOL)insertCurso:(CursoDTO *)curso{
++ (BOOL) insertCurso:(CursoDTO *)curso{
     
     PFObject *cursoToInsert = [PFObject objectWithClassName:@"Curso"];
     
-    [cursoToInsert setObject:curso.avance forKey:@"avance"];
     [cursoToInsert setObject:curso.cantidadPalabras forKey:@"cantidadPalabras"];
     [cursoToInsert setObject:curso.curso forKey:@"curso"];
     [cursoToInsert setObject:curso.nombre forKey:@"nombre"];
-    [cursoToInsert setObject:curso.palabrasCompletas forKey:@"palabrasCompletas"];
-    [cursoToInsert setObject:curso.tiempoEstudiando forKey:@"tiempoEstudiando"];
-    
-    [cursoToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Nivel" objectId:curso.nivel ]forKey:@"nivel"];
     
     
     [cursoToInsert saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -205,7 +198,6 @@
 
     
 }
-
 + (BOOL) deleteCurso:(NSString *)cursoID{
     
     
@@ -232,22 +224,16 @@
 
     
 }
-+(BOOL) updateCurso: (CursoDTO *)curso{
++ (BOOL) updateCurso: (CursoDTO *)curso{
     
     
     PFQuery *query = [PFQuery queryWithClassName:@"Curso"];
     
     [query getObjectInBackgroundWithId:curso.objectId
                                  block:^(PFObject *cursoToUpdate, NSError *error) {
-                                     
-                                     [cursoToUpdate setObject:curso.avance forKey:@"avance"];
                                      [cursoToUpdate setObject:curso.cantidadPalabras forKey:@"cantidadPalabras"];
                                      [cursoToUpdate setObject:curso.curso forKey:@"curso"];
                                      [cursoToUpdate setObject:curso.nombre forKey:@"nombre"];
-                                     [cursoToUpdate setObject:curso.palabrasCompletas forKey:@"palabrasCompletas"];
-                                     [cursoToUpdate setObject:curso.tiempoEstudiando forKey:@"tiempoEstudiando"];
-                                     
-                                     [cursoToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Nivel" objectId:curso.nivel]forKey:@"nivel"];
                                      
                                      [cursoToUpdate saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                          if (!error) {
@@ -278,15 +264,8 @@
                                          NSLog(@"Success");
                                          cursoToSelect.objectId = cursoFoundParse.objectId;
                                          cursoToSelect.nombre = [cursoFoundParse objectForKey:@"nombre"];
-                                         cursoToSelect.avance = [cursoFoundParse objectForKey:@"avance"];
                                          cursoToSelect.cantidadPalabras =[cursoFoundParse objectForKey:@"cantidadPalabras"];
                                          cursoToSelect.curso= [cursoFoundParse objectForKey:@"curso"];
-                                         cursoToSelect.palabrasCompletas =[cursoFoundParse objectForKey:@"palabrasCompletas"];
-                                         cursoToSelect.tiempoEstudiando =[cursoFoundParse objectForKey:@"tiempoEstudiando"];
-                                         
-                                         PFObject *nivel = [cursoFoundParse objectForKey:@"nivel"];
-                                         
-                                         cursoToSelect.nivel= nivel.objectId;
                                         
                                          
                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"kCursoDidLoaded" object:cursoToSelect];
@@ -318,15 +297,8 @@
                 
                 objNuevo.objectId = objArray.objectId;
                 objNuevo.nombre = [objArray objectForKey:@"nombre"];
-                objNuevo.avance = [objArray objectForKey:@"avance"];
                 objNuevo.cantidadPalabras =[objArray objectForKey:@"cantidadPalabras"];
                 objNuevo.curso= [objArray objectForKey:@"curso"];
-                objNuevo.palabrasCompletas =[objArray objectForKey:@"palabrasCompletas"];
-                objNuevo.tiempoEstudiando =[objArray objectForKey:@"tiempoEstudiando"];
-                
-                PFObject *nivel = [objArray objectForKey:@"nivel"];
-               
-                    objNuevo.nivel= nivel.objectId;
                
                 [resultados addObject:objNuevo];
             }
@@ -342,7 +314,6 @@
     }];
   
 }
-
 + (void) selectCursoAllByNivelID:(NSString *)nivelID{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Curso"];
@@ -362,20 +333,8 @@
                 
                 objNuevo.objectId = objArray.objectId;
                 objNuevo.nombre = [objArray objectForKey:@"nombre"];
-                objNuevo.avance = [objArray objectForKey:@"avance"];
                 objNuevo.cantidadPalabras =[objArray objectForKey:@"cantidadPalabras"];
                 objNuevo.curso= [objArray objectForKey:@"curso"];
-                objNuevo.palabrasCompletas =[objArray objectForKey:@"palabrasCompletas"];
-                objNuevo.tiempoEstudiando =[objArray objectForKey:@"tiempoEstudiando"];
-                
-               
-                PFObject *nivel = [objArray objectForKey:@"nivel"];
-                
-                objNuevo.nivel= nivel.objectId;
-                   
-                   
-               
-
                 
                  [resultados addObject:objNuevo];
             }
@@ -393,24 +352,18 @@
     
 }
 
-
-
 @end
 
 @implementation PalabraParse
 
-+ (BOOL)insertPalabra:(PalabraDTO *)palabra{
++ (BOOL) insertPalabra:(PalabraDTO *)palabra{
     
     
     PFObject *palabraToInsert = [PFObject objectWithClassName:@"Palabra"];
    
-    [palabraToInsert setObject:palabra.avance forKey:@"avance"];
-    [palabraToInsert setObject:palabra.estado forKey:@"estado"];
     [palabraToInsert setObject:palabra.palabra forKey:@"palabra"];
-    [palabraToInsert setObject:palabra.prioridad forKey:@"prioridad"];
     [palabraToInsert setObject:palabra.tipoPalabra forKey:@"tipoPalabra"];
      [palabraToInsert setObject:palabra.traduccion forKey:@"traduccion"];
-     [palabraToInsert setObject:palabra.ultimaFechaRepaso forKey:@"ultimaFechaRepaso"];
     
     [palabraToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:palabra.curso ]forKey:@"curso"];
     
@@ -452,20 +405,16 @@
 
     
 }
-+(BOOL) updatePalabra: (PalabraDTO *)palabra{
++ (BOOL) updatePalabra: (PalabraDTO *)palabra{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Palabra"];
     
     [query getObjectInBackgroundWithId:palabra.objectId
                                  block:^(PFObject *palabraToUpdate, NSError *error) {
                                      
-                                    [palabraToUpdate setObject:palabra.estado forKey:@"estado"];
-                                     [palabraToUpdate setObject:palabra.avance forKey:@"avance"];
                                      [palabraToUpdate setObject:palabra.palabra forKey:@"palabra"];
-                                     [palabraToUpdate setObject:palabra.prioridad forKey:@"prioridad"];
                                      [palabraToUpdate setObject:palabra.tipoPalabra forKey:@"tipoPalabra"];
                                      [palabraToUpdate setObject:palabra.traduccion forKey:@"traduccion"];
-                                     [palabraToUpdate setObject:palabra.ultimaFechaRepaso forKey:@"ultimaFechaRepaso"];
                                      
                                      [palabraToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:palabra.curso ]forKey:@"curso"];
                                      
@@ -500,13 +449,9 @@
                                          NSLog(@"Success");
                                          palabraToSelect.objectId = palabraFoundParse.objectId;
                                          // palabraToSelect.audio = [palabraFoundParse objectForKey:@"audio"];
-                                         palabraToSelect.avance = [palabraFoundParse objectForKey:@"avance"];
-                                         palabraToSelect.estado =[palabraFoundParse objectForKey:@"estado"];
                                          palabraToSelect.palabra =[palabraFoundParse objectForKey:@"palabra"];
-                                         palabraToSelect.prioridad= [palabraFoundParse objectForKey:@"prioridad"];
                                          palabraToSelect.tipoPalabra =[palabraFoundParse objectForKey:@"tipoPalabra"];
                                          palabraToSelect.traduccion =[palabraFoundParse objectForKey:@"traduccion"];
-                                         palabraToSelect.ultimaFechaRepaso =[palabraFoundParse objectForKey:@"ultimaFechaRepaso"];
                                          
                                          PFObject *curso = [palabraFoundParse objectForKey:@"curso"];
                                         
@@ -546,13 +491,9 @@
                 
                 objNuevo.objectId = objArray.objectId;
                 // palabraToSelect.audio = [palabraFoundParse objectForKey:@"audio"];
-                objNuevo.avance = [objArray objectForKey:@"avance"];
-                objNuevo.estado =[objArray objectForKey:@"estado"];
                 objNuevo.palabra =[objArray objectForKey:@"palabra"];
-                objNuevo.prioridad= [objArray objectForKey:@"prioridad"];
                 objNuevo.tipoPalabra =[objArray objectForKey:@"tipoPalabra"];
                 objNuevo.traduccion =[objArray objectForKey:@"traduccion"];
-                objNuevo.ultimaFechaRepaso =[objArray objectForKey:@"ultimaFechaRepaso"];
                 PFObject *curso = [objArray objectForKey:@"curso"];
                 objNuevo.curso= curso.objectId;
                     
@@ -596,13 +537,9 @@
                 
                 objNuevo.objectId = objArray.objectId;
                 // palabraToSelect.audio = [palabraFoundParse objectForKey:@"audio"];
-                objNuevo.avance = [objArray objectForKey:@"avance"];
-                objNuevo.estado =[objArray objectForKey:@"estado"];
                 objNuevo.palabra =[objArray objectForKey:@"palabra"];
-                objNuevo.prioridad= [objArray objectForKey:@"prioridad"];
                 objNuevo.tipoPalabra =[objArray objectForKey:@"tipoPalabra"];
                 objNuevo.traduccion =[objArray objectForKey:@"traduccion"];
-                objNuevo.ultimaFechaRepaso =[objArray objectForKey:@"ultimaFechaRepaso"];
                 PFObject *curso = [objArray objectForKey:@"curso"];
                
                 objNuevo.curso= curso.objectId;
@@ -628,9 +565,512 @@
 
 @end
 
+@implementation PalabraAvanceParse
+
++ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabra{
+    
+    
+    PFObject *palabraAvanceToInsert = [PFObject objectWithClassName:@"PalabraAvance"];
+    
+    [palabraAvanceToInsert setObject:palabra.avance forKey:@"avance"];
+    [palabraAvanceToInsert setObject:palabra.estado forKey:@"estado"];
+    [palabraAvanceToInsert setObject:palabra.prioridad forKey:@"prioridad"];
+    [palabraAvanceToInsert setObject:palabra.ultimaFechaRepaso forKey:@"ultimaFechaRepaso"];
+    
+    [palabraAvanceToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:palabra.usuario ]forKey:@"usuario"];
+    
+    [palabraAvanceToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Palabra" objectId:palabra.palabra ]forKey:@"palabra"];
+    
+    
+    [palabraAvanceToInsert saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            NSLog(@"Success");
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+    return YES;
+    
+    
+}
++ (BOOL) deletePalabraAvance:(NSString *)palabraAvanceID{
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    
+    [query getObjectInBackgroundWithId:palabraAvanceID
+                                 block:^(PFObject *palabraToDelete, NSError *error) {
+                                     
+                                     
+                                     [palabraToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                         if (!error) {
+                                             NSLog(@"Success");
+                                         } else {
+                                             NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                         }
+                                     }];
+                                     
+                                     
+                                 }];
+    
+    
+    return YES;
+    
+    
+}
++ (BOOL) updatePalabraAvance:(PalabraAvanceDTO *)palabraAvance{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    
+    [query getObjectInBackgroundWithId:palabraAvance.objectId
+                                 block:^(PFObject *palabraToUpdate, NSError *error) {
+                                     
+                                     [palabraToUpdate setObject:palabraAvance.avance forKey:@"avance"];
+                                     [palabraToUpdate setObject:palabraAvance.estado forKey:@"estado"];
+                                     [palabraToUpdate setObject:palabraAvance.prioridad forKey:@"prioridad"];
+                                     [palabraToUpdate setObject:palabraAvance.ultimaFechaRepaso forKey:@"ultimaFechaRepaso"];
+                                     
+                                     [palabraToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:palabraAvance.usuario ]forKey:@"usuario"];
+                                     
+                                     [palabraToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Palabra" objectId:palabraAvance.palabra ]forKey:@"palabra"];
+
+                                     
+                                     [palabraToUpdate saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                         if (!error) {
+                                             NSLog(@"Success");
+                                         } else {
+                                             NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                         }
+                                     }];
+                                     
+                                 }];
+    
+    
+    
+    return YES;
+    
+    
+}
++ (void) selectPalabraAvance:(NSString *)palabraAvanceID{
+    
+    
+    PalabraAvanceDTO *palabraToSelect = [[PalabraAvanceDTO alloc]init];
+    
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    [query getObjectInBackgroundWithId:palabraAvanceID
+                                 block:^(PFObject *palabraFoundParse, NSError *error) {
+                                     
+                                     if (!error) {
+                                         NSLog(@"Success");
+                                         palabraToSelect.objectId = palabraFoundParse.objectId;
+                                         // palabraToSelect.audio = [palabraFoundParse objectForKey:@"audio"];
+                                         palabraToSelect.avance =[palabraFoundParse objectForKey:@"avance"];
+                                         palabraToSelect.prioridad =[palabraFoundParse objectForKey:@"prioridad"];
+                                         palabraToSelect.estado =[palabraFoundParse objectForKey:@"estado"];
+                                         palabraToSelect.ultimaFechaRepaso =[palabraFoundParse objectForKey:@"ultimaFechaRepaso"];
+                                         
+                                         PFObject *palabra = [palabraFoundParse objectForKey:@"palabra"];
+                                         PFObject *usuario = [palabraFoundParse objectForKey:@"usuario"];
+                                         
+                                         palabraToSelect.palabra= palabra.objectId;
+                                         palabraToSelect.usuario= usuario.objectId;
+                                         
+                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"kPalabraAvanceDidLoaded" object:palabraToSelect];
+                                         
+                                     } else {
+                                         NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                     }
+                                 }];
+}
++ (void) selectPalabraAvanceAll{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.prioridad =[objArray objectForKey:@"prioridad"];
+                objNuevo.estado =[objArray objectForKey:@"estado"];
+                objNuevo.ultimaFechaRepaso =[objArray objectForKey:@"ultimaFechaRepaso"];
+                
+                PFObject *palabra = [objArray objectForKey:@"palabra"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.palabra= palabra.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListPalabraAvanceDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+    
+    
+    
+    
+}
++ (void) selectPalabraAvanceAllByUserID:(NSString *)userID{
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    [query whereKey:@"usuario"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:userID]];
+    
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.prioridad =[objArray objectForKey:@"prioridad"];
+                objNuevo.estado =[objArray objectForKey:@"estado"];
+                objNuevo.ultimaFechaRepaso =[objArray objectForKey:@"ultimaFechaRepaso"];
+                
+                PFObject *palabra = [objArray objectForKey:@"palabra"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.palabra= palabra.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListPalabraAvanceByUserIDDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+}
++ (void) selectPalabraAvanceByUserID:(NSString *)userID PalabraID:(NSString *)palabraID
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"PalabraAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    [query whereKey:@"usuario"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:userID]];
+    [query whereKey:@"palabra"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Palabra" objectId:palabraID]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.prioridad =[objArray objectForKey:@"prioridad"];
+                objNuevo.estado =[objArray objectForKey:@"estado"];
+                objNuevo.ultimaFechaRepaso =[objArray objectForKey:@"ultimaFechaRepaso"];
+                
+                PFObject *palabra = [objArray objectForKey:@"palabra"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.palabra= palabra.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListPalabraAvanceByUserIDPalabraIDDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+}
+
+@end
+
+@implementation CursoAvanceParse
+
++ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance{
+    
+    
+    PFObject *cursoAvanceToInsert = [PFObject objectWithClassName:@"CursoAvance"];
+    
+    [cursoAvanceToInsert setObject:cursoAvance.avance forKey:@"avance"];
+    [cursoAvanceToInsert setObject:cursoAvance.palabrasComenzadas forKey:@"palabrasComenzadas"];
+    [cursoAvanceToInsert setObject:cursoAvance.palabrasCompletas forKey:@"palabrasCompletas"];
+    [cursoAvanceToInsert setObject:cursoAvance.tiempoEstudiado forKey:@"tiempoEstudiado"];
+    
+    [cursoAvanceToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:cursoAvance.usuario ]forKey:@"usuario"];
+    
+    [cursoAvanceToInsert setObject:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:cursoAvance.curso ]forKey:@"curso"];
+    
+    
+    [cursoAvanceToInsert saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            NSLog(@"Success");
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+    
+    return YES;
+    
+    
+}
++ (BOOL) deleteCursoAvance:(NSString *)cursoAvanceID{
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    
+    [query getObjectInBackgroundWithId:cursoAvanceID
+                                 block:^(PFObject *palabraToDelete, NSError *error) {
+                                     
+                                     
+                                     [palabraToDelete deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                         if (!error) {
+                                             NSLog(@"Success");
+                                         } else {
+                                             NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                         }
+                                     }];
+                                     
+                                     
+                                 }];
+    
+    
+    return YES;
+    
+    
+}
++ (BOOL) updateCursoAvance:(CursoAvanceDTO *)cursoAvance{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    
+    [query getObjectInBackgroundWithId:cursoAvance.objectId
+                                 block:^(PFObject *cursoToUpdate, NSError *error) {
+                                     
+                                     [cursoToUpdate setObject:cursoAvance.avance forKey:@"avance"];
+                                     [cursoToUpdate setObject:cursoAvance.palabrasComenzadas forKey:@"palabrasComenzadas"];
+                                     [cursoToUpdate setObject:cursoAvance.palabrasCompletas forKey:@"palabrasCompletas"];
+                                     [cursoToUpdate setObject:cursoAvance.tiempoEstudiado forKey:@"tiempoEstudiado"];
+                                     
+                                     [cursoToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:cursoAvance.usuario ]forKey:@"usuario"];
+                                     
+                                     [cursoToUpdate setObject:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:cursoAvance.curso ]forKey:@"curso"];
+                                     
+                                     
+                                     [cursoToUpdate saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                         if (!error) {
+                                             NSLog(@"Success");
+                                         } else {
+                                             NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                         }
+                                     }];
+                                     
+                                 }];
+    
+    
+    
+    return YES;
+    
+    
+}
++ (void) selectCursoAvance:(NSString *)cursoAvanceID{
+    
+    
+    CursoAvanceDTO *cursoToSelect = [[CursoAvanceDTO alloc]init];
+    
+    
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    [query getObjectInBackgroundWithId:cursoAvanceID
+                                 block:^(PFObject *cursoFoundParse, NSError *error) {
+                                     
+                                     if (!error) {
+                                         NSLog(@"Success");
+                                         cursoToSelect.objectId = cursoFoundParse.objectId;
+                                         cursoToSelect.avance =[cursoFoundParse objectForKey:@"avance"];
+                                         cursoToSelect.palabrasComenzadas =[cursoFoundParse objectForKey:@"palabrasComenzadas"];
+                                         cursoToSelect.palabrasCompletas =[cursoFoundParse objectForKey:@"palabrasCompletas"];
+                                         cursoToSelect.tiempoEstudiado =[cursoFoundParse objectForKey:@"tiempoEstudiado"];
+                                         
+                                         PFObject *curso = [cursoFoundParse objectForKey:@"curso"];
+                                         PFObject *usuario = [cursoFoundParse objectForKey:@"usuario"];
+                                         
+                                         cursoToSelect.curso= curso.objectId;
+                                         cursoToSelect.usuario= usuario.objectId;
+                                         
+                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"kCursoAvanceDidLoaded" object:cursoToSelect];
+                                         
+                                     } else {
+                                         NSLog(@"Error: %@ %@", error, [error userInfo]);
+                                     }
+                                 }];
+}
++ (void) selectCursoAvanceAll{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.palabrasComenzadas =[objArray objectForKey:@"palabrasComenzadas"];
+                objNuevo.palabrasCompletas =[objArray objectForKey:@"palabrasCompletas"];
+                objNuevo.tiempoEstudiado =[objArray objectForKey:@"tiempoEstudiado"];
+                
+                PFObject *curso = [objArray objectForKey:@"curso"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.curso= curso.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoAvanceDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+    
+    
+    
+    
+}
++ (void) selectCursoAvanceAllByUserID:(NSString *)userID{
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    [query whereKey:@"usuario"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:userID]];
+    
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.palabrasComenzadas =[objArray objectForKey:@"palabrasComenzadas"];
+                objNuevo.palabrasCompletas =[objArray objectForKey:@"palabrasCompletas"];
+                objNuevo.tiempoEstudiado =[objArray objectForKey:@"tiempoEstudiado"];
+                
+                PFObject *curso = [objArray objectForKey:@"curso"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.curso= curso.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoAvanceByUserIDDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+}
++ (void) selectCursoAvanceByUserID:(NSString *)userID CursoID:(NSString *)cursoID
+{
+    PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
+    
+    __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
+    
+    [query whereKey:@"usuario"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Usuario" objectId:userID]];
+    [query whereKey:@"curso"
+            equalTo:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:cursoID]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
+        if (!error) {
+            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
+            for (int i=0; i<palabras.count; i++) {
+                
+                PFObject *objArray = palabras[i];
+                
+                objNuevo.objectId = objArray.objectId;
+                objNuevo.avance =[objArray objectForKey:@"avance"];
+                objNuevo.palabrasComenzadas =[objArray objectForKey:@"palabrasComenzadas"];
+                objNuevo.palabrasCompletas =[objArray objectForKey:@"palabrasCompletas"];
+                objNuevo.tiempoEstudiado =[objArray objectForKey:@"tiempoEstudiado"];
+                
+                PFObject *curso = [objArray objectForKey:@"curso"];
+                PFObject *usuario = [objArray objectForKey:@"usuario"];
+                
+                objNuevo.curso= curso.objectId;
+                objNuevo.usuario= usuario.objectId;
+                
+                [resultados addObject:objNuevo];
+            }
+            
+            NSLog(@"Success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoAvanceByUserIDCursoIDDidLoaded" object:resultados];
+            
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+            
+        }
+    }];
+}
+
+@end
+
 @implementation OracionParse
 
-+ (BOOL)insertOracion:(OracionDTO *)oracion{
++ (BOOL) insertOracion:(OracionDTO *)oracion{
     
     PFObject *oracionToInsert = [PFObject objectWithClassName:@"Oracion"];
     
@@ -678,7 +1118,7 @@
 
     
 }
-+(BOOL) updateOracion: (OracionDTO *)oracion{
++ (BOOL) updateOracion: (OracionDTO *)oracion{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Oracion"];
     
@@ -786,7 +1226,7 @@
     
     
 }
-+(void) selectOracionAllByPalabraID:(NSString *)palabraID{
++ (void) selectOracionAllByPalabraID:(NSString *)palabraID{
     PFQuery *query = [PFQuery queryWithClassName:@"Oracion"];
     
     __block NSMutableArray *resultados = [[NSMutableArray alloc]init];

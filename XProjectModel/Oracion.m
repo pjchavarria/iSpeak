@@ -1,8 +1,8 @@
 //
 //  Oracion.m
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/14/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 @implementation Oracion
 
 @dynamic audio;
+@dynamic objectId;
 @dynamic oracion;
 @dynamic traduccion;
-@dynamic objectId;
 @dynamic palabra;
 
 @end
