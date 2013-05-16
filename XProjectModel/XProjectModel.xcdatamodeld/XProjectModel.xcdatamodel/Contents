@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="11E53" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Curso" representedClassName="Curso" syncable="YES">
-        <attribute name="avance" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="cantidadPalabras" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="curso" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="nombre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="palabrasCompletas" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="tiempoEstudiando" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="cursoAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CursoAvance" inverseName="curso" inverseEntity="CursoAvance" syncable="YES"/>
         <relationship name="palabras" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Palabra" inverseName="curso" inverseEntity="Palabra" syncable="YES"/>
+    </entity>
+    <entity name="CursoAvance" representedClassName="CursoAvance" syncable="YES">
+        <attribute name="avance" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="palabrasComenzadas" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="palabrasCompletas" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sincronizado" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="tiempoEstudiado" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <relationship name="curso" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Curso" inverseName="cursoAvance" inverseEntity="Curso" syncable="YES"/>
+        <relationship name="usuario" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Usuario" inverseName="cursoAvance" inverseEntity="Usuario" syncable="YES"/>
     </entity>
     <entity name="Oracion" representedClassName="Oracion">
         <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -22,26 +30,37 @@
     </entity>
     <entity name="Palabra" representedClassName="Palabra" syncable="YES">
         <attribute name="audio" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="avance" optional="YES" attributeType="Integer 32" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
-        <attribute name="estado" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="palabra" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="prioridad" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="tipoPalabra" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="traduccion" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ultimaFechaRepaso" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="curso" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Curso" inverseName="palabras" inverseEntity="Curso" syncable="YES"/>
         <relationship name="oraciones" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Oracion" inverseName="palabra" inverseEntity="Oracion" syncable="YES"/>
+        <relationship name="palabraAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PalabraAvance" inverseName="palabra" inverseEntity="PalabraAvance" syncable="YES"/>
+    </entity>
+    <entity name="PalabraAvance" representedClassName="PalabraAvance" syncable="YES">
+        <attribute name="avance" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="estado" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prioridad" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sincronizado" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ultimaFechaRepaso" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="palabra" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Palabra" inverseName="palabraAvance" inverseEntity="Palabra" syncable="YES"/>
+        <relationship name="usuario" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Usuario" inverseName="palabraAvance" inverseEntity="Usuario" syncable="YES"/>
     </entity>
     <entity name="Usuario" representedClassName="Usuario" syncable="YES">
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cursoAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CursoAvance" inverseName="usuario" inverseEntity="CursoAvance" syncable="YES"/>
+        <relationship name="palabraAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PalabraAvance" inverseName="usuario" inverseEntity="PalabraAvance" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Curso" positionX="-8100" positionY="-2389" width="128" height="163"/>
-        <element name="Oracion" positionX="-7670" positionY="-2313" width="128" height="118"/>
-        <element name="Palabra" positionX="-7893" positionY="-2385" width="128" height="208"/>
-        <element name="Usuario" positionX="-7794" positionY="-2151" width="128" height="88"/>
+        <element name="Curso" positionX="-7625" positionY="-2313" width="128" height="135"/>
+        <element name="Oracion" positionX="-8064" positionY="-2367" width="128" height="120"/>
+        <element name="Palabra" positionX="-7893" positionY="-2385" width="128" height="165"/>
+        <element name="Usuario" positionX="-7758" positionY="-2061" width="128" height="120"/>
+        <element name="PalabraAvance" positionX="-8082" positionY="-2088" width="128" height="165"/>
+        <element name="CursoAvance" positionX="-7416" positionY="-2106" width="128" height="165"/>
     </elements>
 </model>

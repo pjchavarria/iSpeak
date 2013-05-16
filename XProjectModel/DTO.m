@@ -23,7 +23,13 @@
 @implementation PalabraDTO
 @end
 
+@implementation PalabraAvanceDTO
+@end
+
 @implementation CursoDTO
+@end
+
+@implementation CursoAvanceDTO
 @end
 
 

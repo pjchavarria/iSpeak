@@ -1,8 +1,8 @@
 //
 //  Usuario.m
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/13/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -11,8 +11,9 @@
 
 @implementation Usuario
 
+@dynamic objectId;
 @dynamic password;
 @dynamic username;
-@dynamic objectId;
+@dynamic palabraAvance;
 
 @end

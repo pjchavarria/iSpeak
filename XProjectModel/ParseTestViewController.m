@@ -204,13 +204,8 @@
     
   
     [cursoToInsert setNombre:@"Curso Nuevouih"];
-    [cursoToInsert setPalabrasCompletas:[NSNumber numberWithInt:1]];
-    [cursoToInsert setTiempoEstudiando:[NSNumber numberWithInt:2]];
     [cursoToInsert setCurso:[NSNumber numberWithInt:3]];
     [cursoToInsert setCantidadPalabras:[NSNumber numberWithInt:4]];
-    [cursoToInsert setAvance:[NSNumber numberWithInt:5]];
-    
-    [cursoToInsert setNivel:@"Af7cHOjsa7"];
 
    
     
@@ -233,14 +228,10 @@
     [cursoToUpdate setObjectId:@"uodpWgYv7w"];
     
     [cursoToUpdate setNombre:@"Curso a modidasddsfficar"];
-    [cursoToUpdate setNivel:@"aR2gkAVupS"];
     
    
-    [cursoToUpdate setPalabrasCompletas:[NSNumber numberWithInt:1]];
-    [cursoToUpdate setTiempoEstudiando:[NSNumber numberWithInt:2]];
     [cursoToUpdate setCurso:[NSNumber numberWithInt:3]];
     [cursoToUpdate setCantidadPalabras:[NSNumber numberWithInt:4]];
-    [cursoToUpdate setAvance:[NSNumber numberWithInt:5]];
     
 
     
@@ -261,22 +252,10 @@
     
     PalabraDTO *palabraToInsert = [[PalabraDTO alloc]init];
     
-      
-    
-    
     [palabraToInsert setTraduccion:@"Yugioh"];
-    [palabraToInsert setEstado:[NSNumber numberWithInt:1]];
-    [palabraToInsert setPrioridad:[NSNumber numberWithInt:2]];
     [palabraToInsert setCurso:@"8GSviRI5LO"];
     [palabraToInsert setTipoPalabra:[NSNumber numberWithInt:4]];
-    [palabraToInsert setAvance:[NSNumber numberWithInt:5]];
     [palabraToInsert setPalabra:@"Juegos de cartas"];
-    
-    
-
-    
-    NSDate *now = [[NSDate alloc] init];
-    [palabraToInsert setUltimaFechaRepaso:now];
      
     // Recordar que todas las llamadas a parse son asincronas xsiak
     [PalabraParse insertPalabra:palabraToInsert];
@@ -294,22 +273,11 @@
     
     PalabraDTO *palabraToUpdate = [[PalabraDTO alloc]init];
     
-
-    
     [palabraToUpdate setObjectId:@"6Eauose4ys"];
     [palabraToUpdate setCurso:@"uodpWgYv7w"];
     [palabraToUpdate setPalabra:@"BEST Card gamee"];
     [palabraToUpdate setTraduccion:@"BEST Card gamee"];
-    [palabraToUpdate setUltimaFechaRepaso:[[NSDate alloc]init]];
-    
-    
-    
-    [palabraToUpdate setEstado:[NSNumber numberWithInt:1]];
-    [palabraToUpdate setPrioridad:[NSNumber numberWithInt:2]];
     [palabraToUpdate setTipoPalabra:[NSNumber numberWithInt:4]];
-    [palabraToUpdate setAvance:[NSNumber numberWithInt:5]];
-    
-
     
     [PalabraParse updatePalabra:palabraToUpdate];
 }

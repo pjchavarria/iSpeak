@@ -1,8 +1,8 @@
 //
 //  Oracion.h
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/14/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -14,9 +14,9 @@
 @interface Oracion : NSManagedObject
 
 @property (nonatomic, retain) NSData * audio;
+@property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSString * oracion;
 @property (nonatomic, retain) NSString * traduccion;
-@property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) Palabra *palabra;
 
 @end

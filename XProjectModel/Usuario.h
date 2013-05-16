@@ -1,8 +1,8 @@
 //
 //  Usuario.h
-//  XProjectModel
+//  iSpeak
 //
-//  Created by Daniel Soto on 5/13/13.
+//  Created by Lion User on 16/05/2013.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -12,8 +12,17 @@
 
 @interface Usuario : NSManagedObject
 
+@property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * username;
-@property (nonatomic, retain) NSString * objectId;
+@property (nonatomic, retain) NSSet *palabraAvance;
+@end
+
+@interface Usuario (CoreDataGeneratedAccessors)
+
+- (void)addPalabraAvanceObject:(NSManagedObject *)value;
+- (void)removePalabraAvanceObject:(NSManagedObject *)value;
+- (void)addPalabraAvance:(NSSet *)values;
+- (void)removePalabraAvance:(NSSet *)values;
 
 @end
