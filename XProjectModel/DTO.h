@@ -27,6 +27,9 @@
 @property (nonatomic, strong) NSString * objectId;
 @property (nonatomic, strong) NSString *palabra;
 @end
+
+
+@interface PalabraDTO : NSObject
 @property (nonatomic, retain) NSData * audio;
 @property (nonatomic, retain) NSNumber * avance;
 @property (nonatomic, retain) NSNumber * estado;
