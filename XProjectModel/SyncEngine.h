@@ -16,7 +16,7 @@
 - (void)createPalabraAvance:(Usuario *)usuario;
 
 - (void)syncCursos:(void(^)())handler;
-- (void)syncCursosAvance:(Usuario *)usuario completion:(void(^)())handler;
+- (void)syncCursoAvance:(Usuario *)usuario completion:(void(^)())handler;
 - (void)syncPalabras:(CursoDTO*)curso;
 - (void)syncOraciones:(CursoDTO*)curso;
 - (void)syncPalabraAvance:(Usuario *)usuario;
