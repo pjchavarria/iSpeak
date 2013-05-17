@@ -291,7 +291,9 @@
 
 - (IBAction)selectAllPalabras:(id)sender {
     
-    [PalabraParse selectPalabraAll];
+    [PalabraParse selectPalabraAll:^(NSArray *cursos) {
+        
+    }];
 }
 
 - (IBAction)insertOracion:(id)sender {

@@ -7,19 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Usuario,Curso;
+@class Usuario,Curso,Palabra;
 @interface SyncEngine : NSObject
 
 + (SyncEngine *)sharedEngine;
 - (void)syncUser:(UsuarioDTO*)data;
-- (void)createCursoAvance:(Usuario *)usuario;
-- (void)createPalabraAvance:(Usuario *)usuario;
+- (void)createCursoAvance:(Usuario *)usuario Curso:(Curso *)curso;
+- (void)createPalabraAvance:(Usuario *)usuario Palabra:(Palabra *)palabra;
 
 - (void)syncCursos:(void(^)())handler;
 - (void)syncCursoAvance:(Usuario *)usuario completion:(void(^)())handler;
-- (void)syncPalabras:(CursoDTO*)curso;
-- (void)syncOraciones:(CursoDTO*)curso;
-- (void)syncPalabraAvance:(Usuario *)usuario;
+- (void)syncPalabras:(Curso*)curso completion:(void(^)())handler;
+- (void)syncOraciones:(Palabra*)palabra completion:(void(^)())handler;
+- (void)syncPalabraAvanceConUsuario:(Usuario *)usuario Palabra:(Palabra*)palabra completion:(void(^)())handler;
 
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler;
 - (void)iniciarCurso:(Curso *)curso;

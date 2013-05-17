@@ -440,7 +440,7 @@
 
     
 }
-+ (void) selectPalabraAll{
++ (void) selectPalabraAll:(void (^) (NSArray *palabras))handler{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Palabra"];
     
@@ -462,16 +462,10 @@
                 objNuevo.traduccion =[objArray objectForKey:@"traduccion"];
                 PFObject *curso = [objArray objectForKey:@"curso"];
                 objNuevo.curso= curso.objectId;
-                    
-                    
-                    
-             
                 
                 [resultados addObject:objNuevo];
             }
-
-            NSLog(@"Success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListPalabraDidLoaded" object:resultados];
+            handler(resultados);
             
         } else {
             // Log details of the failure
@@ -533,7 +527,7 @@
 
 @implementation PalabraAvanceParse
 
-+ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabra{
++ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabra completion:(void (^) (NSString *palabraAvanceId))handler{
     
     
     PFObject *palabraAvanceToInsert = [PFObject objectWithClassName:@"PalabraAvance"];
@@ -551,8 +545,10 @@
     [palabraAvanceToInsert saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             NSLog(@"Success");
+            handler([palabraAvanceToInsert objectId]);
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
+            handler(nil);
         }
     }];
     
@@ -790,7 +786,7 @@
 
 @implementation CursoAvanceParse
 
-+ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance{
++ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance completion:(void (^) (NSString *cursoAvanceId))handler{
     
     
     PFObject *cursoAvanceToInsert = [PFObject objectWithClassName:@"CursoAvance"];
@@ -808,8 +804,10 @@
     [cursoAvanceToInsert saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             NSLog(@"Success");
+            handler([cursoAvanceToInsert objectId]);
         } else {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
+            handler(nil);
         }
     }];
     
@@ -907,7 +905,7 @@
                                      }
                                  }];
 }
-+ (void) selectCursoAvanceAll{
++ (void) selectCursoAvanceAll:(void (^) (NSArray *cursoAvances))handler{
     
     PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
     
@@ -938,8 +936,7 @@
                 [resultados addObject:objNuevo];
             }
             
-            NSLog(@"Success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoAvanceDidLoaded" object:resultados];
+            handler(resultados);
             
         } else {
             // Log details of the failure
