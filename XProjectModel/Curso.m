@@ -22,7 +22,7 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@",self.nombre];
+	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.nombre];
 }
 
 @end

@@ -187,6 +187,7 @@
 		//[selfgoToDashboard];
 		[UsuarioParse validateUsuario:self.txtUsername.text Password:self.txtPassword.text completion:^(UsuarioDTO *usuario) {
 			if (usuario) {
+                subio = NO;
 				[self goToDashboard:usuario];
 			}else{
 				[self shakeView];

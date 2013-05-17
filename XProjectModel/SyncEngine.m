@@ -56,15 +56,19 @@
 	
 	[CursoParse selectCursoAll:^(NSArray *cursos) {
 		NSLog(@"Parse: %@",cursos);
+        NSMutableArray *idsCursos = [[NSMutableArray alloc] init];
+        for (CursoDTO *curso in cursos){
+            [idsCursos addObject:curso.objectId];
+        }
 		int currentIndex = 0;
 		for (CursoDTO *curso in cursos) {
 			NSManagedObject *storedManagedObject = nil;
 			if ([storedRecords count] > currentIndex) {
 				storedManagedObject = [storedRecords objectAtIndex:currentIndex];
 			}
-			if ([[storedManagedObject valueForKey:@"objectId"] isEqualToString:curso.objectId]) {
-				
-				[coreDataController updateCurso:curso];
+			if ([idsCursos containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
+				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
+				[coreDataController updateCurso:[cursos objectAtIndex:[idsCursos indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertCurso:curso];
 			}
