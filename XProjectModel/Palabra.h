@@ -2,14 +2,14 @@
 //  Palabra.h
 //  iSpeak
 //
-//  Created by Lion User on 16/05/2013.
+//  Created by Paul on 16/05/13.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Curso, Oracion;
+@class Curso, Oracion, PalabraAvance;
 
 @interface Palabra : NSManagedObject
 
@@ -30,8 +30,8 @@
 - (void)addOraciones:(NSSet *)values;
 - (void)removeOraciones:(NSSet *)values;
 
-- (void)addPalabraAvanceObject:(NSManagedObject *)value;
-- (void)removePalabraAvanceObject:(NSManagedObject *)value;
+- (void)addPalabraAvanceObject:(PalabraAvance *)value;
+- (void)removePalabraAvanceObject:(PalabraAvance *)value;
 - (void)addPalabraAvance:(NSSet *)values;
 - (void)removePalabraAvance:(NSSet *)values;
 

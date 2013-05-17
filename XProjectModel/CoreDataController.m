@@ -7,6 +7,14 @@
 
 #import "CoreDataController.h"
 
+
+NSString * const kPalabraAvanceClass = @"PalabraAvance";
+NSString * const kCursoAvanceClass = @"CursoAvance";
+NSString * const kOracionClass = @"Oracion";
+NSString * const kCursoClass = @"Curso";
+NSString * const kPalabraClass = @"Palabra";
+NSString * const kUsuarioClass = @"Usuario";
+
 @interface CoreDataController ()
 
 @property (strong, nonatomic) NSManagedObjectContext *masterManagedObjectContext;
@@ -31,6 +39,19 @@
     });
     
     return sharedInstance;
+}
+
+- (void)setUsuarioActivo:(Usuario *)usuarioActivo
+{
+	
+	if (!usuarioActivo) {
+		[[NSUserDefaults standardUserDefaults] setObject:@"ninguno" forKey:@"usuarioActivo"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}else {
+		[[NSUserDefaults standardUserDefaults] setObject:usuarioActivo.objectId forKey:@"usuarioActivo"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
+	_usuarioActivo = usuarioActivo;
 }
 
 #pragma mark - Core Data stack
@@ -112,7 +133,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"SignificantDates" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"XProjectModel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -125,7 +146,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"SignificantDates.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"XProjectModel.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -168,5 +189,190 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+#pragma mark - Insert Core Data
+
+- (void)insertUsuario:(UsuarioDTO *)data
+{
+	Usuario *usuario = [NSEntityDescription insertNewObjectForEntityForName:kUsuarioClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	
+	usuario.username = data.username;
+	usuario.password = data.password;
+	usuario.objectId = data.objectId;
+}
+- (void)updateUsuario:(UsuarioDTO *)data
+{
+	Usuario *usuario = [self getObjectForClass:kUsuarioClass predicate:[NSString stringWithFormat:@"objectId == %@",data.objectId]];
+
+	usuario.username = data.username;
+	usuario.password = data.password;
+	usuario.objectId = data.objectId;
+}
+
+
+- (void)insertCurso:(CursoDTO*)data
+{
+	Curso *curso = [NSEntityDescription insertNewObjectForEntityForName:kCursoClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	CursoDTO *cursoDTO = data;
+	
+	curso.cantidadPalabras = cursoDTO.cantidadPalabras;
+	curso.curso = cursoDTO.curso;
+	curso.nombre = cursoDTO.nombre;
+	curso.objectId = cursoDTO.objectId;
+}
+- (void)insertOracion:(OracionDTO*)data
+{
+	Oracion *oracion = [NSEntityDescription insertNewObjectForEntityForName:kOracionClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	OracionDTO *oracionDTO = data;
+	
+	oracion.objectId = oracionDTO.objectId;
+	oracion.audio = oracionDTO.audio;
+	oracion.oracion = oracionDTO.oracion;
+	oracion.traduccion = oracionDTO.traduccion;
+	
+	// Relaciones
+	oracion.palabra = [self getObjectForClass:kPalabraClass predicate:[NSString stringWithFormat:@"objectId == %@",oracionDTO.palabra]];
+}
+- (void)insertPalabra:(PalabraDTO*)data
+{
+	Palabra *palabra = [NSEntityDescription insertNewObjectForEntityForName:kPalabraClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	PalabraDTO *palabraDTO = data;
+	
+	palabra.audio = palabraDTO.audio;
+	palabra.objectId = palabraDTO.objectId;
+	palabra.palabra = palabraDTO.palabra;
+	palabra.tipoPalabra = palabraDTO.tipoPalabra;
+	palabra.traduccion = palabraDTO.traduccion;
+}
+- (void)insertPalabraAvance:(PalabraAvanceDTO*)data
+{
+	PalabraAvance *palabraAvance = [NSEntityDescription insertNewObjectForEntityForName:kPalabraAvanceClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	PalabraAvanceDTO *palabraAvanceDTO = data;
+	
+	palabraAvance.objectId = palabraAvanceDTO.objectId;
+	palabraAvance.avance = palabraAvanceDTO.avance;
+	palabraAvance.estado = palabraAvanceDTO.estado;
+	palabraAvance.prioridad = palabraAvanceDTO.prioridad;
+	palabraAvance.sincronizado = palabraAvanceDTO.sincronizado;
+	palabraAvance.ultimaFechaRepaso = palabraAvanceDTO.ultimaFechaRepaso;
+	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.ultimaSincronizacion;
+	
+	// Relaciones
+	palabraAvance.usuario = self.usuarioActivo;
+	palabraAvance.palabra = [self getObjectForClass:kPalabraAvanceClass predicate:[NSString stringWithFormat:@"objectId == %@",palabraAvanceDTO.palabra]];
+}
+- (void)insertCursoAvance:(CursoAvanceDTO*)data
+{
+	CursoAvance *cursoAvance = [NSEntityDescription insertNewObjectForEntityForName:kCursoAvanceClass inManagedObjectContext:self.backgroundManagedObjectContext];
+	CursoAvanceDTO *cursoAvanceDTO = data;
+	
+	cursoAvance.objectId = cursoAvanceDTO.objectId;
+	cursoAvance.avance = cursoAvanceDTO.avance;
+	cursoAvance.palabrasComenzadas = cursoAvanceDTO.palabrasComenzadas;
+	cursoAvance.palabrasCompletas = cursoAvanceDTO.palabrasCompletas;
+	cursoAvance.sincronizado = cursoAvanceDTO.sincronizado;
+	cursoAvance.tiempoEstudiado = cursoAvanceDTO.tiempoEstudiado;
+	cursoAvance.ultimaSincronizacion = cursoAvanceDTO.ultimaSincronizacion;
+	
+	// Relaciones
+	cursoAvance.usuario = self.usuarioActivo;
+	cursoAvance.curso = [self getObjectForClass:kCursoClass predicate:[NSString stringWithFormat:@"objectId == %@",cursoAvanceDTO.curso]];
+}
+
+#pragma mark - Update Core Data
+
+- (void)updateCurso:(CursoDTO*)data
+{
+	
+}
+- (void)updateOracion:(OracionDTO*)data
+{
+	
+}
+- (void)updatePalabra:(PalabraDTO*)data
+{
+	
+}
+- (void)updatePalabraAvance:(PalabraAvanceDTO*)data
+{
+		
+}
+- (void)updateCursoAvance:(CursoAvanceDTO*)data
+{
+	 
+}
+
+
+#pragma mark - Core Data Utility Methods
+
+- (id)getObjectForClass:(NSString *)className predicate:(NSPredicate *)predicate
+{
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
+    [fetchRequest setPredicate:predicate];
+	[fetchRequest setFetchLimit:1];
+	NSError *error = nil;
+	NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+		NSLog(@"%@",error);
+	}
+	
+	if (!results.count) {
+		return nil;
+	}else{
+		return results[0];
+	}
+	
+}
+
+- (NSArray *)managedObjectsForClass:(NSString *)className {
+	
+    __block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = self.backgroundManagedObjectContext;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
+//    NSPredicate *predicate;
+//    if (inIds) {
+//        predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", idArray];
+//    } else {
+//        predicate = [NSPredicate predicateWithFormat:@"NOT (objectId IN %@)", idArray];
+//    }
+//    
+//    [fetchRequest setPredicate:predicate];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
+                                      [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    
+    return results;
+}
+- (NSArray *)managedObjectsForClass:(NSString *)className predicate:(NSPredicate *)predicate
+{
+	__block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = self.backgroundManagedObjectContext;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
+	[fetchRequest setPredicate:predicate];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    
+    return results;
+}
+- (NSArray *)managedObjectsForClass:(NSString *)className sortKey:(NSString *)sortKey ascending:(BOOL)ascending
+{
+	
+    __block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = self.backgroundManagedObjectContext;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
+
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
+                                      [NSSortDescriptor sortDescriptorWithKey:sortKey ascending:ascending]]];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    
+    return results;
+}
 
 @end

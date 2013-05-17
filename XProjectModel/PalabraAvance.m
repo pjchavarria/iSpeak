@@ -2,7 +2,7 @@
 //  PalabraAvance.m
 //  iSpeak
 //
-//  Created by Lion User on 16/05/2013.
+//  Created by Paul on 16/05/13.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
@@ -13,11 +13,13 @@
 
 @implementation PalabraAvance
 
-@dynamic objectId;
 @dynamic avance;
 @dynamic estado;
+@dynamic objectId;
 @dynamic prioridad;
+@dynamic sincronizado;
 @dynamic ultimaFechaRepaso;
+@dynamic ultimaSincronizacion;
 @dynamic palabra;
 @dynamic usuario;
 

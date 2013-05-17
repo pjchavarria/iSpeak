@@ -244,7 +244,7 @@
 }
 - (IBAction)selectAllCursos:(id)sender {
     
-   [CursoParse selectCursoAll];
+   //[CursoParse selectCursoAll];
 
 }
 
@@ -349,16 +349,16 @@
 
 - (IBAction)selectCursoByNivelID:(id)sender {
     
-    [CursoParse selectCursoAllByNivelID:@"Af7cHOjsa7"];
+    //[CursoParse selectCursoAllByNivelID:@"Af7cHOjsa7"];
 }
 
 - (IBAction)selectPalabrasByCursoID:(id)sender {
     
-    [PalabraParse selectPalabraAllByCursoID:@"8GSviRI5LO"];
+    //[PalabraParse selectPalabraAllByCursoID:@"8GSviRI5LO"];
 }
 
 - (IBAction)selectOracionByPalabraID:(id)sender {
     
-     [OracionParse selectOracionAllByPalabraID:@"8PWJnYaj3F"];
+     //[OracionParse selectOracionAllByPalabraID:@"8PWJnYaj3F"];
 }
 @end

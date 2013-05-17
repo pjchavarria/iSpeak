@@ -7,6 +7,10 @@
 //
 
 #import "LoginViewController.h"
+#import "SyncEngine.h"
+#import "CoreDataController.h"
+#import "Usuario.h"
+#import "Reachability.h"
 
 @interface LoginViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *txtUsername;
@@ -41,6 +45,19 @@
 	self.txtPassword.text = @"";
     [self.txtPassword setSecureTextEntry:YES];
     subio = NO;
+	
+	
+	
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	id object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
+	if (![object isEqualToString:@"ninguno"]) {
+		// skip login and show dashboard
+		[self goToDashboard:nil];
+		//[self performSelector:@selector(goToDashboard:) withObject:nil afterDelay:0.1];
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,13 +157,68 @@
         }
     }];
 }
-- (void)goToDashboard{
-    [self.view endEditing:YES];
-    subio = NO;
-    [self performSegueWithIdentifier:@"login" sender:nil];
+- (void)goToDashboard:(UsuarioDTO *)usuario{
+	
+	NetworkStatus netStatus = [self currentNetworkStatus];
+	
+	if (netStatus == NotReachable) {
+		NSLog(@"No internet conection");
+		[self performSegueWithIdentifier:@"login" sender:nil];
+	}else{
+		if (usuario) {
+			[[SyncEngine sharedEngine] syncUser:usuario];
+		}
+		
+		[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
+			[self.view endEditing:YES];
+			subio = NO;
+			[self performSegueWithIdentifier:@"login" sender:nil];
+			
+		}];
+	}
 }
 - (IBAction)loginButtonPressed:(id)sender {
-	[self goToDashboard];
-    //[UsuarioParse validateUsuario:self.txtUsername.text Password:self.txtPassword.text];
+	
+	NetworkStatus netStatus = [self currentNetworkStatus];
+	
+	if (netStatus == NotReachable) {
+		NSLog(@"No internet conection");
+	}else{
+		//[selfgoToDashboard];
+		[UsuarioParse validateUsuario:self.txtUsername.text Password:self.txtPassword.text completion:^(UsuarioDTO *usuario) {
+			if (usuario) {
+				[self goToDashboard:usuario];
+			}else{
+				[self shakeView];
+			}
+		}];
+	}
+}
+
+- (NetworkStatus)currentNetworkStatus
+{
+	Reachability* wifiReach = [Reachability reachabilityWithHostName: @"www.apple.com"];
+	NetworkStatus netStatus = [wifiReach currentReachabilityStatus];
+	
+	switch (netStatus)
+	{
+		case NotReachable:
+		{
+			NSLog(@"Access Not Available");
+			break;
+		}
+			
+		case ReachableViaWWAN:
+		{
+			NSLog(@"Reachable WWAN");
+			break;
+		}
+		case ReachableViaWiFi:
+		{
+			NSLog(@"Reachable WiFi");
+			break;
+		}
+	}
+	return netStatus;
 }
 @end

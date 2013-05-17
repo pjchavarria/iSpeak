@@ -11,13 +11,16 @@
 #import "CoursesHeader.h"
 #import "LessonStartViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SyncEngine.h"
+#import "CoreDataController.h"
+
 
 @interface DashboardViewController () <UITableViewDataSource,UITableViewDelegate>
 {
-    NSMutableArray *courses;
+    NSArray *courses;
 }
 @property (strong, nonatomic) IBOutlet UITableView *tableViewCursos;
-
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 - (IBAction)logoutPressed:(id)sender;
 
 @end
@@ -36,17 +39,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fillCourses:) name:@"kListCursoDidLoaded" object:nil];
-	// Do any additional setup after loading the view, typically from a nib.
-    [CursoParse selectCursoAll];
+    
+	CoreDataController *coreDataController = [CoreDataController sharedInstance];
+	self.managedObjectContext = [coreDataController backgroundManagedObjectContext];
 	
+	courses = [coreDataController managedObjectsForClass:@"Curso" sortKey:@"nombre" ascending:YES];
+	[self.tableViewCursos reloadData];
+
 }
 
 -(void)fillCourses:(id)array
 {
-    NSMutableArray *obj = (NSMutableArray *)[array object];
-    courses = obj;
-    [self.tableViewCursos reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,6 +92,7 @@
 }
 
 - (IBAction)logoutPressed:(id)sender {
+	[[CoreDataController sharedInstance] setUsuarioActivo:nil];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

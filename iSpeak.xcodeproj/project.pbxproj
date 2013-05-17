@@ -16,6 +16,12 @@
 		04BE969D1744631E006B551E /* dashboad-cell-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BE969C1744631E006B551E /* dashboad-cell-background@2x.png */; };
 		04BE96A0174465BF006B551E /* lesson-intro-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BE969E174465BF006B551E /* lesson-intro-background@2x.png */; };
 		04BE96A1174465BF006B551E /* lesson-resume-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BE969F174465BF006B551E /* lesson-resume-background@2x.png */; };
+		04C3623617458DEE00D57E85 /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3623517458DEE00D57E85 /* SyncEngine.m */; };
+		04C36239174591A600D57E85 /* PalabraAvance.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C36238174591A600D57E85 /* PalabraAvance.m */; };
+		04C3623C174591AF00D57E85 /* CursoAvance.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3623B174591AF00D57E85 /* CursoAvance.m */; };
+		04C3623F1745B20400D57E85 /* Palabra.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C3623E1745B20400D57E85 /* Palabra.m */; };
+		04C362421745B20500D57E85 /* Curso.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C362411745B20500D57E85 /* Curso.m */; };
+		04C362451745DE0300D57E85 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C362441745DE0300D57E85 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3A8BD9FD17428BB9009C56DC /* DTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A8BD9FC17428BB9009C56DC /* DTO.m */; };
 		3AEEA7C217301B2B00C5FEB0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AEEA7C117301B2B00C5FEB0 /* UIKit.framework */; };
 		3AEEA7C417301B2B00C5FEB0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AEEA7C317301B2B00C5FEB0 /* Foundation.framework */; };
@@ -40,12 +46,8 @@
 		3AF554221741B97F001CF36F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF554211741B97F001CF36F /* SystemConfiguration.framework */; };
 		3AF554261741BB07001CF36F /* ParseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF554241741BB07001CF36F /* ParseTestViewController.m */; };
 		3AF5542A1741BB59001CF36F /* ParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF554291741BB59001CF36F /* ParseUtilities.m */; };
-		CE76F636174547A600B0A534 /* Curso.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F635174547A600B0A534 /* Curso.m */; };
 		CE76F639174547D400B0A534 /* Oracion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F638174547D400B0A534 /* Oracion.m */; };
-		CE76F63C174547D500B0A534 /* Palabra.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F63B174547D500B0A534 /* Palabra.m */; };
 		CE76F63F174547D500B0A534 /* Usuario.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F63E174547D500B0A534 /* Usuario.m */; };
-		CE76F642174547D500B0A534 /* PalabraAvance.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F641174547D500B0A534 /* PalabraAvance.m */; };
-		CE76F6451745514600B0A534 /* CursoAvance.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F6441745514600B0A534 /* CursoAvance.m */; };
 		CEBC98B6174405B700AE5C95 /* dashboard-bbi-logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */; };
 		CEC172131743F12200C3F8E7 /* CoursesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172051743F12200C3F8E7 /* CoursesCell.m */; };
 		CEC172141743F12200C3F8E7 /* CoursesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172071743F12200C3F8E7 /* CoursesHeader.m */; };
@@ -91,6 +93,18 @@
 		04BE969C1744631E006B551E /* dashboad-cell-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dashboad-cell-background@2x.png"; sourceTree = "<group>"; };
 		04BE969E174465BF006B551E /* lesson-intro-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-intro-background@2x.png"; sourceTree = "<group>"; };
 		04BE969F174465BF006B551E /* lesson-resume-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-resume-background@2x.png"; sourceTree = "<group>"; };
+		04C3623417458DEE00D57E85 /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEngine.h; sourceTree = "<group>"; };
+		04C3623517458DEE00D57E85 /* SyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEngine.m; sourceTree = "<group>"; };
+		04C36237174591A600D57E85 /* PalabraAvance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PalabraAvance.h; sourceTree = "<group>"; };
+		04C36238174591A600D57E85 /* PalabraAvance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PalabraAvance.m; sourceTree = "<group>"; };
+		04C3623A174591AF00D57E85 /* CursoAvance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CursoAvance.h; sourceTree = "<group>"; };
+		04C3623B174591AF00D57E85 /* CursoAvance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CursoAvance.m; sourceTree = "<group>"; };
+		04C3623D1745B20400D57E85 /* Palabra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palabra.h; sourceTree = "<group>"; };
+		04C3623E1745B20400D57E85 /* Palabra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palabra.m; sourceTree = "<group>"; };
+		04C362401745B20500D57E85 /* Curso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Curso.h; sourceTree = "<group>"; };
+		04C362411745B20500D57E85 /* Curso.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Curso.m; sourceTree = "<group>"; };
+		04C362431745DE0300D57E85 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		04C362441745DE0300D57E85 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3A8BD9FB17428BB9009C56DC /* DTO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTO.h; sourceTree = "<group>"; };
 		3A8BD9FC17428BB9009C56DC /* DTO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTO.m; sourceTree = "<group>"; };
 		3AEEA7BE17301B2B00C5FEB0 /* XProjectModel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XProjectModel.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,18 +136,10 @@
 		3AF554241741BB07001CF36F /* ParseTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseTestViewController.m; sourceTree = "<group>"; };
 		3AF554281741BB59001CF36F /* ParseUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseUtilities.h; sourceTree = "<group>"; };
 		3AF554291741BB59001CF36F /* ParseUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseUtilities.m; sourceTree = "<group>"; };
-		CE76F634174547A600B0A534 /* Curso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Curso.h; sourceTree = "<group>"; };
-		CE76F635174547A600B0A534 /* Curso.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Curso.m; sourceTree = "<group>"; };
 		CE76F637174547D400B0A534 /* Oracion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Oracion.h; sourceTree = "<group>"; };
 		CE76F638174547D400B0A534 /* Oracion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Oracion.m; sourceTree = "<group>"; };
-		CE76F63A174547D500B0A534 /* Palabra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palabra.h; sourceTree = "<group>"; };
-		CE76F63B174547D500B0A534 /* Palabra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palabra.m; sourceTree = "<group>"; };
 		CE76F63D174547D500B0A534 /* Usuario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Usuario.h; sourceTree = "<group>"; };
 		CE76F63E174547D500B0A534 /* Usuario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Usuario.m; sourceTree = "<group>"; };
-		CE76F640174547D500B0A534 /* PalabraAvance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PalabraAvance.h; sourceTree = "<group>"; };
-		CE76F641174547D500B0A534 /* PalabraAvance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PalabraAvance.m; sourceTree = "<group>"; };
-		CE76F6431745514600B0A534 /* CursoAvance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CursoAvance.h; sourceTree = "<group>"; };
-		CE76F6441745514600B0A534 /* CursoAvance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CursoAvance.m; sourceTree = "<group>"; };
 		CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dashboard-bbi-logout@2x.png"; path = "Resources/dashboard-bbi-logout@2x.png"; sourceTree = "<group>"; };
 		CEC172041743F12200C3F8E7 /* CoursesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursesCell.h; sourceTree = "<group>"; };
 		CEC172051743F12200C3F8E7 /* CoursesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursesCell.m; sourceTree = "<group>"; };
@@ -182,8 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AF5541C1741B959001CF36F /* QuartzCore.framework in Frameworks */,
 				3AF554221741B97F001CF36F /* SystemConfiguration.framework in Frameworks */,
+				3AF5541C1741B959001CF36F /* QuartzCore.framework in Frameworks */,
 				3AF554201741B972001CF36F /* StoreKit.framework in Frameworks */,
 				3AF5541E1741B969001CF36F /* Security.framework in Frameworks */,
 				3AF5541A1741B94F001CF36F /* MobileCoreServices.framework in Frameworks */,
@@ -226,18 +232,18 @@
 		04BE9697174456AC006B551E /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				CE76F6431745514600B0A534 /* CursoAvance.h */,
-				CE76F6441745514600B0A534 /* CursoAvance.m */,
-				CE76F634174547A600B0A534 /* Curso.h */,
-				CE76F635174547A600B0A534 /* Curso.m */,
-				CE76F640174547D500B0A534 /* PalabraAvance.h */,
-				CE76F641174547D500B0A534 /* PalabraAvance.m */,
 				CE76F63D174547D500B0A534 /* Usuario.h */,
 				CE76F63E174547D500B0A534 /* Usuario.m */,
-				CE76F63A174547D500B0A534 /* Palabra.h */,
-				CE76F63B174547D500B0A534 /* Palabra.m */,
 				CE76F637174547D400B0A534 /* Oracion.h */,
 				CE76F638174547D400B0A534 /* Oracion.m */,
+				04C36237174591A600D57E85 /* PalabraAvance.h */,
+				04C36238174591A600D57E85 /* PalabraAvance.m */,
+				04C3623A174591AF00D57E85 /* CursoAvance.h */,
+				04C3623B174591AF00D57E85 /* CursoAvance.m */,
+				04C362401745B20500D57E85 /* Curso.h */,
+				04C362411745B20500D57E85 /* Curso.m */,
+				04C3623D1745B20400D57E85 /* Palabra.h */,
+				04C3623E1745B20400D57E85 /* Palabra.m */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -337,6 +343,10 @@
 			children = (
 				3AF554281741BB59001CF36F /* ParseUtilities.h */,
 				3AF554291741BB59001CF36F /* ParseUtilities.m */,
+				04C3623417458DEE00D57E85 /* SyncEngine.h */,
+				04C3623517458DEE00D57E85 /* SyncEngine.m */,
+				04C362431745DE0300D57E85 /* Reachability.h */,
+				04C362441745DE0300D57E85 /* Reachability.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -511,12 +521,14 @@
 				CEC172181743F12200C3F8E7 /* LessonFinishViewController.m in Sources */,
 				CEC172191743F12200C3F8E7 /* LoginViewController.m in Sources */,
 				CED6608B17453522008BD312 /* CoreDataController.m in Sources */,
-				CE76F636174547A600B0A534 /* Curso.m in Sources */,
 				CE76F639174547D400B0A534 /* Oracion.m in Sources */,
-				CE76F63C174547D500B0A534 /* Palabra.m in Sources */,
 				CE76F63F174547D500B0A534 /* Usuario.m in Sources */,
-				CE76F642174547D500B0A534 /* PalabraAvance.m in Sources */,
-				CE76F6451745514600B0A534 /* CursoAvance.m in Sources */,
+				04C3623617458DEE00D57E85 /* SyncEngine.m in Sources */,
+				04C36239174591A600D57E85 /* PalabraAvance.m in Sources */,
+				04C3623C174591AF00D57E85 /* CursoAvance.m in Sources */,
+				04C3623F1745B20400D57E85 /* Palabra.m in Sources */,
+				04C362421745B20500D57E85 /* Curso.m in Sources */,
+				04C362451745DE0300D57E85 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

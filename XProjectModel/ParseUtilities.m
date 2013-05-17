@@ -27,7 +27,7 @@
         if (!error) {
             NSLog(@"Success");
         } else {
-             NSLog(@"Error: %@ %@", error, [error userInfo]);
+			NSLog(@"Error: %@ %@", error, [error userInfo]);
         }
     }];
     
@@ -86,11 +86,11 @@
 }
 + (void) selectUsuario:(NSString *)userID{
     
-     UsuarioDTO *userToSelect = [[UsuarioDTO alloc]init];
+	UsuarioDTO *userToSelect = [[UsuarioDTO alloc]init];
     
 
-      PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
-    [query getObjectInBackgroundWithId:userID
+	PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
+	[query getObjectInBackgroundWithId:userID
                                 block:^(PFObject *userFoundParse, NSError *error) {
                                     
                                     if (!error) {
@@ -148,7 +148,7 @@
    
     
 }
-+ (void) validateUsuario:(NSString *)username Password:(NSString *)password
++ (void) validateUsuario:(NSString *)username Password:(NSString *)password completion:(void (^) (UsuarioDTO *usuario))handler
 {
     
     PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
@@ -156,19 +156,20 @@
     [query whereKey:@"password" equalTo:password];
     [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
                                      
-                                     if (!error) {
+                                     if (!error && array.count == 1) {
+										 
                                          NSLog(@"Success");
-                                         if(array.count > 0 && array.count < 2)
-                                         {
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDidEnter" object:nil];
-                                         }
-                                         else
-                                         {
-                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDidNotEnter" object:nil];
-                                         }
+										 
+										 PFObject *userArray = array[0];
+										 UsuarioDTO *user = [[UsuarioDTO alloc]init];
+										 user.objectId = userArray.objectId;
+										 user.username = [userArray objectForKey:@"username"];
+										 user.password = [userArray objectForKey:@"password"];
+										 handler(user);
+										 
                                      } else {
                                          NSLog(@"Error: %@ %@", error, [error userInfo]);
-                                         [[NSNotificationCenter defaultCenter] postNotificationName:@"kUserDidNotEnter" object:nil];
+										 handler(nil);
                                      }
                                  }];
     
@@ -281,15 +282,19 @@
 
     
 }
-+ (void) selectCursoAll{
++ (void) selectCursoAll:(void (^) (NSArray *cursos))handler{
+	
+//	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+//											 (unsigned long)NULL), ^(void) {
+//		[self getResultSetFromDB:docids];
+//	});
+	
     PFQuery *query = [PFQuery queryWithClassName:@"Curso"];
     
     __block NSMutableArray*resultados = [[NSMutableArray alloc]init];
     
-    
     [query findObjectsInBackgroundWithBlock:^(NSArray *cursos, NSError *error) {
         if (!error) {
-            
             
             for (int i=0; i<cursos.count; i++) {
                 CursoDTO *objNuevo = [[CursoDTO alloc]init];
@@ -302,9 +307,8 @@
                
                 [resultados addObject:objNuevo];
             }
-            NSLog(@"Success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoDidLoaded" object:resultados];
-
+			
+			handler(resultados);
             
         } else {
             // Log details of the failure
@@ -518,7 +522,7 @@
 
     
 }
-+ (void) selectPalabraAllByCursoID:(NSString *)cursoID{
++ (void) selectPalabraAllByCursoID:(NSString *)cursoID completion:(void (^) (NSArray *palabrasDelCurso))handler{
     PFQuery *query = [PFQuery queryWithClassName:@"Palabra"];
     
     __block NSMutableArray *resultados = [[NSMutableArray alloc]init];

@@ -48,6 +48,7 @@
 @property (nonatomic, retain) NSNumber *sincronizado;
 @property (nonatomic, retain) NSString *usuario;
 @property (nonatomic, retain) NSString *palabra;
+@property (nonatomic, retain) NSDate *ultimaSincronizacion;
 @end
 
 
@@ -68,6 +69,7 @@
 @property (nonatomic, retain) NSNumber *sincronizado;
 @property (nonatomic, retain) NSString *usuario;
 @property (nonatomic, retain) NSString *curso;
+@property (nonatomic, retain) NSDate *ultimaSincronizacion;
 @end
 
 

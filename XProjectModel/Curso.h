@@ -2,29 +2,31 @@
 //  Curso.h
 //  iSpeak
 //
-//  Created by Lion User on 16/05/2013.
+//  Created by Paul on 16/05/13.
 //  Copyright (c) 2013 Next Level. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Palabra;
+@class CursoAvance, Palabra;
 
 @interface Curso : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * avance;
 @property (nonatomic, retain) NSNumber * cantidadPalabras;
 @property (nonatomic, retain) NSNumber * curso;
 @property (nonatomic, retain) NSString * nombre;
 @property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) NSNumber * palabrasCompletas;
-@property (nonatomic, retain) NSNumber * tiempoEstudiando;
-@property (nonatomic, retain) NSNumber * palabrasComenzadas;
+@property (nonatomic, retain) NSSet *cursoAvance;
 @property (nonatomic, retain) NSSet *palabras;
 @end
 
 @interface Curso (CoreDataGeneratedAccessors)
+
+- (void)addCursoAvanceObject:(CursoAvance *)value;
+- (void)removeCursoAvanceObject:(CursoAvance *)value;
+- (void)addCursoAvance:(NSSet *)values;
+- (void)removeCursoAvance:(NSSet *)values;
 
 - (void)addPalabrasObject:(Palabra *)value;
 - (void)removePalabrasObject:(Palabra *)value;

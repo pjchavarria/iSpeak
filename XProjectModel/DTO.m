@@ -27,6 +27,10 @@
 @end
 
 @implementation CursoDTO
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.nombre];
+}
 @end
 
 @implementation CursoAvanceDTO
