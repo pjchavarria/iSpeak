@@ -67,8 +67,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3AEEA7BD17301B2B00C5FEB0"
             BuildableName = "XProjectModel.app"
-            BlueprintName = "XProjectModel"
-            ReferencedContainer = "container:XProjectModel.xcodeproj">
+            BlueprintName = "iSpeak"
+            ReferencedContainer = "container:iSpeak.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
