@@ -52,10 +52,18 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	id object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
+    CoreDataController *coreDataController = [CoreDataController sharedInstance];
+    NSLog(@"%@",[coreDataController managedObjectsForClass:kPalabraClass]);
+	NSString *object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
+    if (!object) {
+        object = @"ninguno";
+        [[NSUserDefaults standardUserDefaults] setObject:@"ninguno" forKey:@"usuarioActivo"];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+    }
 	if (![object isEqualToString:@"ninguno"]) {
 		// skip login and show dashboard
-		[self goToDashboard:nil];
+        [coreDataController setUsuarioActivo:[coreDataController getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",object]]];
+		[self goToDashboard:nil];        
 		//[self performSelector:@selector(goToDashboard:) withObject:nil afterDelay:0.1];
 	}
 }
@@ -187,6 +195,7 @@
 		//[selfgoToDashboard];
 		[UsuarioParse validateUsuario:self.txtUsername.text Password:self.txtPassword.text completion:^(UsuarioDTO *usuario) {
 			if (usuario) {
+                
                 subio = NO;
 				[self goToDashboard:usuario];
 			}else{

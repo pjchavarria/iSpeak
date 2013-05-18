@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Dx0-I4-HYs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Dx0-I4-HYs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -220,7 +220,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mastered 80" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8k-S2-Wyq">
-                                                    <rect key="frame" x="100" y="33" width="92" height="19"/>
+                                                    <rect key="frame" x="100" y="33" width="79" height="19"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" red="0.94509803920000002" green="0.46666666670000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -237,8 +237,10 @@
                                         <connections>
                                             <outlet property="backgroundScroll" destination="7tH-xx-L8X" id="Y8u-Tq-rfS"/>
                                             <outlet property="courseImage" destination="MYd-bn-ibG" id="PJj-Yp-fai"/>
+                                            <outlet property="masteredItemsLabel" destination="x8k-S2-Wyq" id="clR-yd-fZB"/>
                                             <outlet property="masteredScroll" destination="xZP-7r-CXZ" id="mEr-Qr-y2p"/>
                                             <outlet property="percentage" destination="d8S-Dm-FB2" id="Q76-Aa-6EO"/>
+                                            <outlet property="startedItemsLabel" destination="hFL-ED-R83" id="iV2-Jx-HBf"/>
                                             <outlet property="startedScroll" destination="En3-VB-qBI" id="HlZ-Ss-sgW"/>
                                             <outlet property="title" destination="fPT-PQ-rxy" id="W3d-py-FoR"/>
                                         </connections>
@@ -269,8 +271,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="OrA-hW-Ifn"/>
                     <connections>
+                        <outlet property="completedCoursesLabel" destination="Jnb-Ji-nnu" id="XyJ-oW-DbU"/>
+                        <outlet property="masteredItemsLabel" destination="jZt-dj-bYZ" id="i1B-lG-X56"/>
                         <outlet property="myTableView" destination="EYa-p2-RKi" id="K55-GA-6pu"/>
+                        <outlet property="startedItemsLabel" destination="nrO-yE-t7d" id="Vlo-AL-EKc"/>
                         <outlet property="tableViewCursos" destination="EYa-p2-RKi" id="m3c-mt-dkr"/>
+                        <outlet property="timeStudiedLabel" destination="qtB-ZT-IBo" id="nGr-fW-6eX"/>
                         <segue destination="1xl-hz-UcK" kind="modal" identifier="modalLessonNavigationController" id="Q13-Pg-Fb9"/>
                     </connections>
                 </viewController>
@@ -465,10 +471,10 @@
             </objects>
             <point key="canvasLocation" x="575" y="-242"/>
         </scene>
-        <!--Lesson Finish View Controller-->
+        <!--Lesson Review View Controller-->
         <scene sceneID="dnR-WU-3cQ">
             <objects>
-                <viewController id="VLy-DE-mBH" customClass="LessonFinishViewController" sceneMemberID="viewController">
+                <viewController id="VLy-DE-mBH" customClass="LessonReviewViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gxy-EK-Ppr">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -658,10 +664,10 @@
             </objects>
             <point key="canvasLocation" x="1481" y="-245"/>
         </scene>
-        <!--Lesson Review View Controller-->
+        <!--Lesson Finish View Controller-->
         <scene sceneID="jbO-Ok-RxM">
             <objects>
-                <viewController id="XTd-Af-ky0" customClass="LessonReviewViewController" sceneMemberID="viewController">
+                <viewController id="XTd-Af-ky0" customClass="LessonFinishViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3RL-XI-kK4">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

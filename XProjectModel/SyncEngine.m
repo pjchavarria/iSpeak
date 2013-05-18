@@ -178,6 +178,41 @@ enum {
 		handler();
 	}];
 }
+
+- (void)syncCursoAvanceConUsuario:(Usuario *)usuario completion:(void(^)())handler
+{
+	CoreDataController *coreDataController = [CoreDataController sharedInstance];
+	
+	//mostRecentUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:className];
+	
+	NSArray *storedRecords = [coreDataController managedObjectsForClass:kCursoAvanceClass];
+	NSLog(@"Stored: %@",storedRecords);
+	
+	[CursoAvanceParse selectCursoAvanceAllByUserID:usuario.objectId completion:^(NSArray *cursoAvances) {
+		NSLog(@"Parse: %@",cursoAvances);
+        NSMutableArray *idsCursoAvances = [[NSMutableArray alloc] init];
+        for (CursoAvanceDTO *cursoAvance in cursoAvances){
+            [idsCursoAvances addObject:cursoAvance.objectId];
+        }
+		int currentIndex = 0;
+		for (CursoAvanceDTO *cursoAvance in cursoAvances) {
+			NSManagedObject *storedManagedObject = nil;
+			if ([storedRecords count] > currentIndex) {
+				storedManagedObject = [storedRecords objectAtIndex:currentIndex];
+			}
+			if ([idsCursoAvances containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
+				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
+				[coreDataController updateCurso:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
+			}else{
+				[coreDataController insertCursoAvance:cursoAvance];
+			}
+			currentIndex++;
+			
+		}
+		[coreDataController saveBackgroundContext];
+		handler();
+	}];
+}
 - (void)syncPalabras:(Curso*)curso completion:(void(^)())handler
 {
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
@@ -326,7 +361,7 @@ enum {
 	// Descargar/Actualizar todos los avances de cursos
 	[self syncCursos:^{
 		
-		[self syncCursoAvance:usuario completion:^{
+		[self syncCursoAvanceConUsuario:usuario completion:^{
 			
 			handler();
 			

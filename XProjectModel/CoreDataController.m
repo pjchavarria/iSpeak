@@ -201,7 +201,7 @@ NSString * const kUsuarioClass = @"Usuario";
 }
 - (void)updateUsuario:(UsuarioDTO *)data
 {
-	Usuario *usuario = [self getObjectForClass:kUsuarioClass predicate:[NSString stringWithFormat:@"objectId == %@",data.objectId]];
+	Usuario *usuario = [self getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",data.objectId]];
 
 	usuario.username = data.username;
 	usuario.password = data.password;
@@ -230,7 +230,7 @@ NSString * const kUsuarioClass = @"Usuario";
 	oracion.traduccion = oracionDTO.traduccion;
 	
 	// Relaciones
-	oracion.palabra = [self getObjectForClass:kPalabraClass predicate:[NSString stringWithFormat:@"objectId == %@",oracionDTO.palabra]];
+	oracion.palabra = [self getObjectForClass:kPalabraClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",oracionDTO.palabra]];
 }
 - (void)insertPalabra:(PalabraDTO*)data
 {
@@ -258,7 +258,7 @@ NSString * const kUsuarioClass = @"Usuario";
 	
 	// Relaciones
 	palabraAvance.usuario = self.usuarioActivo;
-	palabraAvance.palabra = [self getObjectForClass:kPalabraAvanceClass predicate:[NSString stringWithFormat:@"objectId == %@",palabraAvanceDTO.palabra]];
+	palabraAvance.palabra = [self getObjectForClass:kPalabraAvanceClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra]];
 }
 - (void)insertCursoAvance:(CursoAvanceDTO*)data
 {
@@ -275,7 +275,7 @@ NSString * const kUsuarioClass = @"Usuario";
 	
 	// Relaciones
 	cursoAvance.usuario = self.usuarioActivo;
-	cursoAvance.curso = [self getObjectForClass:kCursoClass predicate:[NSString stringWithFormat:@"objectId == %@",cursoAvanceDTO.curso]];
+	cursoAvance.curso = [self getObjectForClass:kCursoClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",cursoAvanceDTO.curso]];
 }
 
 #pragma mark - Update Core Data

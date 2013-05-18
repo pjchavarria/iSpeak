@@ -16,13 +16,13 @@
 - (void)createPalabraAvance:(Usuario *)usuario Palabra:(Palabra *)palabra;
 
 - (void)syncCursos:(void(^)())handler;
-- (void)syncCursoAvance:(Usuario *)usuario completion:(void(^)())handler;
+- (void)syncCursoAvanceConUsuario:(Usuario *)usuario Curso:(Curso *)curso completion:(void(^)())handler;
 - (void)syncPalabras:(Curso*)curso completion:(void(^)())handler;
 - (void)syncOraciones:(Palabra*)palabra completion:(void(^)())handler;
 - (void)syncPalabraAvanceConUsuario:(Usuario *)usuario Palabra:(Palabra*)palabra completion:(void(^)())handler;
 
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler;
-- (void)iniciarCurso:(Curso *)curso;
+- (void)iniciarCurso:(Curso *)curso completion:(void(^)())handler;
 - (void)iniciarRepaso:(Curso *)curso;
 - (void)finalizarLeccion:(Curso *)curso;
 - (void)elInternetRegreso;

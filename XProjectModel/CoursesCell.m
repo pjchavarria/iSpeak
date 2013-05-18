@@ -7,11 +7,16 @@
 //
 
 #import "CoursesCell.h"
+@interface CoursesCell()
 
+
+
+@end
 @implementation CoursesCell
 {
     BOOL inited;
 }
+
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

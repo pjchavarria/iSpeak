@@ -12,6 +12,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *title;
 @property (strong, nonatomic) IBOutlet UILabel *percentage;
 @property (strong, nonatomic) IBOutlet UIImageView *courseImage;
+@property (strong, nonatomic) IBOutlet UILabel *masteredItemsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *startedItemsLabel;
+
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundScroll;
 @property (strong, nonatomic) IBOutlet UIImageView *masteredScroll;
 @property (strong, nonatomic) IBOutlet UIImageView *startedScroll;

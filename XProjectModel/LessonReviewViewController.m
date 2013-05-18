@@ -1,5 +1,5 @@
 //
-//  LessonReviewViewController.m
+//  LessonViewController.m
 //  X Project
 //
 //  Created by Lion User on 14/05/2013.
@@ -9,8 +9,6 @@
 #import "LessonReviewViewController.h"
 
 @interface LessonReviewViewController ()
-- (IBAction)finishLessonPressed:(id)sender;
-- (IBAction)goToCourseViewPressed:(id)sender;
 
 @end
 
@@ -37,11 +35,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)finishLessonPressed:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)nextButton:(id)sender {
+    if(![self.firstView isHidden])
+    {
+        [self.firstView setHidden:YES];
+        [self.secondView setHidden:NO];
+    }
+    else if(![self.secondView isHidden])
+    {
+        [self.secondView setHidden:YES];
+        [self.thirdView setHidden:NO];
+    }
+    else if(![self.thirdView isHidden])
+    {
+        [self performSegueWithIdentifier:@"pushLessonReview" sender:nil];
+    }
 }
 
-- (IBAction)goToCourseViewPressed:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
 @end

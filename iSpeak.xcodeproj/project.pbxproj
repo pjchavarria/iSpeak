@@ -53,8 +53,8 @@
 		CEC172141743F12200C3F8E7 /* CoursesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172071743F12200C3F8E7 /* CoursesHeader.m */; };
 		CEC172151743F12200C3F8E7 /* LessonStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172091743F12200C3F8E7 /* LessonStartViewController.m */; };
 		CEC172161743F12200C3F8E7 /* DashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC1720B1743F12200C3F8E7 /* DashboardViewController.m */; };
-		CEC172171743F12200C3F8E7 /* LessonReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC1720D1743F12200C3F8E7 /* LessonReviewViewController.m */; };
-		CEC172181743F12200C3F8E7 /* LessonFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC1720F1743F12200C3F8E7 /* LessonFinishViewController.m */; };
+		CEC172171743F12200C3F8E7 /* LessonFinishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC1720D1743F12200C3F8E7 /* LessonFinishViewController.m */; };
+		CEC172181743F12200C3F8E7 /* LessonReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC1720F1743F12200C3F8E7 /* LessonReviewViewController.m */; };
 		CEC172191743F12200C3F8E7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172111743F12200C3F8E7 /* LoginViewController.m */; };
 		CEC1721A1743F12200C3F8E7 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEC172121743F12200C3F8E7 /* MainStoryboard.storyboard */; };
 		CEC1721D1743F13800C3F8E7 /* dashboad-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC1721C1743F13800C3F8E7 /* dashboad-background@2x.png */; };
@@ -149,10 +149,10 @@
 		CEC172091743F12200C3F8E7 /* LessonStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonStartViewController.m; sourceTree = "<group>"; };
 		CEC1720A1743F12200C3F8E7 /* DashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardViewController.h; sourceTree = "<group>"; };
 		CEC1720B1743F12200C3F8E7 /* DashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardViewController.m; sourceTree = "<group>"; };
-		CEC1720C1743F12200C3F8E7 /* LessonReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonReviewViewController.h; sourceTree = "<group>"; };
-		CEC1720D1743F12200C3F8E7 /* LessonReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonReviewViewController.m; sourceTree = "<group>"; };
-		CEC1720E1743F12200C3F8E7 /* LessonFinishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonFinishViewController.h; sourceTree = "<group>"; };
-		CEC1720F1743F12200C3F8E7 /* LessonFinishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonFinishViewController.m; sourceTree = "<group>"; };
+		CEC1720C1743F12200C3F8E7 /* LessonFinishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonFinishViewController.h; sourceTree = "<group>"; };
+		CEC1720D1743F12200C3F8E7 /* LessonFinishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonFinishViewController.m; sourceTree = "<group>"; };
+		CEC1720E1743F12200C3F8E7 /* LessonReviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LessonReviewViewController.h; sourceTree = "<group>"; };
+		CEC1720F1743F12200C3F8E7 /* LessonReviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LessonReviewViewController.m; sourceTree = "<group>"; };
 		CEC172101743F12200C3F8E7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		CEC172111743F12200C3F8E7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		CEC172121743F12200C3F8E7 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -360,10 +360,10 @@
 				CEC1720B1743F12200C3F8E7 /* DashboardViewController.m */,
 				CEC172081743F12200C3F8E7 /* LessonStartViewController.h */,
 				CEC172091743F12200C3F8E7 /* LessonStartViewController.m */,
-				CEC1720C1743F12200C3F8E7 /* LessonReviewViewController.h */,
-				CEC1720D1743F12200C3F8E7 /* LessonReviewViewController.m */,
-				CEC1720E1743F12200C3F8E7 /* LessonFinishViewController.h */,
-				CEC1720F1743F12200C3F8E7 /* LessonFinishViewController.m */,
+				CEC1720E1743F12200C3F8E7 /* LessonReviewViewController.h */,
+				CEC1720F1743F12200C3F8E7 /* LessonReviewViewController.m */,
+				CEC1720C1743F12200C3F8E7 /* LessonFinishViewController.h */,
+				CEC1720D1743F12200C3F8E7 /* LessonFinishViewController.m */,
 				3AF554231741BB07001CF36F /* ParseTestViewController.h */,
 				3AF554241741BB07001CF36F /* ParseTestViewController.m */,
 			);
@@ -517,8 +517,8 @@
 				CEC172141743F12200C3F8E7 /* CoursesHeader.m in Sources */,
 				CEC172151743F12200C3F8E7 /* LessonStartViewController.m in Sources */,
 				CEC172161743F12200C3F8E7 /* DashboardViewController.m in Sources */,
-				CEC172171743F12200C3F8E7 /* LessonReviewViewController.m in Sources */,
-				CEC172181743F12200C3F8E7 /* LessonFinishViewController.m in Sources */,
+				CEC172171743F12200C3F8E7 /* LessonFinishViewController.m in Sources */,
+				CEC172181743F12200C3F8E7 /* LessonReviewViewController.m in Sources */,
 				CEC172191743F12200C3F8E7 /* LoginViewController.m in Sources */,
 				CED6608B17453522008BD312 /* CoreDataController.m in Sources */,
 				CE76F639174547D400B0A534 /* Oracion.m in Sources */,

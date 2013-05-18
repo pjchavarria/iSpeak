@@ -21,6 +21,12 @@
 }
 @property (strong, nonatomic) IBOutlet UITableView *tableViewCursos;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (strong, nonatomic) IBOutlet UILabel *masteredItemsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *startedItemsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *completedCoursesLabel;
+@property (strong, nonatomic) IBOutlet UILabel *timeStudiedLabel;
+
 - (IBAction)logoutPressed:(id)sender;
 
 @end
@@ -72,8 +78,18 @@
     if ([segue.identifier isEqualToString:@"modalLessonNavigationController"]) {
         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
         LessonStartViewController *lvc = (LessonStartViewController *)[navController.viewControllers objectAtIndex:0];
-        CursoDTO *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
+        Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
         lvc.courseTitleS = curso.nombre;
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];
+        NSLog(@"%@ %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId);
+        NSArray *cursoAvances = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
+        NSArray *a = [[CoreDataController sharedInstance] managedObjectsForClass:kPalabraClass];
+        NSLog(@"%@",[a description]);
+        if(cursoAvances.count == 0)
+            [[SyncEngine sharedEngine] iniciarCurso:curso completion:nil];
+        else
+            [[SyncEngine sharedEngine] iniciarRepaso:curso];
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,7 +98,7 @@
     CoursesCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	
     [cell initialize:0.5 mastered:0.75];
-    CursoDTO *curso = [courses objectAtIndex:indexPath.row];
+    Curso *curso = [courses objectAtIndex:indexPath.row];
     cell.title.text = curso.nombre;
     return cell;
 }

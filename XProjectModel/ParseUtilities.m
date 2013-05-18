@@ -512,7 +512,7 @@
             }
             
             NSLog(@"Success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListPalabraByCursoIDDidLoaded" object:resultados];
+            handler(resultados);
             
         } else {
             // Log details of the failure
@@ -949,7 +949,7 @@
     
     
 }
-+ (void) selectCursoAvanceAllByUserID:(NSString *)userID{
++ (void) selectCursoAvanceAllByUserID:(NSString *)userID completion:(void (^) (NSArray *cursoAvances))handler{
     PFQuery *query = [PFQuery queryWithClassName:@"CursoAvance"];
     
     __block NSMutableArray *resultados = [[NSMutableArray alloc]init];
@@ -983,7 +983,7 @@
             }
             
             NSLog(@"Success");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"kListCursoAvanceByUserIDDidLoaded" object:resultados];
+            handler(resultados);
             
         } else {
             // Log details of the failure

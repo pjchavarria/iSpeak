@@ -70,7 +70,7 @@
 + (BOOL) updateCursoAvance:(CursoAvanceDTO *)cursoAvance;
 + (void) selectCursoAvance:(NSString *)cursoAvanceID;
 + (void) selectCursoAvanceAll:(void (^) (NSArray *cursoAvances))handler;
-+ (void) selectCursoAvanceAllByUserID:(NSString *)userID;
++ (void) selectCursoAvanceAllByUserID:(NSString *)userID completion:(void (^) (NSArray *cursoAvances))handler;
 + (void) selectCursoAvanceByUserID:(NSString *)userID cursoID:(NSString *)cursoID completion:(void (^) (NSArray *cursoAvances))handler;
 
 @end
