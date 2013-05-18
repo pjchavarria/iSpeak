@@ -7,6 +7,7 @@
 //
 
 #import "LessonStartViewController.h"
+#import "LessonFinishViewController.h"
 
 @interface LessonStartViewController ()
 
@@ -38,17 +39,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.courseTitle.text = self.courseTitleS;
+    LessonFinishViewController *fvc = (LessonFinishViewController *)[[self.navigationController viewControllers] lastObject];
+    fvc.curso = self.curso;
+    self.courseTitle.text = self.curso.nombre;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)goBack:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)startCoursePressed:(id)sender {
     [self performSegueWithIdentifier:@"pushLesson" sender:nil];

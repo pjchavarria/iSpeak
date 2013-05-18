@@ -10,6 +10,6 @@
 
 @interface LessonStartViewController : UIViewController
 
-@property (strong, nonatomic) NSString *courseTitleS;
+@property (strong, nonatomic) Curso *curso;
 
 @end

@@ -79,7 +79,7 @@
         UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
         LessonStartViewController *lvc = (LessonStartViewController *)[navController.viewControllers objectAtIndex:0];
         Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
-        lvc.courseTitleS = curso.nombre;
+        lvc.curso = curso;
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];
         NSLog(@"%@ %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId);

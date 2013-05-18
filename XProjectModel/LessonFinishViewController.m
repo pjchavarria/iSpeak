@@ -7,6 +7,8 @@
 //
 
 #import "LessonFinishViewController.h"
+#import "SyncEngine.h"
+#import "CoreDataController.h"
 
 @interface LessonFinishViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *reviewedItemsLabel;
@@ -40,10 +42,12 @@
 }
 
 - (IBAction)finishLessonPressed:(id)sender {
+    [[SyncEngine sharedEngine] finalizarLeccion:self.curso];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)goToCourseViewPressed:(id)sender {
+    [[SyncEngine sharedEngine] finalizarLeccion:self.curso];    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end

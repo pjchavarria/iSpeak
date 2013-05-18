@@ -10,5 +10,6 @@
 
 @interface LessonFinishViewController : UIViewController
 
+@property (strong, nonatomic) Curso *curso;
 
 @end

@@ -26,6 +26,13 @@ NSString * const kUsuarioClass = @"Usuario";
 
 @implementation CoreDataController
 
+enum {
+    kSincronizacionEstadoInsertado,
+    kSincronizacionEstadoModificado,
+    kSincronizacionEstadoEliminado,
+    kSincronizacionEstadoSincronizado
+}SincronizacionEstado;
+
 @synthesize masterManagedObjectContext = _masterManagedObjectContext;
 @synthesize backgroundManagedObjectContext = _backgroundManagedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -282,7 +289,7 @@ NSString * const kUsuarioClass = @"Usuario";
 
 - (void)updateCurso:(CursoDTO*)data
 {
-	
+    
 }
 - (void)updateOracion:(OracionDTO*)data
 {
@@ -294,11 +301,47 @@ NSString * const kUsuarioClass = @"Usuario";
 }
 - (void)updatePalabraAvance:(PalabraAvanceDTO*)data
 {
-		
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kPalabraAvanceClass];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
+    [fetchRequest setPredicate:predicate];
+	[fetchRequest setFetchLimit:1];
+    NSError *error = nil;
+    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if(results.count > 0)
+    {
+        PalabraAvance *palabraAvance = [results objectAtIndex:0];
+        palabraAvance.avance = data.avance;
+        palabraAvance.estado = data.estado;
+        palabraAvance.prioridad = data.prioridad;
+        palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+        palabraAvance.ultimaFechaRepaso = data.ultimaFechaRepaso;
+        palabraAvance.ultimaSincronizacion = [NSDate date];
+        
+        [self saveBackgroundContext];
+    }
 }
 - (void)updateCursoAvance:(CursoAvanceDTO*)data
 {
-	 
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kCursoAvanceClass];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
+    [fetchRequest setPredicate:predicate];
+	[fetchRequest setFetchLimit:1];
+    NSError *error = nil;
+    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+    if(results.count > 0)
+    {
+        CursoAvance *cursoAvance = [results objectAtIndex:0];
+        cursoAvance.avance = data.avance;
+        cursoAvance.palabrasComenzadas = data.palabrasComenzadas;
+        cursoAvance.palabrasCompletas = data.palabrasCompletas;
+        cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+        cursoAvance.tiempoEstudiado = data.tiempoEstudiado;
+        cursoAvance.ultimaSincronizacion = [NSDate date];
+        
+        [self saveBackgroundContext];
+    }
 }
 
 

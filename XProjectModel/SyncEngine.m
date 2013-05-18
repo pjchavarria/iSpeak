@@ -167,7 +167,7 @@ enum {
 			}
 			if ([idsCursoAvances containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
-				[coreDataController updateCurso:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
+				[coreDataController updateCursoAvance:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertCursoAvance:cursoAvance];
 			}
@@ -202,7 +202,7 @@ enum {
 			}
 			if ([idsCursoAvances containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
-				[coreDataController updateCurso:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
+				[coreDataController updateCursoAvance:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertCursoAvance:cursoAvance];
 			}
@@ -236,7 +236,7 @@ enum {
 			}
 			if ([idsPalabras containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
-				[coreDataController updateCurso:[palabras objectAtIndex:[idsPalabras indexOfObject:idCurso]]];
+				[coreDataController updatePalabra:[palabras objectAtIndex:[idsPalabras indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertPalabra:palabra];
 			}
@@ -270,7 +270,7 @@ enum {
 			}
 			if ([idsOraciones containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
-				[coreDataController updateCurso:[oraciones objectAtIndex:[idsOraciones indexOfObject:idCurso]]];
+				[coreDataController updateOracion:[oraciones objectAtIndex:[idsOraciones indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertOracion:oracion];
 			}
@@ -322,7 +322,7 @@ enum {
 			}
 			if ([idsPalabraAvances containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
-				[coreDataController updateCurso:[palabraAvances objectAtIndex:[idsPalabraAvances indexOfObject:idCurso]]];
+				[coreDataController updatePalabraAvance:[palabraAvances objectAtIndex:[idsPalabraAvances indexOfObject:idCurso]]];
 			}else{
 				[coreDataController insertPalabraAvance:palabraAvance];
 			}
