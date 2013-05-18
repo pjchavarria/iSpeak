@@ -9,6 +9,15 @@
 #import "LessonStartViewController.h"
 
 @interface LessonStartViewController ()
+
+@property (strong, nonatomic) IBOutlet UILabel *courseTitle;
+@property (strong, nonatomic) IBOutlet UILabel *progressPercentage;
+@property (strong, nonatomic) IBOutlet UILabel *masteredItems;
+@property (strong, nonatomic) IBOutlet UILabel *startedItems;
+@property (strong, nonatomic) IBOutlet UILabel *nonStartedItems;
+@property (strong, nonatomic) IBOutlet UILabel *itemsToReview;
+@property (strong, nonatomic) IBOutlet UILabel *currentStudyTime;
+
 - (IBAction)startCoursePressed:(id)sender;
 - (IBAction)backToDashboardPressed:(id)sender;
 

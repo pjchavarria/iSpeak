@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LessonReviewViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIView *firstView;
-@property (strong, nonatomic) IBOutlet UIView *secondView;
-@property (strong, nonatomic) IBOutlet UIView *thirdView;
-- (IBAction)nextButton:(id)sender;
+
 
 @end

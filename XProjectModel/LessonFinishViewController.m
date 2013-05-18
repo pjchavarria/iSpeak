@@ -9,6 +9,8 @@
 #import "LessonFinishViewController.h"
 
 @interface LessonFinishViewController ()
+@property (strong, nonatomic) IBOutlet UILabel *reviewedItemsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *studiedTimeLabel;
 - (IBAction)finishLessonPressed:(id)sender;
 - (IBAction)goToCourseViewPressed:(id)sender;
 

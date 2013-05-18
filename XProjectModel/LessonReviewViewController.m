@@ -9,7 +9,34 @@
 #import "LessonReviewViewController.h"
 
 @interface LessonReviewViewController ()
+// First excercise
+@property (strong, nonatomic) IBOutlet UIView *firstView;
+@property (strong, nonatomic) IBOutlet UILabel *palabraLabel;
+@property (strong, nonatomic) IBOutlet UILabel *significadoLabel;
 
+
+// Second excercise
+@property (strong, nonatomic) IBOutlet UIView *secondView;
+@property (strong, nonatomic) IBOutlet UILabel *palabraEnunciadoLabel;
+
+@property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta1Button;
+@property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta2Button;
+@property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta3Button;
+@property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta4Button;
+
+
+// Third excercise
+@property (strong, nonatomic) IBOutlet UIView *thirdView;
+@property (strong, nonatomic) IBOutlet UILabel *oracionIncompletaLabel;
+
+// Progress
+@property (strong, nonatomic) IBOutlet UIImageView *progressImageView;
+
+// Command Buttons
+@property (strong, nonatomic) IBOutlet UIButton *nextButton;
+@property (strong, nonatomic) IBOutlet UIButton *backButton;
+- (IBAction)nextButton:(id)sender;
+- (IBAction)backButton:(id)sender;
 @end
 
 @implementation LessonReviewViewController
@@ -50,6 +77,9 @@
     {
         [self performSegueWithIdentifier:@"pushLessonReview" sender:nil];
     }
+}
+
+- (IBAction)backButton:(id)sender {
 }
 
 @end

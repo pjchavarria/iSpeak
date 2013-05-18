@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LessonStartViewController : UIViewController
-- (IBAction)goBack:(id)sender;
-@property (strong, nonatomic) IBOutlet UILabel *courseTitle;
-@property (nonatomic) NSString *courseTitleS;
+
+@property (strong, nonatomic) NSString *courseTitleS;
 
 @end
