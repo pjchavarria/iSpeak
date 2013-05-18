@@ -46,14 +46,14 @@
 + (BOOL) deletePalabra:(NSString *)palabraID;
 + (BOOL) updatePalabra:(PalabraDTO *)palabra;
 + (void) selectPalabra:(NSString *)palabraID;
-+ (void) selectPalabraAll;
++ (void) selectPalabraAll:(void (^) (NSArray *palabras))handler;
 + (void) selectPalabraAllByCursoID:(NSString *)cursoID completion:(void (^) (NSArray *palabrasDelCurso))handler;
 
 @end
 
 @interface PalabraAvanceParse : NSObject
 
-+ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabraAvance;
++ (BOOL) insertPalabraAvance:(PalabraAvanceDTO *)palabra completion:(void (^) (NSString *palabraAvanceId))handler;
 + (BOOL) deletePalabraAvance:(NSString *)palabraAvanceID;
 + (BOOL) updatePalabraAvance:(PalabraAvanceDTO *)palabraAvance;
 + (void) selectPalabraAvance:(NSString *)palabraAvanceID;
@@ -65,11 +65,11 @@
 
 @interface CursoAvanceParse : NSObject
 
-+ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance;
++ (BOOL) insertCursoAvance:(CursoAvanceDTO *)cursoAvance completion:(void (^) (NSString *cursoAvanceId))handler;
 + (BOOL) deleteCursoAvance:(NSString *)cursoAvanceID;
 + (BOOL) updateCursoAvance:(CursoAvanceDTO *)cursoAvance;
 + (void) selectCursoAvance:(NSString *)cursoAvanceID;
-+ (void) selectCursoAvanceAll;
++ (void) selectCursoAvanceAll:(void (^) (NSArray *cursoAvances))handler;
 + (void) selectCursoAvanceAllByUserID:(NSString *)userID;
 + (void) selectCursoAvanceByUserID:(NSString *)userID cursoID:(NSString *)cursoID completion:(void (^) (NSArray *cursoAvances))handler;
 
