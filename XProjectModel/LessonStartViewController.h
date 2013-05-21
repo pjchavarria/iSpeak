@@ -10,6 +10,6 @@
 
 @interface LessonStartViewController : UIViewController
 
-@property (strong, nonatomic) Curso *curso;
 
+- (id)initWithCurso:(Curso *)curso;
 @end

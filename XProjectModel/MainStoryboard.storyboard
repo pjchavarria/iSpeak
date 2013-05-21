@@ -211,12 +211,12 @@
                                                     <rect key="frame" x="8" y="68" width="278" height="12"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-mastered.png" id="xZP-7r-CXZ">
-                                                    <rect key="frame" x="10" y="70" width="276" height="8"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-started.png" id="En3-VB-qBI">
+                                                    <rect key="frame" x="10" y="70" width="211" height="8"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-started.png" id="En3-VB-qBI">
-                                                    <rect key="frame" x="10" y="70" width="276" height="8"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-mastered.png" id="xZP-7r-CXZ">
+                                                    <rect key="frame" x="10" y="70" width="60" height="8"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Mastered 80" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x8k-S2-Wyq">
@@ -300,12 +300,12 @@
                                 <rect key="frame" x="20" y="274" width="278" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-mastered.png" id="npg-93-F5S">
-                                <rect key="frame" x="21" y="276" width="200" height="8"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-started.png" id="e03-zf-cPC">
                                 <rect key="frame" x="21" y="276" width="150" height="8"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dashboad-progress-bar-mastered.png" id="npg-93-F5S">
+                                <rect key="frame" x="21" y="276" width="72" height="8"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RHO-Dq-YlS">
@@ -819,87 +819,6 @@
         <image name="login-button-blue-pressed@2x.png" width="330" height="69"/>
         <image name="login-textbox@2x.png" width="330" height="69"/>
     </resources>
-    <classes>
-        <class className="CoursesCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoursesCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="backgroundScroll" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="courseImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="masteredItemsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="masteredScroll" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="percentage" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startedItemsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startedScroll" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DashboardViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DashboardViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="logoutPressed:"/>
-                <relationship kind="outlet" name="completedCoursesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="masteredItemsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="myTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="startedItemsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableViewCursos" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="timeStudiedLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LessonFinishViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonFinishViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="finishLessonPressed:"/>
-                <relationship kind="action" name="goToCourseViewPressed:"/>
-                <relationship kind="outlet" name="reviewedItemsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="studiedTimeLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LessonReviewViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonReviewViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backButton:"/>
-                <relationship kind="action" name="nextButton:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="firstView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="nextButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="oracionIncompletaLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="palabraEnunciadoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="palabraLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="palabraRespuesta1Button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="palabraRespuesta2Button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="palabraRespuesta3Button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="palabraRespuesta4Button" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="progressImageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="secondView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="significadoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="thirdView" candidateClass="UIView"/>
-            </relationships>
-        </class>
-        <class className="LessonStartViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonStartViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="backToDashboardPressed:"/>
-                <relationship kind="action" name="goBack:"/>
-                <relationship kind="action" name="startCoursePressed:"/>
-                <relationship kind="outlet" name="courseTitle" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="currentStudyTime" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="itemsToReview" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="masteredItems" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="newItems" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="progressPercentage" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="startedItems" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="loginButtonPressed:"/>
-                <relationship kind="outlet" name="controles" candidateClass="UIView"/>
-                <relationship kind="outlet" name="txtPassword" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="txtUsername" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

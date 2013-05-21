@@ -8,6 +8,7 @@
 
 #import "LessonStartViewController.h"
 #import "LessonFinishViewController.h"
+#import "CoreDataController.h"
 
 @interface LessonStartViewController ()
 
@@ -19,13 +20,24 @@
 @property (strong, nonatomic) IBOutlet UILabel *itemsToReview;
 @property (strong, nonatomic) IBOutlet UILabel *currentStudyTime;
 
+@property (strong, nonatomic) Curso *curso;
+@property (strong, nonatomic) CursoAvance *cursoAvance;
+
 - (IBAction)startCoursePressed:(id)sender;
 - (IBAction)backToDashboardPressed:(id)sender;
 
 @end
 
 @implementation LessonStartViewController
-
+- (id)initWithCurso:(Curso *)curso
+{
+    CoreDataController *coreDataController = [CoreDataController sharedInstance];
+    
+    Usuario *usuarioActivo = [coreDataController usuarioActivo];
+    self.curso = curso;
+    self.cursoAvance = [[CoreDataController sharedInstance] getObjectForClass:kCursoAvanceClass predicate:[NSPredicate predicateWithFormat:@"curso.objectId == %@ AND usuario.objectId == %@",curso.objectId,usuarioActivo.objectId]];
+    return [self initWithNibName:nil bundle:nil];
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,10 +50,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    LessonFinishViewController *fvc = (LessonFinishViewController *)[[self.navigationController viewControllers] lastObject];
-    fvc.curso = self.curso;
+    
     self.courseTitle.text = self.curso.nombre;
+    self.masteredItems.text = self.cursoAvance.palabrasCompletas.stringValue;
+    self.startedItems.text = self.cursoAvance.palabrasComenzadas.stringValue;
+    self.nonStartedItems.text = [NSString stringWithFormat:@"%d",50-self.cursoAvance.palabrasComenzadas.intValue-self.cursoAvance.palabrasCompletas.intValue];
+    
+    self.progressPercentage.text = [NSString stringWithFormat:@"%@",self.cursoAvance.avance];
+    self.itemsToReview.text = @"..";
+    self.currentStudyTime.text = @"..h:..m";
 }
 
 - (void)didReceiveMemoryWarning
