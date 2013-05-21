@@ -10,5 +10,6 @@
 
 @interface LessonReviewViewController : UIViewController
 
+@property (strong, nonatomic) NSArray *palabras;
 
 @end
