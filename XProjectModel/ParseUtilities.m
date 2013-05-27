@@ -120,11 +120,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *usuarios, NSError *error) {
         if (!error) {
-                                
-            UsuarioDTO *user = [[UsuarioDTO alloc]init];
-        
+            
             for (int i=0; i<usuarios.count; i++) {
-                
+                UsuarioDTO *user = [[UsuarioDTO alloc]init];
                 PFObject *userArray = usuarios[i];
                 
                 user.objectId = userArray.objectId;
@@ -449,10 +447,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            PalabraDTO *objNuevo = [[PalabraDTO alloc]init];
             
             for (int i=0; i<palabras.count; i++) {
-                
+                PalabraDTO *objNuevo = [[PalabraDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -489,10 +486,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            PalabraDTO *objNuevo = [[PalabraDTO alloc]init];
             
             for (int i=0; i<palabras.count; i++) {
-                
+                PalabraDTO *objNuevo = [[PalabraDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -657,10 +653,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
             
             for (int i=0; i<palabras.count; i++) {
-                
+                PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -705,10 +700,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
             
             for (int i=0; i<palabras.count; i++) {
-                
+                PalabraAvanceDTO *objNuevo = [[PalabraAvanceDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -914,10 +908,10 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
             
             for (int i=0; i<palabras.count; i++) {
-                
+                CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -960,10 +954,10 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
             
             for (int i=0; i<palabras.count; i++) {
-                
+                CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -1004,10 +998,10 @@
             equalTo:[PFObject objectWithoutDataWithClassName:@"Curso" objectId:cursoID]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *palabras, NSError *error) {
         if (!error) {
-            CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
+            
             
             for (int i=0; i<palabras.count; i++) {
-                
+                CursoAvanceDTO *objNuevo = [[CursoAvanceDTO alloc]init];
                 PFObject *objArray = palabras[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -1163,10 +1157,9 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *oraciones, NSError *error) {
         if (!error) {
-            OracionDTO *objNuevo = [[OracionDTO alloc]init];
             
             for (int i=0; i<oraciones.count; i++) {
-                
+                OracionDTO *objNuevo = [[OracionDTO alloc]init];
                 PFObject *objArray = oraciones[i];
                 
                 objNuevo.objectId = objArray.objectId;
@@ -1208,10 +1201,10 @@
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *oraciones, NSError *error) {
         if (!error) {
-            OracionDTO *objNuevo = [[OracionDTO alloc]init];
+            
             
             for (int i=0; i<oraciones.count; i++) {
-                
+                OracionDTO *objNuevo = [[OracionDTO alloc]init];
                 PFObject *objArray = oraciones[i];
                 
                 objNuevo.objectId = objArray.objectId;
