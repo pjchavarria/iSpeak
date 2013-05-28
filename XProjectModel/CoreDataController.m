@@ -249,6 +249,8 @@ enum {
 	palabra.palabra = palabraDTO.palabra;
 	palabra.tipoPalabra = palabraDTO.tipoPalabra;
 	palabra.traduccion = palabraDTO.traduccion;
+    
+    palabra.curso = [self getObjectForClass:kCursoClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",palabraDTO.curso]];
 }
 - (void)insertPalabraAvance:(PalabraAvanceDTO*)data
 {
@@ -265,7 +267,7 @@ enum {
 	
 	// Relaciones
 	palabraAvance.usuario = self.usuarioActivo;
-	palabraAvance.palabra = [self getObjectForClass:kPalabraAvanceClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra]];
+	palabraAvance.palabra = [self getObjectForClass:kPalabraClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra]];
 }
 - (void)insertCursoAvance:(CursoAvanceDTO*)data
 {

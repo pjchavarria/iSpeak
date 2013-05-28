@@ -37,7 +37,7 @@
     CoreDataController *coreDataController = [CoreDataController sharedInstance];
     
     Usuario *usuarioActivo = [coreDataController usuarioActivo];
-    self.curso = curso;
+    _curso = curso;
     self.cursoAvance = [[CoreDataController sharedInstance] getObjectForClass:kCursoAvanceClass predicate:[NSPredicate predicateWithFormat:@"curso.objectId == %@ AND usuario.objectId == %@",curso.objectId,usuarioActivo.objectId]];
 }
 
@@ -62,7 +62,7 @@
     
     self.progressPercentage.text = [NSString stringWithFormat:@"%@",self.cursoAvance.avance];
     
-    NSArray *palabrasDelCurso = [coreDataController getObjectForClass:kPalabraAvanceClass predicate:nil];
+    NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass];
     
     self.palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 100"]];
     self.palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance != 100 AND avance !=0"]];

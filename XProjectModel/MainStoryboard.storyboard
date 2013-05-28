@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Dx0-I4-HYs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="Dx0-I4-HYs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -580,8 +580,11 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="palabraRespuesta1:" destination="VLy-DE-mBH" eventType="touchUpInside" id="QZU-Bw-oB7"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hAT-ze-3wN">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hAT-ze-3wN">
                                         <rect key="frame" x="13" y="156" width="295" height="63"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="25"/>
@@ -593,8 +596,11 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="palabraRespuesta2:" destination="VLy-DE-mBH" eventType="touchUpInside" id="vUX-QD-BLA"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VFS-Za-awU">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VFS-Za-awU">
                                         <rect key="frame" x="13" y="222" width="295" height="63"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="25"/>
@@ -607,10 +613,11 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="palabraRespuesta3:" destination="VLy-DE-mBH" eventType="touchUpInside" id="V6x-eV-4WP"/>
                                             <segue destination="XTd-Af-ky0" kind="push" identifier="pushLessonReview" id="ISn-b1-6cz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BN6-1i-OQF">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BN6-1i-OQF">
                                         <rect key="frame" x="13" y="288" width="295" height="63"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="25"/>
@@ -622,6 +629,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="palabraRespuesta4:" destination="VLy-DE-mBH" eventType="touchUpInside" id="ugA-Cb-FDL"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -819,6 +829,90 @@
         <image name="login-button-blue-pressed@2x.png" width="330" height="69"/>
         <image name="login-textbox@2x.png" width="330" height="69"/>
     </resources>
+    <classes>
+        <class className="CoursesCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoursesCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundScroll" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="courseImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="masteredItemsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="masteredScroll" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="percentage" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startedItemsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startedScroll" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="title" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="DashboardViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DashboardViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="logoutPressed:"/>
+                <relationship kind="outlet" name="completedCoursesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="masteredItemsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="myTableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="startedItemsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableViewCursos" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="timeStudiedLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LessonFinishViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonFinishViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="finishLessonPressed:"/>
+                <relationship kind="action" name="goToCourseViewPressed:"/>
+                <relationship kind="outlet" name="reviewedItemsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="studiedTimeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LessonReviewViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonReviewViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backButton:"/>
+                <relationship kind="action" name="nextButton:"/>
+                <relationship kind="action" name="palabraRespuesta1:"/>
+                <relationship kind="action" name="palabraRespuesta2:"/>
+                <relationship kind="action" name="palabraRespuesta3:"/>
+                <relationship kind="action" name="palabraRespuesta4:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="firstView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="nextButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="oracionIncompletaLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="palabraEnunciadoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="palabraLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="palabraRespuesta1Button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="palabraRespuesta2Button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="palabraRespuesta3Button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="palabraRespuesta4Button" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="progressImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="secondView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="significadoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="thirdView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LessonStartViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LessonStartViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backToDashboardPressed:"/>
+                <relationship kind="action" name="startCoursePressed:"/>
+                <relationship kind="outlet" name="courseTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="currentStudyTime" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="itemsToReview" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="masteredItems" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nonStartedItems" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="progressPercentage" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="startedItems" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButtonPressed:"/>
+                <relationship kind="outlet" name="controles" candidateClass="UIView"/>
+                <relationship kind="outlet" name="txtPassword" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="txtUsername" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

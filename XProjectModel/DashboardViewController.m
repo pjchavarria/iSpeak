@@ -84,9 +84,10 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];
         NSLog(@"%@ %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId);
         NSArray *cursoAvances = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
-        NSArray *a = [[CoreDataController sharedInstance] managedObjectsForClass:kPalabraClass];
-        NSLog(@"%@",[a description]);
-        if(cursoAvances.count == 0)
+        CursoAvance *cursoA;
+        if(cursoAvances.count > 0)
+            cursoA = [cursoAvances objectAtIndex:0];
+        if([cursoA.avance integerValue] == 0)
             [[SyncEngine sharedEngine] iniciarCurso:curso completion:nil];
         else
             [[SyncEngine sharedEngine] iniciarRepaso:curso];

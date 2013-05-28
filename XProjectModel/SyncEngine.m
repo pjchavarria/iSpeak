@@ -58,7 +58,7 @@ enum {
     
     [CursoAvanceParse insertCursoAvance:cursoAvance completion:^(NSString *cursoAvanceId) {
         cursoAvance.objectId = cursoAvanceId;
-        if(cursoAvance.objectId == nil)
+        if(cursoAvance.objectId != nil)
         {
             cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoInsertado];
             [[CoreDataController sharedInstance] insertCursoAvance:cursoAvance];
@@ -80,7 +80,7 @@ enum {
     [PalabraAvanceParse insertPalabraAvance:palabraAvance completion:^(NSString *palabraAvanceId) {
         palabraAvance.objectId = palabraAvanceId;
         
-        if(palabraAvance.objectId == nil)
+        if(palabraAvance.objectId != nil)
         {
             palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoInsertado];
             [[CoreDataController sharedInstance] insertPalabraAvance:palabraAvance];
@@ -204,7 +204,7 @@ enum {
 				NSString *idCurso = [storedManagedObject valueForKey:@"objectId"];
 				[coreDataController updateCursoAvance:[cursoAvances objectAtIndex:[idsCursoAvances indexOfObject:idCurso]]];
 			}else{
-				[coreDataController insertCursoAvance:cursoAvance];
+				//[coreDataController insertCursoAvance:cursoAvance];
 			}
 			currentIndex++;
 			

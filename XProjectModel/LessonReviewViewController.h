@@ -11,5 +11,9 @@
 @interface LessonReviewViewController : UIViewController
 
 @property (strong, nonatomic) NSArray *palabras;
+- (IBAction)palabraRespuesta1:(id)sender;
+- (IBAction)palabraRespuesta2:(id)sender;
+- (IBAction)palabraRespuesta3:(id)sender;
+- (IBAction)palabraRespuesta4:(id)sender;
 
 @end
