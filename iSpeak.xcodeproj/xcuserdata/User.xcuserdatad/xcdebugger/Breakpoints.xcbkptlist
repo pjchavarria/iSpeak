@@ -8,12 +8,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "390531086.318577"
+         timestampString = "392326475.114599"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "163"
-         endingLineNumber = "163"
-         landmarkName = "-syncCursoAvanceConUsuario:Curso:completion:"
+         startingLineNumber = "231"
+         endingLineNumber = "231"
+         landmarkName = "-syncCursoAvance:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "XProjectModel/SyncEngine.m"
+         timestampString = "392326475.114599"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "314"
+         endingLineNumber = "314"
+         landmarkName = "-iniciarCurso:completion:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

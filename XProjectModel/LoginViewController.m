@@ -167,6 +167,7 @@
 }
 - (void)goToDashboard:(UsuarioDTO *)usuario skipCheck:(BOOL)skip{
 	
+    return;
 	NetworkStatus netStatus = [self currentNetworkStatus];
 	
 	if (netStatus == NotReachable) {

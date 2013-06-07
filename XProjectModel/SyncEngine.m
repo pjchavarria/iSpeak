@@ -124,9 +124,77 @@ enum {
 		handler();
     }];
 }
-- (void)masterMasterSyncForClass:(NSString *)class
+- (void)masterMasterSyncForClass:(NSString *)class columnName:(NSString *)key objectId:(NSString *)objectId block:(void(^)())handler
 {
+    // Ok so, this is the plan
+    // 1. Download created files that are not in the local db (
+    // 2. Push created files locally
+    // 3. Update&Merge updated files (solve conflicts)
+    
+	CoreDataController *coreDataController = [CoreDataController sharedInstance];
+	NSArray *storedRecords = [coreDataController managedObjectsForClass:class];
+	NSLog(@"Stored %@: %@",class,storedRecords);
+    
+    NSDate *lastUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:class];
 	
+	PFQuery *query = [PFQuery queryWithClassName:class];
+	if (key && objectId) {
+		[query whereKey:key equalTo:[PFObject objectWithoutDataWithClassName:kCursoClass objectId:objectId]];
+        
+	}
+    [query findObjectsInBackgroundWithBlock:^(NSArray *fetchedObjects, NSError *error) {
+		if (error) {
+			NSLog(@"%@",error);
+			handler();
+		}
+        NSLog(@"Parse %@: %@",class,fetchedObjects);
+		NSMutableArray *fetchedObjectsLeftToSync = fetchedObjects.mutableCopy;
+        NSMutableArray *fetchedObjectsIDs = [[NSMutableArray alloc] init];
+        for (PFObject *object in fetchedObjects){
+            [fetchedObjectsIDs addObject:object.objectId];
+        }
+		
+		for (int i=0;i<fetchedObjects.count;i++) {
+			NSManagedObject *storedManagedObject = (storedRecords.count > i)?storedManagedObject = storedRecords[i] : nil;
+			
+			// UPDATE
+			// si encuentra un id jalado de parse q es igual al guardado en storedRecords[currentIndex]
+			if ([fetchedObjectsIDs containsObject:[storedManagedObject valueForKey:@"objectId"]]) {
+				NSString *idObject = [storedManagedObject valueForKey:@"objectId"];
+				id foundObject = [fetchedObjects objectAtIndex:[fetchedObjectsIDs indexOfObject:idObject]];
+				
+				if ([foundObject isKindOfClass:[CursoDTO class]]) {
+					[coreDataController updateCurso:storedRecords[i] withData:foundObject];
+				}else if([foundObject isKindOfClass:[PalabraDTO class]]){
+					[coreDataController updatePalabra:storedRecords[i] withData:foundObject];
+				}else if([foundObject isKindOfClass:[OracionDTO class]]){
+					[coreDataController updateOracion:storedRecords[i] withData:foundObject];
+				}
+                
+				[fetchedObjectsLeftToSync removeObject:foundObject];
+                
+                // CREATE
+			}else if(!storedManagedObject){
+				id foundObject = fetchedObjectsLeftToSync.lastObject;
+				
+				if ([foundObject isKindOfClass:[CursoDTO class]]) {
+					[coreDataController insertCurso:foundObject];
+				}else if([foundObject isKindOfClass:[PalabraDTO class]]){
+					[coreDataController insertPalabra:foundObject];
+				}else if([foundObject isKindOfClass:[OracionDTO class]]){
+					[coreDataController insertOracion:foundObject];
+				}
+				
+				[fetchedObjectsLeftToSync removeLastObject];
+			}
+			
+		}
+		[coreDataController saveBackgroundContext];
+		[coreDataController saveMasterContext];
+		NSArray *toredRecords = [coreDataController managedObjectsForClass:class];
+		NSLog(@"Result %@: %@",class,toredRecords);
+		handler();
+    }];
 }
 
 #pragma mark - Sync Classes Methods
