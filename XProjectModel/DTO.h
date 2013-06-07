@@ -7,69 +7,69 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <Parse/PFObject+Subclass.h>
 @interface DTO : NSObject
 
+@end	
+
+
+@interface UsuarioDTO : PFObject<PFSubclassing>
+@property (retain) NSString * password;
+@property (retain) NSString * username;
++ (NSString *)parseClassName;
 @end
 
 
-@interface UsuarioDTO : NSObject
-@property (nonatomic, strong) NSString * password;
-@property (nonatomic, strong) NSString * username;
-@property (nonatomic, strong) NSString * objectId;
+@interface OracionDTO : PFObject<PFSubclassing>
+@property ( retain) NSData * audio;
+@property ( retain) NSString * oracion;
+@property ( retain) NSString * traduccion;
+@property ( retain) NSString *palabra;
++ (NSString *)parseClassName;
 @end
 
 
-@interface OracionDTO : NSObject
-@property (nonatomic, strong) NSData * audio;
-@property (nonatomic, strong) NSString * oracion;
-@property (nonatomic, strong) NSString * traduccion;
-@property (nonatomic, strong) NSString * objectId;
-@property (nonatomic, strong) NSString *palabra;
+@interface PalabraDTO : PFObject<PFSubclassing>
+@property ( retain) NSData * audio;
+@property ( retain) NSString * palabra;
+@property ( retain) NSString * traduccion;
+@property ( retain) NSNumber * tipoPalabra;
+@property ( retain) NSString *curso;
+@property ( retain) NSSet *oraciones;
++ (NSString *)parseClassName;
+@end
+
+@interface PalabraAvanceDTO : PFObject<PFSubclassing>
+@property ( retain) NSNumber * avance;
+@property ( retain) NSNumber * estado;
+@property ( retain) NSNumber * prioridad;
+@property ( retain) NSDate * ultimaFechaRepaso;
+@property ( retain) NSNumber * sincronizado;
+@property ( retain) NSString *usuario;
+@property ( retain) NSString *palabra;
+@property ( retain) NSDate *ultimaSincronizacion;
++ (NSString *)parseClassName;
 @end
 
 
-@interface PalabraDTO : NSObject
-@property (nonatomic, retain) NSData * audio;
-@property (nonatomic, retain) NSString * palabra;
-@property (nonatomic, retain) NSString * traduccion;
-@property (nonatomic, retain) NSNumber * tipoPalabra;
-@property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) NSString *curso;
-@property (nonatomic, retain) NSSet *oraciones;
+@interface CursoDTO : PFObject<PFSubclassing>
+@property ( retain) NSNumber * cantidadPalabras;
+@property ( retain) NSNumber * curso;
+@property ( retain) NSString * nombre;
+@property ( retain) NSSet *palabras;
++ (NSString *)parseClassName;
 @end
 
-@interface PalabraAvanceDTO : NSObject
-@property (nonatomic, retain) NSNumber * avance;
-@property (nonatomic, retain) NSNumber * estado;
-@property (nonatomic, retain) NSNumber * prioridad;
-@property (nonatomic, retain) NSDate * ultimaFechaRepaso;
-@property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) NSNumber *sincronizado;
-@property (nonatomic, retain) NSString *usuario;
-@property (nonatomic, retain) NSString *palabra;
-@property (nonatomic, retain) NSDate *ultimaSincronizacion;
-@end
-
-
-@interface CursoDTO : NSObject
-@property (nonatomic, retain) NSNumber * cantidadPalabras;
-@property (nonatomic, retain) NSNumber * curso;
-@property (nonatomic, retain) NSString * nombre;
-@property (nonatomic, retain) NSString * objectId;
-@property (nonatomic, retain) NSSet *palabras;
-@end
-
-@interface CursoAvanceDTO : NSObject
-@property (nonatomic, retain) NSNumber * avance;
-@property (nonatomic, retain) NSNumber * palabrasComenzadas;
-@property (nonatomic, retain) NSNumber * palabrasCompletas;
-@property (nonatomic, retain) NSNumber * tiempoEstudiado;
-@property (nonatomic, retain) NSString *objectId;
-@property (nonatomic, retain) NSNumber *sincronizado;
-@property (nonatomic, retain) NSString *usuario;
-@property (nonatomic, retain) NSString *curso;
-@property (nonatomic, retain) NSDate *ultimaSincronizacion;
+@interface CursoAvanceDTO : PFObject<PFSubclassing>
+@property ( retain) NSNumber * avance;
+@property ( retain) NSNumber * palabrasComenzadas;
+@property ( retain) NSNumber * palabrasCompletas;
+@property ( retain) NSNumber * tiempoEstudiado;
+@property ( retain) NSNumber * sincronizado;
+@property ( retain) NSString *usuario;
+@property ( retain) NSString *curso;
+@property ( retain) NSDate *ultimaSincronizacion;
++ (NSString *)parseClassName;
 @end
 
 

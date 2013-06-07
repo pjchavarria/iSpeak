@@ -44,8 +44,6 @@
 		3AF5541E1741B969001CF36F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF5541D1741B969001CF36F /* Security.framework */; };
 		3AF554201741B972001CF36F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF5541F1741B972001CF36F /* StoreKit.framework */; };
 		3AF554221741B97F001CF36F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF554211741B97F001CF36F /* SystemConfiguration.framework */; };
-		3AF554261741BB07001CF36F /* ParseTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF554241741BB07001CF36F /* ParseTestViewController.m */; };
-		3AF5542A1741BB59001CF36F /* ParseUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF554291741BB59001CF36F /* ParseUtilities.m */; };
 		CE76F639174547D400B0A534 /* Oracion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F638174547D400B0A534 /* Oracion.m */; };
 		CE76F63F174547D500B0A534 /* Usuario.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F63E174547D500B0A534 /* Usuario.m */; };
 		CEBC98B6174405B700AE5C95 /* dashboard-bbi-logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */; };
@@ -132,10 +130,6 @@
 		3AF5541D1741B969001CF36F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3AF5541F1741B972001CF36F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3AF554211741B97F001CF36F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		3AF554231741BB07001CF36F /* ParseTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseTestViewController.h; sourceTree = "<group>"; };
-		3AF554241741BB07001CF36F /* ParseTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseTestViewController.m; sourceTree = "<group>"; };
-		3AF554281741BB59001CF36F /* ParseUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseUtilities.h; sourceTree = "<group>"; };
-		3AF554291741BB59001CF36F /* ParseUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseUtilities.m; sourceTree = "<group>"; };
 		CE76F637174547D400B0A534 /* Oracion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Oracion.h; sourceTree = "<group>"; };
 		CE76F638174547D400B0A534 /* Oracion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Oracion.m; sourceTree = "<group>"; };
 		CE76F63D174547D500B0A534 /* Usuario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Usuario.h; sourceTree = "<group>"; };
@@ -341,8 +335,6 @@
 		CE8216ED1743E5D700FBD124 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3AF554281741BB59001CF36F /* ParseUtilities.h */,
-				3AF554291741BB59001CF36F /* ParseUtilities.m */,
 				04C3623417458DEE00D57E85 /* SyncEngine.h */,
 				04C3623517458DEE00D57E85 /* SyncEngine.m */,
 				04C362431745DE0300D57E85 /* Reachability.h */,
@@ -364,8 +356,6 @@
 				CEC1720F1743F12200C3F8E7 /* LessonReviewViewController.m */,
 				CEC1720C1743F12200C3F8E7 /* LessonFinishViewController.h */,
 				CEC1720D1743F12200C3F8E7 /* LessonFinishViewController.m */,
-				3AF554231741BB07001CF36F /* ParseTestViewController.h */,
-				3AF554241741BB07001CF36F /* ParseTestViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -510,8 +500,6 @@
 				3AEEA7D017301B2B00C5FEB0 /* main.m in Sources */,
 				3AEEA7D417301B2B00C5FEB0 /* AppDelegate.m in Sources */,
 				3AEEA7E017301B2B00C5FEB0 /* XProjectModel.xcdatamodeld in Sources */,
-				3AF554261741BB07001CF36F /* ParseTestViewController.m in Sources */,
-				3AF5542A1741BB59001CF36F /* ParseUtilities.m in Sources */,
 				3A8BD9FD17428BB9009C56DC /* DTO.m in Sources */,
 				CEC172131743F12200C3F8E7 /* CoursesCell.m in Sources */,
 				CEC172141743F12200C3F8E7 /* CoursesHeader.m in Sources */,

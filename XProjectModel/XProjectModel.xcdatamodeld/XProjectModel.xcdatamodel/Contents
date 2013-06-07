@@ -60,7 +60,7 @@
     <elements>
         <element name="Curso" positionX="-7751" positionY="-2286" width="128" height="135"/>
         <element name="CursoAvance" positionX="-7920" positionY="-2331" width="128" height="180"/>
-        <element name="Oracion" positionX="-7580" positionY="-2079" width="128" height="120"/>
+        <element name="Oracion" positionX="-7580" positionY="-2169" width="128" height="120"/>
         <element name="Palabra" positionX="-7758" positionY="-2109" width="128" height="165"/>
         <element name="PalabraAvance" positionX="-7920" positionY="-2109" width="128" height="180"/>
         <element name="Usuario" positionX="-8129" positionY="-2127" width="128" height="120"/>

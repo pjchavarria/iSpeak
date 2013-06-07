@@ -6,6 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
+#import "DTO.h"
 #import "CursoAvance.h"
 #import "PalabraAvance.h"
 #import "Oracion.h"
@@ -47,11 +49,11 @@ extern NSString * const kUsuarioClass;
 - (void)insertPalabraAvance:(PalabraAvanceDTO*)data;
 - (void)insertCursoAvance:(CursoAvanceDTO*)data;
 
-- (void)updateCurso:(CursoDTO*)data;
-- (void)updateOracion:(OracionDTO*)data;
-- (void)updatePalabra:(PalabraDTO*)data;
-- (void)updatePalabraAvance:(PalabraAvanceDTO*)data;
-- (void)updateCursoAvance:(CursoAvanceDTO*)data;
+- (void)updateCurso:(Curso*)curso withData:(CursoDTO*)data ;
+- (void)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data;
+- (void)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data;
+- (void)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data;
+- (void)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data;
 
 
 - (id)getObjectForClass:(NSString *)className predicate:(NSPredicate *)predicate;

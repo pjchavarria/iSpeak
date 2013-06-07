@@ -63,7 +63,7 @@
 	if (![object isEqualToString:@"ninguno"]) {
 		// skip login and show dashboard
         [coreDataController setUsuarioActivo:[coreDataController getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",object]]];
-		[self goToDashboard:nil];        
+		[self goToDashboard:nil skipCheck:YES];
 		//[self performSelector:@selector(goToDashboard:) withObject:nil afterDelay:0.1];
 	}
 }
@@ -165,7 +165,7 @@
         }
     }];
 }
-- (void)goToDashboard:(UsuarioDTO *)usuario{
+- (void)goToDashboard:(UsuarioDTO *)usuario skipCheck:(BOOL)skip{
 	
 	NetworkStatus netStatus = [self currentNetworkStatus];
 	
@@ -173,16 +173,22 @@
 		NSLog(@"No internet conection");
 		[self performSegueWithIdentifier:@"login" sender:nil];
 	}else{
-		if (usuario) {
-			[[SyncEngine sharedEngine] syncUser:usuario];
-		}
-		
-		[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
+		if (!skip) {
+			if (usuario) {
+				[[SyncEngine sharedEngine] syncUser:usuario];
+			}
+			
+			[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
+				[self.view endEditing:YES];
+				subio = NO;
+				[self performSegueWithIdentifier:@"login" sender:nil];
+				
+			}];
+		}else {
 			[self.view endEditing:YES];
 			subio = NO;
 			[self performSegueWithIdentifier:@"login" sender:nil];
-			
-		}];
+		}
 	}
 }
 - (IBAction)loginButtonPressed:(id)sender {
@@ -193,12 +199,17 @@
 		NSLog(@"No internet conection");
 	}else{
 		//[selfgoToDashboard];
-		[UsuarioParse validateUsuario:self.txtUsername.text Password:self.txtPassword.text completion:^(UsuarioDTO *usuario) {
-			if (usuario) {
-                
-                subio = NO;
-				[self goToDashboard:usuario];
-			}else{
+		PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];
+		[query whereKey:@"username" equalTo:self.txtUsername.text];
+		[query whereKey:@"password" equalTo:self.txtPassword.text];
+		[query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+			
+			if (!error && array.count == 1) {
+				UsuarioDTO *user = array[0];
+				subio = NO;
+				[self goToDashboard:user skipCheck:NO];
+			} else {
+				NSLog(@"Error: %@ %@", error, [error userInfo]);
 				[self shakeView];
 			}
 		}];

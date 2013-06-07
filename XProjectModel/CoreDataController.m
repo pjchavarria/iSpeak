@@ -244,7 +244,7 @@ enum {
 	Palabra *palabra = [NSEntityDescription insertNewObjectForEntityForName:kPalabraClass inManagedObjectContext:self.backgroundManagedObjectContext];
 	PalabraDTO *palabraDTO = data;
 	
-	palabra.audio = palabraDTO.audio;
+	//palabra.audio = palabraDTO.audio;
 	palabra.objectId = palabraDTO.objectId;
 	palabra.palabra = palabraDTO.palabra;
 	palabra.tipoPalabra = palabraDTO.tipoPalabra;
@@ -289,61 +289,82 @@ enum {
 
 #pragma mark - Update Core Data
 
-- (void)updateCurso:(CursoDTO*)data
+- (void)updateCurso:(Curso*)curso withData:(CursoDTO*)data
 {
-    
+	CursoDTO *cursoDTO = data;
+	curso.cantidadPalabras = cursoDTO.cantidadPalabras;
+	curso.curso = cursoDTO.curso;
+	curso.nombre = cursoDTO.nombre;
+	curso.objectId = cursoDTO.objectId;
 }
-- (void)updateOracion:(OracionDTO*)data
+- (void)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data
+{
+	OracionDTO *oracionDTO = data;
+	oracion.objectId = oracionDTO.objectId;
+	oracion.audio = oracionDTO.audio;
+	oracion.oracion = oracionDTO.oracion;
+	oracion.traduccion = oracionDTO.traduccion;
+}
+- (void)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data
+{
+	PalabraDTO *palabraDTO = data;
+	palabra.audio = palabraDTO.audio;
+	palabra.objectId = palabraDTO.objectId;
+	palabra.palabra = palabraDTO.palabra;
+	palabra.tipoPalabra = palabraDTO.tipoPalabra;
+	palabra.traduccion = palabraDTO.traduccion;
+}
+- (void)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data
 {
 	
 }
-- (void)updatePalabra:(PalabraDTO*)data
+- (void)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data
 {
 	
 }
 - (void)updatePalabraAvance:(PalabraAvanceDTO*)data
 {
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kPalabraAvanceClass];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
-    [fetchRequest setPredicate:predicate];
-	[fetchRequest setFetchLimit:1];
-    NSError *error = nil;
-    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if(results.count > 0)
-    {
-        PalabraAvance *palabraAvance = [results objectAtIndex:0];
-        palabraAvance.avance = data.avance;
-        palabraAvance.estado = data.estado;
-        palabraAvance.prioridad = data.prioridad;
-        palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-        palabraAvance.ultimaFechaRepaso = data.ultimaFechaRepaso;
-        palabraAvance.ultimaSincronizacion = [NSDate date];
-        
-        [self saveBackgroundContext];
-    }
+//    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kPalabraAvanceClass];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
+//    [fetchRequest setPredicate:predicate];
+//	[fetchRequest setFetchLimit:1];
+//    NSError *error = nil;
+//    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    
+//    if(results.count > 0)
+//    {
+//        PalabraAvance *palabraAvance = [results objectAtIndex:0];
+//        palabraAvance.avance = data.avance;
+//        palabraAvance.estado = data.estado;
+//        palabraAvance.prioridad = data.prioridad;
+//        palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+//        palabraAvance.ultimaFechaRepaso = data.ultimaFechaRepaso;
+//        palabraAvance.ultimaSincronizacion = [NSDate date];
+//        
+//        [self saveBackgroundContext];
+//    }
 }
 - (void)updateCursoAvance:(CursoAvanceDTO*)data
 {
-	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kCursoAvanceClass];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
-    [fetchRequest setPredicate:predicate];
-	[fetchRequest setFetchLimit:1];
-    NSError *error = nil;
-    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if(results.count > 0)
-    {
-        CursoAvance *cursoAvance = [results objectAtIndex:0];
-        cursoAvance.avance = data.avance;
-        cursoAvance.palabrasComenzadas = data.palabrasComenzadas;
-        cursoAvance.palabrasCompletas = data.palabrasCompletas;
-        cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-        cursoAvance.tiempoEstudiado = data.tiempoEstudiado;
-        cursoAvance.ultimaSincronizacion = [NSDate date];
-        
-        [self saveBackgroundContext];
-    }
+//	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kCursoAvanceClass];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",data.objectId];
+//    [fetchRequest setPredicate:predicate];
+//	[fetchRequest setFetchLimit:1];
+//    NSError *error = nil;
+//    NSArray *results = [self.backgroundManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    
+//    if(results.count > 0)
+//    {
+//        CursoAvance *cursoAvance = [results objectAtIndex:0];
+//        cursoAvance.avance = data.avance;
+//        cursoAvance.palabrasComenzadas = data.palabrasComenzadas;
+//        cursoAvance.palabrasCompletas = data.palabrasCompletas;
+//        cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+//        cursoAvance.tiempoEstudiado = data.tiempoEstudiado;
+//        cursoAvance.ultimaSincronizacion = [NSDate date];
+//        
+//        [self saveBackgroundContext];
+//    }
 }
 
 

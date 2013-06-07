@@ -49,7 +49,7 @@
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	self.managedObjectContext = [coreDataController backgroundManagedObjectContext];
 	
-	courses = [coreDataController managedObjectsForClass:@"Curso" sortKey:@"nombre" ascending:YES];
+	courses = [coreDataController managedObjectsForClass:@"Curso" sortKey:@"curso" ascending:YES];
 	[self.tableViewCursos reloadData];
 
 }
@@ -81,16 +81,6 @@
         Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
         lvc.curso = curso;
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];
-        NSLog(@"%@ %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId);
-        NSArray *cursoAvances = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
-        CursoAvance *cursoA;
-        if(cursoAvances.count > 0)
-            cursoA = [cursoAvances objectAtIndex:0];
-        if([cursoA.avance integerValue] == 0)
-            [[SyncEngine sharedEngine] iniciarCurso:curso completion:nil];
-        else
-            [[SyncEngine sharedEngine] iniciarRepaso:curso];
     }
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -105,7 +95,25 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+	Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];
+	NSLog(@"%@ %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId);
+	NSArray *cursoAvances = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
+	CursoAvance *cursoA;
+	if(cursoAvances.count > 0)
+		cursoA = [cursoAvances lastObject];
+	
+	if([cursoA.avance integerValue] == 0)
+		[[SyncEngine sharedEngine] iniciarCurso:curso completion:^{
+			cursoA.avance = [NSNumber numberWithDouble:0.001];
+			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+		}];
+	else
+		[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
+			nil;
+		}];
+	
+    
 }
 
 - (IBAction)logoutPressed:(id)sender {

@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "ParseTestViewController.h" 
 #import <Parse/Parse.h>
 #import "CoreDataController.h"
+#import "DTO.h"
 
 @implementation AppDelegate
 
@@ -18,13 +18,18 @@
 {
     // Override point for customization after application launch.
   
+	[UsuarioDTO registerSubclass];
+	[OracionDTO registerSubclass];
+	[PalabraDTO registerSubclass];
+	[PalabraAvanceDTO registerSubclass];
+	[CursoDTO registerSubclass];
+	[CursoAvanceDTO registerSubclass];
+	
     [Parse setApplicationId:@"cKWn6emVAVVNimsfsIoAbcRYlW4tYCyHX5vbc1MU"
                   clientKey:@"V5KIY5m4nG6VvtYGO8opJ9HY69ugOAjWS0BwEetL"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    
-    
-    
+
     return YES;
 }
 							

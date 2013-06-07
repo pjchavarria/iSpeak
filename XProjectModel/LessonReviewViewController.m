@@ -8,6 +8,7 @@
 
 #import "LessonReviewViewController.h"
 #import "PalabraAvance.h"
+#import "Palabra.h"
 
 @interface LessonReviewViewController ()
 // First excercise

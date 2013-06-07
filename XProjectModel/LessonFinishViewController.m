@@ -42,12 +42,16 @@
 }
 
 - (IBAction)finishLessonPressed:(id)sender {
-    [[SyncEngine sharedEngine] finalizarLeccion:self.curso];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
+		
+		[self dismissViewControllerAnimated:YES completion:nil];
+	}];
 }
 
 - (IBAction)goToCourseViewPressed:(id)sender {
-    [[SyncEngine sharedEngine] finalizarLeccion:self.curso];    
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
+		
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}];
 }
 @end

@@ -7,25 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
-@class Usuario,Curso,Palabra;
+@class Usuario,Curso,Palabra,UsuarioDTO;
 @interface SyncEngine : NSObject
 
 + (SyncEngine *)sharedEngine;
-- (void)syncUser:(UsuarioDTO*)data;
-- (void)createCursoAvance:(Usuario *)usuario Curso:(Curso *)curso;
-- (void)createPalabraAvance:(Usuario *)usuario Palabra:(Palabra *)palabra;
+- (void)syncUser:(UsuarioDTO *)data;
 
-- (void)syncCursos:(void(^)())handler;
-- (void)syncCursoAvanceConUsuario:(Usuario *)usuario Curso:(Curso *)curso completion:(void(^)())handler;
-- (void)syncPalabras:(Curso*)curso completion:(void(^)())handler;
-- (void)syncOraciones:(Palabra*)palabra completion:(void(^)())handler;
-- (void)syncPalabraAvanceConUsuario:(Usuario *)usuario Palabra:(Palabra*)palabra completion:(void(^)())handler;
+- (void)syncCursoAvanceConUsuario:(Usuario *)usuario curso:(Curso *)curso completion:(void(^)())handler;
+- (void)syncPalabraAvanceConUsuario:(Usuario *)usuario palabra:(Palabra*)palabra completion:(void(^)())handler;
 
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler;
 - (void)iniciarCurso:(Curso *)curso completion:(void(^)())handler;
-- (void)iniciarRepaso:(Curso *)curso;
-- (void)finalizarLeccion:(Curso *)curso;
-- (void)elInternetRegreso;
+- (void)iniciarRepaso:(Curso *)curso completion:(void(^)())handler;
+- (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler;
+- (void)elInternetRegresoCompletion:(void(^)())handler;
 
 
 @end
