@@ -75,6 +75,7 @@
 @dynamic usuarioId;
 @dynamic cursoId;
 @dynamic ultimaSincronizacion;
+@dynamic curso;
 + (NSString *)parseClassName{
 	return @"CursoAvance";
 }
@@ -93,7 +94,6 @@
 @dynamic usuarioId;
 @dynamic palabraId;
 @dynamic ultimaSincronizacion;
-@dynamic palabraCoreData;
 + (NSString *)parseClassName{
 	return @"PalabraAvance";
 }

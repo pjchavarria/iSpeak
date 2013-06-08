@@ -40,7 +40,7 @@ enum {
     cursoAvance.ultimaSincronizacion = [NSDate date];
     cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
     cursoAvance.cursoId = curso.objectId;
-	
+	cursoAvance.curso = [PFObject objectWithoutDataWithClassName:kCursoClass objectId:curso.objectId];
 	return cursoAvance;
 }
 - (PalabraAvanceDTO *)createPalabraAvance:(Usuario *)usuario palabra:(Palabra *)palabra
@@ -54,7 +54,6 @@ enum {
     palabraAvance.ultimaSincronizacion = [NSDate date];
     palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
     palabraAvance.palabraId = palabra.objectId;
-    palabraAvance.palabraCoreData = palabra;
 	
 	return palabraAvance;
 }
@@ -406,7 +405,10 @@ enum {
 						  if ([object isKindOfClass:[CursoAvanceDTO class]]) {
 							  [coredataController insertCursoAvance:object curso:curso];
 						  }else if ([object isKindOfClass:[PalabraAvanceDTO class]]){
-							  [coredataController insertPalabraAvance:object palabra:((PalabraAvanceDTO*)object).palabraCoreData];
+                              PalabraAvanceDTO *palabraAvanceDTO = object;
+                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabraId];
+                              Palabra *palabra = [[CoreDataController sharedInstance] getObjectForClass:kPalabraClass predicate:predicate];
+							  [coredataController insertPalabraAvance:object palabra:palabra];
 						  }
 						  
 					  }
@@ -423,20 +425,25 @@ enum {
 {
 	// Descargar/Actualizar palabras y oraciones del curso
 	// Actualizar avances de palabras
-
+//    [self masterMasterSyncForClass:kPalabraAvanceClass columnName:@"palabra" objectId:curso.objectId block:^{
+//        handler();
+//    }];
 }
 - (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler
 {
 	// Actualizar avance del curso y avance de las palabras del curso
-//    [self syncCursoAvanceConUsuario:[[CoreDataController sharedInstance] usuarioActivo] Curso:curso completion:^{
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@",curso.objectId];
-//        NSArray *storedPalabras = [[CoreDataController sharedInstance] managedObjectsForClass:kPalabraClass predicate:predicate];
-//        for(Palabra *palabra in storedPalabras){
-//            [self syncPalabraAvanceConUsuario:[[CoreDataController sharedInstance] usuarioActivo] Palabra:palabra completion:^{
-//                
-//            }];
-//        }
-//    }];
+    [self masterMasterSyncForClass:kCursoAvanceClass
+                        columnName:@"curso"
+                          objectId:curso.objectId
+                             block:^{
+        [self masterMasterSyncForClass:kPalabraAvanceClass
+                            columnName:@"palabra"
+                              objectId:curso.objectId
+                                 block:^{
+            handler();
+        }];
+    }];
+    
 }
 - (void)elInternetRegresoCompletion:(void(^)())handler
 {

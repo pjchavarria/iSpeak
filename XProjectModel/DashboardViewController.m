@@ -105,7 +105,6 @@
 	
 	if(!cursoA)
 		[[SyncEngine sharedEngine] iniciarCurso:curso completion:^{
-			cursoA.avance = [NSNumber numberWithDouble:0.001];
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
 	else

@@ -47,7 +47,6 @@
 @property ( retain) NSString *usuarioId;
 @property ( retain) NSString *palabraId;
 @property ( retain) NSDate *ultimaSincronizacion;
-@property ( strong, nonatomic) Palabra * palabraCoreData;
 + (NSString *)parseClassName;
 @end
 
@@ -69,6 +68,8 @@
 @property ( retain) NSString *usuarioId;
 @property ( retain) NSString *cursoId;
 @property ( retain) NSDate *ultimaSincronizacion;
+@property ( retain) PFObject *curso;
+
 + (NSString *)parseClassName;
 @end
 
