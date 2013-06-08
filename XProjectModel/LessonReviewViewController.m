@@ -92,44 +92,84 @@
     
     switch (random) {
         case 1:
+        {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            PalabraAvance *pa = [self getPalabraRandom:array];
             [self.palabraRespuesta1Button setTitle:palabra.palabra.traduccion forState:UIControlStateNormal];
-            [self.palabraRespuesta2Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta3Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta4Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
+            [array addObject:palabra];            
+            [self.palabraRespuesta2Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta3Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta4Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
             break;
+        }
         case 2:
+        {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            PalabraAvance *pa = [self getPalabraRandom:array];
             [self.palabraRespuesta2Button setTitle:palabra.palabra.traduccion forState:UIControlStateNormal];
-            [self.palabraRespuesta1Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta3Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta4Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
+            [array addObject:palabra];
+            [self.palabraRespuesta1Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta3Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta4Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
             break;
+        }
         case 3:
+        {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            PalabraAvance *pa = [self getPalabraRandom:array];
             [self.palabraRespuesta3Button setTitle:palabra.palabra.traduccion forState:UIControlStateNormal];
-            [self.palabraRespuesta2Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta1Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta4Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
+            [array addObject:palabra];
+            [self.palabraRespuesta2Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta1Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta4Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
             break;
+        }
         case 4:
+        {
+            NSMutableArray *array = [[NSMutableArray alloc] init];
+            PalabraAvance *pa = [self getPalabraRandom:array];
             [self.palabraRespuesta4Button setTitle:palabra.palabra.traduccion forState:UIControlStateNormal];
-            [self.palabraRespuesta2Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta3Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
-            [self.palabraRespuesta1Button setTitle:[self getPalabraRandom:palabra.palabra] forState:UIControlStateNormal];
+            [array addObject:palabra];
+            [self.palabraRespuesta2Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta3Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
+            [array addObject:pa];
+            pa = [self getPalabraRandom:array];
+            [self.palabraRespuesta1Button setTitle:pa.palabra.traduccion forState:UIControlStateNormal];
             break;
+        }
             
         default:
             break;
     }
 }
 
--(NSString *)getPalabraRandom:(Palabra*)palabra
+-(void)setLesson3WithWord:(PalabraAvance *)palabra
+{
+}
+
+-(PalabraAvance *)getPalabraRandom:(NSMutableArray *)palabra
 {
     int index = arc4random()%self.palabras.count;
     PalabraAvance *pa  = [self.palabras objectAtIndex:index];
-    while (pa.palabra.palabra == palabra.palabra) {
+    while ([palabra containsObject:pa]) {
         index = arc4random()%self.palabras.count;
         pa  = [self.palabras objectAtIndex:index];
     }
-    return pa.palabra.traduccion;
+    return pa;
 }
 
 - (IBAction)nextButton:(id)sender {
@@ -160,10 +200,16 @@
         [self setLesson1WithWord:pa];
         contador++;
     }
-    else
+    else if(contador > 10 && contador < 20)
     {
         [self hideLessons];
         [self setLesson1WithWord:[self.palabras objectAtIndex:contador]];
+        contador++;
+    }
+    else
+    {
+        [self hideLessons];
+        [self setLesson3WithWord:[self.palabras objectAtIndex:contador]];
         contador++;
     }
 }
@@ -172,18 +218,38 @@
 }
 
 - (IBAction)palabraRespuesta1:(id)sender {
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta2:(id)sender {
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta3:(id)sender {
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta4:(id)sender {
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    [self checkRespuesta:asd];
     [self nextLesson];
+}
+-(void)checkRespuesta:(NSString *)rpta
+{
+    PalabraAvance *pa = [self.palabras objectAtIndex:contador];
+    if(rpta == pa.palabra.traduccion)
+    {
+        NSLog(@"bien");
+    }
+    else
+    {
+        NSLog(@"mal");        
+    }
 }
 @end
