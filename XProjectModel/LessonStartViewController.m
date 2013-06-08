@@ -84,12 +84,13 @@
         LessonReviewViewController *lrvc = segue.destinationViewController;
         // Filtrar las palabras a repasar considerando cuantas palabras nuevas/a-repasar
         NSMutableArray *palabrasEnLaLeccion = [NSMutableArray array];
-        
+        int index;
         // 1ro si hay palabras nuevas comenzarlas
         if (self.palabrasNuevas.count) {
             NSRange theRange;
             theRange.location = 0;
             theRange.length = (self.palabrasNuevas.count>2)?3:self.palabrasNuevas.count;
+            index = theRange.length;
             [palabrasEnLaLeccion addObjectsFromArray:[self.palabrasNuevas subarrayWithRange:theRange]];
         }
         // 2do completar con todas las demas palabras q faltan ordenadas en orden de prioridad
@@ -104,6 +105,19 @@
             theRange.length = (prioritySorted.count>=palabrasEnLaLeccionLeft)?palabrasEnLaLeccionLeft:prioritySorted.count;
             
             [palabrasEnLaLeccion addObjectsFromArray:[self.palabrasEnProgreso subarrayWithRange:theRange]];
+        }
+        
+        palabrasEnLaLeccionCount = palabrasEnLaLeccion.count;
+        if(palabrasEnLaLeccionCount < 10)
+        {
+        // 3ro se rellena con palabras nuevas
+        if (self.palabrasNuevas.count) {
+            int palabrasEnLaLeccionLeft = 10 - palabrasEnLaLeccionCount;
+            NSRange theRange;
+            theRange.location = index;
+            theRange.length = (self.palabrasNuevas.count>=palabrasEnLaLeccionLeft + index)?palabrasEnLaLeccionLeft:self.palabrasNuevas.count-index;
+            [palabrasEnLaLeccion addObjectsFromArray:[self.palabrasNuevas subarrayWithRange:theRange]];
+        }
         }
         
         lrvc.palabras = palabrasEnLaLeccion;
