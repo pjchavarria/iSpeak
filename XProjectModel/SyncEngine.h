@@ -13,9 +13,6 @@
 + (SyncEngine *)sharedEngine;
 - (void)syncUser:(UsuarioDTO *)data;
 
-- (void)syncCursoAvanceConUsuario:(Usuario *)usuario curso:(Curso *)curso completion:(void(^)())handler;
-- (void)syncPalabraAvanceConUsuario:(Usuario *)usuario palabra:(Palabra*)palabra completion:(void(^)())handler;
-
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler;
 - (void)iniciarCurso:(Curso *)curso completion:(void(^)())handler;
 - (void)iniciarRepaso:(Curso *)curso completion:(void(^)())handler;

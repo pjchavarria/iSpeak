@@ -263,7 +263,7 @@ enum {
 	palabraAvance.prioridad = palabraAvanceDTO.prioridad;
 	palabraAvance.sincronizado = palabraAvanceDTO.sincronizado;
 	palabraAvance.ultimaFechaRepaso = palabraAvanceDTO.ultimaFechaRepaso;
-	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.ultimaSincronizacion;
+	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.updatedAt;
 	
 	// Relaciones
 	palabraAvance.usuario = self.usuarioActivo;
@@ -324,7 +324,7 @@ enum {
 	palabraAvance.prioridad = palabraAvanceDTO.prioridad;
 	palabraAvance.sincronizado = palabraAvanceDTO.sincronizado;
 	palabraAvance.ultimaFechaRepaso = palabraAvanceDTO.ultimaFechaRepaso;
-	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.ultimaSincronizacion;
+	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.updatedAt;
 }
 - (void)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data
 {

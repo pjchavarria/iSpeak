@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392396189.237077"
+         timestampString = "392402993.427561"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "352"
-         endingLineNumber = "352"
-         landmarkName = "-syncPalabraAvanceConUsuario:palabra:completion:"
+         startingLineNumber = "294"
+         endingLineNumber = "294"
+         landmarkName = "-syncUser:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -21,18 +21,44 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392396189.237077"
+         timestampString = "392402550.242752"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "149"
-         endingLineNumber = "149"
+         startingLineNumber = "155"
+         endingLineNumber = "155"
          landmarkName = "-masterMasterSyncForClass:columnName:objectId:block:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "XProjectModel/SyncEngine.m"
+         timestampString = "392402993.427561"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "318"
+         endingLineNumber = "318"
+         landmarkName = "-iniciarCurso:completion:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "XProjectModel/SyncEngine.m"
+         timestampString = "392402993.427561"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "342"
+         endingLineNumber = "342"
+         landmarkName = "-iniciarCurso:completion:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <ExceptionBreakpoints>
       <ExceptionBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          scope = "0"

@@ -44,9 +44,8 @@
 @property ( retain) NSNumber * prioridad;
 @property ( retain) NSDate * ultimaFechaRepaso;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) NSString *usuarioId;
-@property ( retain) NSString *palabraId;
-@property ( retain) NSDate *ultimaSincronizacion;
+@property ( retain) Palabra *palabra;
+@property ( retain) UsuarioDTO *usuario;
 + (NSString *)parseClassName;
 @end
 
@@ -65,10 +64,9 @@
 @property ( retain) NSNumber * palabrasCompletas;
 @property ( retain) NSNumber * tiempoEstudiado;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) NSString *usuarioId;
-@property ( retain) NSString *cursoId;
 @property ( retain) NSDate *ultimaSincronizacion;
-@property ( retain) PFObject *curso;
+@property ( retain) CursoDTO *curso;
+@property ( retain) UsuarioDTO *usuario;
 
 + (NSString *)parseClassName;
 @end

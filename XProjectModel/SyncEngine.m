@@ -32,28 +32,27 @@ enum {
 - (CursoAvanceDTO *)createCursoAvance:(Usuario *)usuario curso:(Curso *)curso
 {
 	CursoAvanceDTO *cursoAvance = [CursoAvanceDTO object];
-    cursoAvance.usuarioId = usuario.objectId;
-    cursoAvance.avance = [NSNumber numberWithInt:0];
+    cursoAvance.usuario = [UsuarioDTO objectWithoutDataWithObjectId:usuario.objectId];    cursoAvance.avance = [NSNumber numberWithInt:0];
     cursoAvance.palabrasComenzadas = [NSNumber numberWithInt:0];
     cursoAvance.palabrasCompletas = [NSNumber numberWithInt:0];
     cursoAvance.tiempoEstudiado = [NSNumber numberWithInt:0];
     cursoAvance.ultimaSincronizacion = [NSDate date];
     cursoAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-    cursoAvance.cursoId = curso.objectId;
-	cursoAvance.curso = [PFObject objectWithoutDataWithClassName:kCursoClass objectId:curso.objectId];
+    
+	cursoAvance.curso = [CursoDTO objectWithoutDataWithObjectId:curso.objectId];
 	return cursoAvance;
 }
 - (PalabraAvanceDTO *)createPalabraAvance:(Usuario *)usuario palabra:(Palabra *)palabra
 {
 	PalabraAvanceDTO *palabraAvance = [PalabraAvanceDTO object];
-    palabraAvance.usuarioId = usuario.objectId;
+    palabraAvance.usuario = [CursoDTO objectWithoutDataWithObjectId:usuario.objectId];;
     palabraAvance.avance = [NSNumber numberWithInt:0];
     palabraAvance.estado = [NSNumber numberWithInt:0];
     palabraAvance.prioridad = [NSNumber numberWithInt:0];
     palabraAvance.ultimaFechaRepaso = [NSDate date];
-    palabraAvance.ultimaSincronizacion = [NSDate date];
+
     palabraAvance.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-    palabraAvance.palabraId = palabra.objectId;
+    palabraAvance.palabra = [PalabraDTO objectWithoutDataWithObjectId:palabra.objectId];
 	
 	return palabraAvance;
 }
@@ -62,6 +61,7 @@ enum {
 
 - (void)masterSubordinateSyncForClass:(NSString *)class columnName:(NSString *)key objectId:(NSString *)objectId block:(void(^)())handler
 {
+    
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	NSArray *storedRecords = [coreDataController managedObjectsForClass:class];
 	NSLog(@"Stored %@: %@",class,storedRecords);
@@ -71,6 +71,9 @@ enum {
 		[query whereKey:key equalTo:[PFObject objectWithoutDataWithClassName:kCursoClass objectId:objectId]];
 	}
     [query findObjectsInBackgroundWithBlock:^(NSArray *serverObjects, NSError *error) {
+        
+        int nCreatedLocal = 0;
+        int nUpdatedLocal = 0;
         
 		if (error) {
 			NSLog(@"%@",error);
@@ -100,7 +103,7 @@ enum {
 				}else if([foundObject isKindOfClass:[OracionDTO class]]){
 					[coreDataController updateOracion:storedRecords[i] withData:foundObject];
 				}
-								
+                nUpdatedLocal++;
 				[serverObjectsLeftToSync removeObject:foundObject];
 			
 			// CREATE
@@ -124,7 +127,7 @@ enum {
                     
 					[coreDataController insertOracion:foundObject palabra:palabra];
 				}
-				
+				nCreatedLocal++;
 				[serverObjectsLeftToSync removeLastObject];
 			}
 			
@@ -133,6 +136,7 @@ enum {
 		[coreDataController saveMasterContext];
 		NSArray *toredRecords = [coreDataController managedObjectsForClass:class];
 		NSLog(@"Result %@: %@",class,toredRecords);
+        NSLog(@"Summary %@: CLocal %d; ULocal %d;",class,nCreatedLocal,nUpdatedLocal);
 		handler();
     }];
 }
@@ -145,6 +149,8 @@ enum {
     // 4. si no, si gana servidor -> actualizar (resolver conflictos, tomar mayor porcentaje)
     // 5. si no, si gana local -> pushear
     // 6. Despues de todo eso, -> pushear nuevos creados localmente
+    
+    
     
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	NSArray *storedRecords = [coreDataController managedObjectsForClass:class];
@@ -168,6 +174,11 @@ enum {
         
 	}
     [query findObjectsInBackgroundWithBlock:^(NSArray *serverObjects, NSError *error) {
+        int nCreatedServer = 0;
+        int nUpdatedServer = 0;
+        int nCreatedLocal = 0;
+        int nUpdatedLocal = 0;
+        
 		if (error) {
 			NSLog(@"%@",error);
 			handler();
@@ -198,15 +209,18 @@ enum {
                     
                     if ([foundObject isKindOfClass:[CursoAvanceDTO class]]) {
                         [coreDataController updateCursoAvance:storedRecords[i] withData:foundObject];
+                        
                     }else if([foundObject isKindOfClass:[PalabraAvanceDTO class]]){
                         [coreDataController updatePalabraAvance:storedRecords[i] withData:foundObject];
+                        
                     }
-                    
+                    nUpdatedLocal++;
                     [serverObjectsLeftToSync removeObject:foundObject];
                     
                 // SI GANA LOCAL, pusheamos
                 }else{
                     [objectsToPush addObject:foundObject];
+                    nUpdatedServer++;
                 }
 				
                 
@@ -220,6 +234,7 @@ enum {
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",cursoDTO.objectId];
                     Curso *curso = [coreDataController getObjectForClass:kCursoClass predicate:predicate];
 					[coreDataController insertCursoAvance:foundObject curso:curso];
+                    
 				}else if([foundObject isKindOfClass:[PalabraAvanceDTO class]]){
                     PalabraAvanceDTO *cursoAvanceDTO = foundObject;
                     PalabraDTO *cursoDTO = (PalabraDTO *)[[cursoAvanceDTO objectForKey:@"palabra"] fetchIfNeeded];
@@ -227,7 +242,7 @@ enum {
                     Palabra *palabra = [coreDataController getObjectForClass:kPalabraClass predicate:predicate];
 					[coreDataController insertPalabraAvance:foundObject palabra:palabra];
 				}
-				
+				nCreatedLocal++;
 				[serverObjectsLeftToSync removeLastObject];
 			}
 			
@@ -238,6 +253,7 @@ enum {
         NSArray *locallyCreated = [coreDataController getObjectForClass:class predicate:predicate];
         
         for (id object in locallyCreated) {
+            nCreatedServer++;
             if ([object isKindOfClass:[CursoAvance class]]) {
                 
                 [objectsToPush addObject:[self createCursoAvance:coreDataController.usuarioActivo curso:object]];
@@ -246,12 +262,10 @@ enum {
                 [objectsToPush addObject:[self createPalabraAvance:coreDataController.usuarioActivo palabra:object]];
             }
         }
-        NSLog(@"%@",objectsToPush);
         [PFObject saveAllInBackground:objectsToPush block:^(BOOL succeeded, NSError *error) {
             if (!succeeded) {
                 NSLog(@"%@",error);
             }
-            NSLog(@"%@",objectsToPush);
         }];
         
         
@@ -259,6 +273,7 @@ enum {
 		[coreDataController saveMasterContext];
 		NSArray *toredRecords = [coreDataController managedObjectsForClass:class];
 		NSLog(@"Result %@: %@",class,toredRecords);
+        NSLog(@"Summary %@: CLocal %d; ULocal %d; CServ %d; UServ %d;",class,nCreatedLocal,nUpdatedLocal,nCreatedServer,nUpdatedServer);
 		handler();
     }];
 }
@@ -277,94 +292,17 @@ enum {
 	usuario = [coreDataController getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",data.objectId]];
 	coreDataController.usuarioActivo = usuario;
 }
-- (void)syncCursoAvance:(NSArray *)storedRecords
-{
-	
-		
-    for(CursoAvance *cursoAvance in storedRecords)
-    {
-        CursoAvanceDTO *cursoAvanceDTO = [CursoAvanceDTO object];
-        cursoAvanceDTO.avance = cursoAvance.avance;
-        cursoAvanceDTO.palabrasComenzadas = cursoAvance.palabrasComenzadas;
-        cursoAvanceDTO.cursoId = cursoAvance.curso.objectId;
-        cursoAvanceDTO.palabrasCompletas = cursoAvance.palabrasCompletas;
-        cursoAvanceDTO.tiempoEstudiado = cursoAvance.tiempoEstudiado;
-        cursoAvanceDTO.ultimaSincronizacion = [NSDate date];
-        cursoAvanceDTO.usuarioId = cursoAvance.usuario.objectId;
-        cursoAvanceDTO.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-		
-		[cursoAvanceDTO saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
-				[[CoreDataController sharedInstance] updateCursoAvance:cursoAvance withData:cursoAvanceDTO];
-			}
-		}];
-		
-    }
-}
-
-
-- (void)syncCursoAvanceConUsuario:(Usuario *)usuario curso:(Curso *)curso completion:(void(^)())handler
-{
-	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-	
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:kCursoAvanceClass];
-	NSLog(@"Stored kCursoAvanceClass: %@",storedRecords);
-	handler();
-
-}
-
-- (void)syncCursoAvanceConUsuario:(Usuario *)usuario completion:(void(^)())handler
-{
-	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-	
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:kCursoAvanceClass];
-	NSLog(@"Stored kCursoAvanceClass: %@",storedRecords);
-	handler();
-
-}
-
-- (void)syncPalabraAvance:(NSArray *)storedRecords
-{
-    for(PalabraAvance *palabraAvance in storedRecords)
-    {
-        PalabraAvanceDTO *palabraAvanceDTO = [PalabraAvanceDTO object];
-        palabraAvanceDTO.avance = palabraAvance.avance;
-        palabraAvanceDTO.estado = palabraAvance.estado;
-        palabraAvanceDTO.palabraId = palabraAvance.palabra.objectId;
-        palabraAvanceDTO.prioridad = palabraAvance.prioridad;
-        palabraAvanceDTO.ultimaFechaRepaso = palabraAvance.ultimaFechaRepaso;
-        palabraAvanceDTO.ultimaSincronizacion = [NSDate date];
-        palabraAvanceDTO.usuarioId = palabraAvance.usuario.objectId;
-        palabraAvanceDTO.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-		
-		[palabraAvanceDTO saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-			if (succeeded) {
-				[[CoreDataController sharedInstance] updatePalabraAvance:palabraAvance withData:palabraAvanceDTO];
-			}
-		}];
-        
-    }
-}
-- (void)syncPalabraAvanceConUsuario:(Usuario *)usuario palabra:(Palabra*)palabra completion:(void(^)())handler
-{
-	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-	
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:kPalabraAvanceClass];
-	NSLog(@"Stored kPalabraClass: %@",storedRecords);
-	
-
-}
-
 
 #pragma mark - SyncEngine Scenario Methods
 
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler
 {
+    NSLog( @"%@" , NSStringFromSelector(_cmd) );
 	// Descargar/Actualizar todos los cursos
 	// Descargar/Actualizar todos los avances de cursos
 	[self masterSubordinateSyncForClass:kCursoClass columnName:nil objectId:nil block:^{
 		
-		[self syncCursoAvanceConUsuario:usuario completion:^{
+		[self masterMasterSyncForClass:kCursoAvanceClass columnName:nil objectId:nil block:^{
 			
 			handler();
 			
@@ -387,7 +325,7 @@ enum {
 								   objectId:curso.objectId
 									  block:
 		 ^{
-			 // Creando curso/palabra avance
+			 // CREATE curso/palabra avance
              CoreDataController *coredataController = [CoreDataController sharedInstance];
 			  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@",curso.objectId];
 			  NSArray *storedPalabras = [coredataController managedObjectsForClass:kPalabraClass predicate:predicate];
@@ -397,16 +335,19 @@ enum {
 			  for (Palabra *palabra in storedPalabras) {
 				  [dataToSave addObject:[self createPalabraAvance:usuario palabra:palabra]];
 			  }
+             NSLog(@"Created %d avance d curso+palabra",dataToSave.count);
+             // PUSH
 			  [PFObject saveAllInBackground:dataToSave block:
 			   ^(BOOL succeeded, NSError *error){
 				  if (succeeded) {
+                      NSLog(@"PUSHED it!");
 					  for (id object in dataToSave) {
 						  ((CursoAvanceDTO*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoInsertado];
 						  if ([object isKindOfClass:[CursoAvanceDTO class]]) {
 							  [coredataController insertCursoAvance:object curso:curso];
 						  }else if ([object isKindOfClass:[PalabraAvanceDTO class]]){
                               PalabraAvanceDTO *palabraAvanceDTO = object;
-                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabraId];
+                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra.objectId];
                               Palabra *palabra = [[CoreDataController sharedInstance] getObjectForClass:kPalabraClass predicate:predicate];
 							  [coredataController insertPalabraAvance:object palabra:palabra];
 						  }
@@ -423,11 +364,12 @@ enum {
 }
 - (void)iniciarRepaso:(Curso *)curso completion:(void(^)())handler
 {
-	// Descargar/Actualizar palabras y oraciones del curso
+	// Descargar/Actualizar palabras y oraciones del curso ==FALTA
 	// Actualizar avances de palabras
-//    [self masterMasterSyncForClass:kPalabraAvanceClass columnName:@"palabra" objectId:curso.objectId block:^{
-//        handler();
-//    }];
+    
+    [self masterMasterSyncForClass:kPalabraAvanceClass columnName:@"palabra" objectId:curso.objectId block:^{
+        handler();
+    }];
 }
 - (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler
 {
@@ -448,15 +390,19 @@ enum {
 - (void)elInternetRegresoCompletion:(void(^)())handler
 {
 	// Actualizar avance de todos los cursos y avance de todas las palabras NO SINCRONIZADAS
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sincronizado not like %@",kSincronizacionEstadoSincronizado];
-    
-    
-    NSArray *storedPalabras = [[CoreDataController sharedInstance] managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
-    [self syncPalabraAvance:storedPalabras];
-    
-    
-    NSArray *storedCursos = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
-    [self syncCursoAvance:storedCursos];
+    [self masterMasterSyncForClass:kCursoAvanceClass
+                        columnName:nil
+                          objectId:nil
+                             block:
+     ^{
+         [self masterMasterSyncForClass:kPalabraAvanceClass
+                                                     columnName:nil
+                                                       objectId:nil
+                                                          block:
+          ^{
+              handler();
+          }];
+    }];
 }
 
 @end

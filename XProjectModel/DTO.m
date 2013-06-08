@@ -72,10 +72,9 @@
 @dynamic palabrasCompletas;
 @dynamic tiempoEstudiado;
 @dynamic sincronizado;
-@dynamic usuarioId;
-@dynamic cursoId;
 @dynamic ultimaSincronizacion;
 @dynamic curso;
+@dynamic usuario;
 + (NSString *)parseClassName{
 	return @"CursoAvance";
 }
@@ -91,9 +90,8 @@
 @dynamic prioridad;
 @dynamic ultimaFechaRepaso;
 @dynamic sincronizado;
-@dynamic usuarioId;
-@dynamic palabraId;
-@dynamic ultimaSincronizacion;
+@dynamic usuario;
+@dynamic palabra;
 + (NSString *)parseClassName{
 	return @"PalabraAvance";
 }
