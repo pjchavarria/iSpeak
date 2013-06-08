@@ -426,7 +426,7 @@ enum {
 	// Descargar/Actualizar palabras y oraciones del curso
 	// Actualizar avances de palabras
 //    [self masterMasterSyncForClass:kPalabraAvanceClass columnName:@"palabra" objectId:curso.objectId block:^{
-//        handler();
+        handler();
 //    }];
 }
 - (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler
