@@ -127,18 +127,29 @@ enum {
 - (void)masterMasterSyncForClass:(NSString *)class columnName:(NSString *)key objectId:(NSString *)objectId block:(void(^)())handler
 {
     // Ok so, this is the plan
-    // 1. Download created files that are not in the local db (
-    // 2. Push created files locally
-    // 3. Update&Merge updated files (solve conflicts)
+    // 1. Download todos los objetos actualizados despues de la ultima fecha de sync
+    // 2. Recorremos los objetos
+    // 3. Si es nuevo insertar
+    // 4. si no, si gana servidor -> actualizar (resolver conflictos, tomar mayor porcentaje)
+    // 5. si no, si gana local -> pushear
+    // 6. Despues de todo eso, -> pushear nuevos creados localmente
     
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:class];
+	NSArray *storedRecords = [coreDataController managedObjectsForClass:class sortKey:@"lastUpdated" ascending:YES];
 	NSLog(@"Stored %@: %@",class,storedRecords);
     
-    NSDate *lastUpdatedDate = [self mostRecentUpdatedAtDateForEntityWithName:class];
-	
-	PFQuery *query = [PFQuery queryWithClassName:class];
+    NSDate *lastUpdatedDate = ((CursoAvanceDTO*)storedRecords.lastObject).updatedAt;
+
+    // Obtener todos los objetos que hallan sido actualizados despues de la ultima fecha de actualizacion
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"updatedAt > %@",lastUpdatedDate];
+    NSLog(@"%@",lastUpdatedDate);
+    PFQuery *query = [PFQuery queryWithClassName:class predicate:predicate];
+    
 	if (key && objectId) {
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            NSLog(@"sadfa %@",objects);
+            
+        }];
 		[query whereKey:key equalTo:[PFObject objectWithoutDataWithClassName:kCursoClass objectId:objectId]];
         
 	}
@@ -148,6 +159,7 @@ enum {
 			handler();
 		}
         NSLog(@"Parse %@: %@",class,fetchedObjects);
+        NSMutableArray *objectsToPush = [[NSMutableArray alloc] init];
 		NSMutableArray *fetchedObjectsLeftToSync = fetchedObjects.mutableCopy;
         NSMutableArray *fetchedObjectsIDs = [[NSMutableArray alloc] init];
         for (PFObject *object in fetchedObjects){
@@ -163,32 +175,43 @@ enum {
 				NSString *idObject = [storedManagedObject valueForKey:@"objectId"];
 				id foundObject = [fetchedObjects objectAtIndex:[fetchedObjectsIDs indexOfObject:idObject]];
 				
-				if ([foundObject isKindOfClass:[CursoDTO class]]) {
-					[coreDataController updateCurso:storedRecords[i] withData:foundObject];
-				}else if([foundObject isKindOfClass:[PalabraDTO class]]){
-					[coreDataController updatePalabra:storedRecords[i] withData:foundObject];
-				}else if([foundObject isKindOfClass:[OracionDTO class]]){
-					[coreDataController updateOracion:storedRecords[i] withData:foundObject];
-				}
+                int avanceServidor = ((CursoAvance *)storedRecords[i]).avance.intValue;
+                int avanceLocal = ((CursoAvanceDTO *)foundObject).avance.intValue;
                 
-				[fetchedObjectsLeftToSync removeObject:foundObject];
+                // SI GANA SERVIDOR, guardamos
+                if (avanceServidor>=avanceLocal) {
+                    ((CursoAvanceDTO *)foundObject).avance = [NSNumber numberWithInt:avanceServidor];
+                    
+                    if ([foundObject isKindOfClass:[CursoAvanceDTO class]]) {
+                        [coreDataController updateCursoAvance:storedRecords[i] withData:foundObject];
+                    }else if([foundObject isKindOfClass:[PalabraAvanceDTO class]]){
+                        [coreDataController updatePalabraAvance:storedRecords[i] withData:foundObject];
+                    }
+                    
+                    [fetchedObjectsLeftToSync removeObject:foundObject];
+                    
+                // SI GANA LOCAL, pusheamos
+                }else{
+                    [objectsToPush addObject:foundObject];
+                }
+				
                 
                 // CREATE
 			}else if(!storedManagedObject){
 				id foundObject = fetchedObjectsLeftToSync.lastObject;
 				
-				if ([foundObject isKindOfClass:[CursoDTO class]]) {
-					[coreDataController insertCurso:foundObject];
-				}else if([foundObject isKindOfClass:[PalabraDTO class]]){
-					[coreDataController insertPalabra:foundObject];
-				}else if([foundObject isKindOfClass:[OracionDTO class]]){
-					[coreDataController insertOracion:foundObject];
+				if ([foundObject isKindOfClass:[CursoAvanceDTO class]]) {
+					[coreDataController insertCursoAvance:foundObject];
+				}else if([foundObject isKindOfClass:[PalabraAvanceDTO class]]){
+					[coreDataController insertPalabraAvance:foundObject];
 				}
 				
 				[fetchedObjectsLeftToSync removeLastObject];
 			}
 			
 		}
+        
+        
 		[coreDataController saveBackgroundContext];
 		[coreDataController saveMasterContext];
 		NSArray *toredRecords = [coreDataController managedObjectsForClass:class];
@@ -283,7 +306,7 @@ enum {
 {
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:kPalabraClass];
+	NSArray *storedRecords = [coreDataController managedObjectsForClass:kPalabraAvanceClass];
 	NSLog(@"Stored kPalabraClass: %@",storedRecords);
 	
 
@@ -382,22 +405,4 @@ enum {
     [self syncCursoAvance:storedCursos];
 }
 
-#pragma mark - SyncEngine Utility Methods
-
-- (NSDate *)mostRecentUpdatedAtDateForEntityWithName:(NSString *)entityName {
-    __block NSDate *date = nil;
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
-    [request setSortDescriptors:[NSArray arrayWithObject:
-                                 [NSSortDescriptor sortDescriptorWithKey:@"ultimaSincronizacion" ascending:NO]]];
-    [request setFetchLimit:1];
-    [[[CoreDataController sharedInstance] backgroundManagedObjectContext] performBlockAndWait:^{
-        NSError *error = nil;
-        NSArray *results = [[[CoreDataController sharedInstance] backgroundManagedObjectContext] executeFetchRequest:request error:&error];
-        if ([results lastObject])   {
-            date = [[results lastObject] valueForKey:@"updatedAt"];
-        }
-    }];
-    
-    return date;
-}
 @end

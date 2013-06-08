@@ -28,9 +28,27 @@
     [Parse setApplicationId:@"cKWn6emVAVVNimsfsIoAbcRYlW4tYCyHX5vbc1MU"
                   clientKey:@"V5KIY5m4nG6VvtYGO8opJ9HY69ugOAjWS0BwEetL"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
- 
-	
     
+//    // JALANDO SOLO UPDATED DESPUES DE FECHA
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"updatedAt < %@",[NSDate dateWithTimeIntervalSinceNow:-2*24*60*60]];
+//    NSLog(@"%@",[NSDate dateWithTimeIntervalSinceNow:-2*24*60*60]);
+//    PFQuery *query = [PFQuery queryWithClassName:kCursoClass predicate:predicate];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        NSLog(@"sadfa %@",objects);
+//        
+//    }];
+    
+//    //  JALANDO AUDIO
+//    PFQuery *query = [PFQuery queryWithClassName:kPalabraClass];  
+//    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        NSLog(@"%@",objects);
+//        PalabraDTO *obj = objects[0];
+//        PFFile *audiox = (PFFile*)obj.audio;
+//        [audiox getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+//            NSLog(@"%@",data);
+//        }];
+//    }];
+
     return YES;
 }
 							
