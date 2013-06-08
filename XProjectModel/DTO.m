@@ -15,7 +15,6 @@
 @implementation UsuarioDTO
 @dynamic password;
 @dynamic username;
-@dynamic objectId;
 + (NSString *)parseClassName{
 	return @"Usuario";
 }
@@ -26,8 +25,6 @@
  @dynamic audio;
  @dynamic oracion;
  @dynamic traduccion;
- @dynamic objectId;
- @dynamic palabra;
 + (NSString *)parseClassName{
 	return @"Oracion";
 }
@@ -43,8 +40,6 @@
 @dynamic palabra;
 @dynamic traduccion;
 @dynamic tipoPalabra;
-@dynamic objectId;
-@dynamic curso;
 @dynamic oraciones;
 + (NSString *)parseClassName{
 	return @"Palabra";
@@ -55,27 +50,12 @@
 }
 @end
 
-@implementation PalabraAvanceDTO
-@dynamic avance;
-@dynamic estado;
-@dynamic prioridad;
-@dynamic ultimaFechaRepaso;
-@dynamic objectId;
-@dynamic sincronizado;
-@dynamic usuario;
-@dynamic palabra;
-@dynamic ultimaSincronizacion;
-+ (NSString *)parseClassName{
-	return @"PalabraAvance";
-}
-@end
 
 
 @implementation CursoDTO
 @dynamic cantidadPalabras;
 @dynamic curso;
 @dynamic nombre;
-@dynamic objectId;
 @dynamic palabras;
 + (NSString *)parseClassName{
 	return @"Curso";
@@ -91,13 +71,35 @@
 @dynamic palabrasComenzadas;
 @dynamic palabrasCompletas;
 @dynamic tiempoEstudiado;
-@dynamic objectId;
 @dynamic sincronizado;
-@dynamic usuario;
-@dynamic curso;
+@dynamic usuarioId;
+@dynamic cursoId;
 @dynamic ultimaSincronizacion;
 + (NSString *)parseClassName{
 	return @"CursoAvance";
+}
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.updatedAt];
+}
+@end
+
+@implementation PalabraAvanceDTO
+@dynamic avance;
+@dynamic estado;
+@dynamic prioridad;
+@dynamic ultimaFechaRepaso;
+@dynamic sincronizado;
+@dynamic usuarioId;
+@dynamic palabraId;
+@dynamic ultimaSincronizacion;
+@dynamic palabraCoreData;
++ (NSString *)parseClassName{
+	return @"PalabraAvance";
+}
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.updatedAt];
 }
 @end
 

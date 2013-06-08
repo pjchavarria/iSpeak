@@ -17,5 +17,8 @@
 @dynamic oracion;
 @dynamic traduccion;
 @dynamic palabra;
-
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.oracion];
+}
 @end

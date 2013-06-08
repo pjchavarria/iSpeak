@@ -44,10 +44,10 @@ extern NSString * const kUsuarioClass;
 - (void)updateUsuario:(UsuarioDTO *)data;
 
 - (void)insertCurso:(CursoDTO*)data;
-- (void)insertOracion:(OracionDTO*)data;
-- (void)insertPalabra:(PalabraDTO*)data;
-- (void)insertPalabraAvance:(PalabraAvanceDTO*)data;
-- (void)insertCursoAvance:(CursoAvanceDTO*)data;
+- (void)insertOracion:(OracionDTO*)data palabra:(Palabra *)palabra;
+- (void)insertPalabra:(PalabraDTO*)data curso:(Curso *)curso;
+- (void)insertPalabraAvance:(PalabraAvanceDTO*)data palabra:(Palabra *)palabra;
+- (void)insertCursoAvance:(CursoAvanceDTO*)data curso:(Curso *)curso;
 
 - (void)updateCurso:(Curso*)curso withData:(CursoDTO*)data ;
 - (void)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data;

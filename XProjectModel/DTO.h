@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/PFObject+Subclass.h>
+@class Palabra;
 @interface DTO : NSObject
 
 @end	
@@ -24,7 +25,6 @@
 @property ( retain) NSData * audio;
 @property ( retain) NSString * oracion;
 @property ( retain) NSString * traduccion;
-@property ( retain) NSString *palabra;
 + (NSString *)parseClassName;
 @end
 
@@ -34,7 +34,6 @@
 @property ( retain) NSString * palabra;
 @property ( retain) NSString * traduccion;
 @property ( retain) NSNumber * tipoPalabra;
-@property ( retain) NSString *curso;
 @property ( retain) NSSet *oraciones;
 + (NSString *)parseClassName;
 @end
@@ -45,9 +44,10 @@
 @property ( retain) NSNumber * prioridad;
 @property ( retain) NSDate * ultimaFechaRepaso;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) NSString *usuario;
-@property ( retain) NSString *palabra;
+@property ( retain) NSString *usuarioId;
+@property ( retain) NSString *palabraId;
 @property ( retain) NSDate *ultimaSincronizacion;
+@property ( strong, nonatomic) Palabra * palabraCoreData;
 + (NSString *)parseClassName;
 @end
 
@@ -66,8 +66,8 @@
 @property ( retain) NSNumber * palabrasCompletas;
 @property ( retain) NSNumber * tiempoEstudiado;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) NSString *usuario;
-@property ( retain) NSString *curso;
+@property ( retain) NSString *usuarioId;
+@property ( retain) NSString *cursoId;
 @property ( retain) NSDate *ultimaSincronizacion;
 + (NSString *)parseClassName;
 @end

@@ -23,4 +23,8 @@
 @dynamic oraciones;
 @dynamic palabraAvance;
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.palabra];
+}
 @end
