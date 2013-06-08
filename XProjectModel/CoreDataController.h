@@ -49,15 +49,16 @@ extern NSString * const kUsuarioClass;
 - (void)insertPalabraAvance:(PalabraAvanceDTO*)data palabra:(Palabra *)palabra;
 - (void)insertCursoAvance:(CursoAvanceDTO*)data curso:(Curso *)curso;
 
-- (void)updateCurso:(Curso*)curso withData:(CursoDTO*)data ;
-- (void)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data;
-- (void)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data;
-- (void)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data;
-- (void)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data;
+- (Curso*)updateCurso:(Curso*)curso withData:(CursoDTO*)data ;
+- (Oracion*)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data;
+- (Palabra*)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data;
+- (PalabraAvance*)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data;
+- (CursoAvance*)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data;
 
 
 - (id)getObjectForClass:(NSString *)className predicate:(NSPredicate *)predicate;
 - (NSArray *)managedObjectsForClass:(NSString *)className;
 - (NSArray *)managedObjectsForClass:(NSString *)className predicate:(NSPredicate *)predicate;
 - (NSArray *)managedObjectsForClass:(NSString *)className sortKey:(NSString *)sortKey ascending:(BOOL)ascending;
+
 @end

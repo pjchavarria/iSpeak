@@ -23,4 +23,9 @@
 @dynamic curso;
 @dynamic usuario;
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.avance];
+}
+
 @end

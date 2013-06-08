@@ -17,6 +17,8 @@
 @dynamic oracion;
 @dynamic traduccion;
 @dynamic palabra;
+@dynamic ultimaSincronizacion;
+
 -(NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.oracion];

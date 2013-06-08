@@ -38,6 +38,16 @@
 + (NSString *)parseClassName;
 @end
 
+
+
+@interface CursoDTO : PFObject<PFSubclassing>
+@property ( retain) NSNumber * cantidadPalabras;
+@property ( retain) NSNumber * curso;
+@property ( retain) NSString * nombre;
+@property ( retain) NSSet *palabras;
++ (NSString *)parseClassName;
+@end
+
 @interface PalabraAvanceDTO : PFObject<PFSubclassing>
 @property ( retain) NSNumber * avance;
 @property ( retain) NSNumber * estado;
@@ -50,21 +60,12 @@
 @end
 
 
-@interface CursoDTO : PFObject<PFSubclassing>
-@property ( retain) NSNumber * cantidadPalabras;
-@property ( retain) NSNumber * curso;
-@property ( retain) NSString * nombre;
-@property ( retain) NSSet *palabras;
-+ (NSString *)parseClassName;
-@end
-
 @interface CursoAvanceDTO : PFObject<PFSubclassing>
 @property ( retain) NSNumber * avance;
 @property ( retain) NSNumber * palabrasComenzadas;
 @property ( retain) NSNumber * palabrasCompletas;
 @property ( retain) NSNumber * tiempoEstudiado;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) NSDate *ultimaSincronizacion;
 @property ( retain) CursoDTO *curso;
 @property ( retain) UsuarioDTO *usuario;
 

@@ -4,29 +4,16 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
+         timestampString = "392418414.404636"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "306"
-         endingLineNumber = "306"
-         landmarkName = "-elInternetRegresoCompletion:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/CoreDataController.m"
-         timestampString = "392242119.517874"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "327"
-         endingLineNumber = "327"
-         landmarkName = "-updatePalabraAvance:"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
+         landmarkName = "-masterSubordinateSyncForClass:pointerColumnName:pointerClassName:pointerObjectId:block:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -34,90 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
+         timestampString = "392418414.404636"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
-         landmarkName = "-masterSubordinateSyncForClass:columnName:objectId:block:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "-masterSubordinateSyncForClass:columnName:objectId:block:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "246"
-         endingLineNumber = "246"
-         landmarkName = "-iniciarCurso:completion:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "286"
-         endingLineNumber = "286"
-         landmarkName = "-iniciarRepaso:completion:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "251"
-         endingLineNumber = "251"
-         landmarkName = "-iniciarCurso:completion:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392317646.928263"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "74"
-         endingLineNumber = "74"
-         landmarkName = "-masterSubordinateSyncForClass:columnName:objectId:block:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "XProjectModel/SyncEngine.m"
-         timestampString = "392318070.968494"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
-         landmarkName = "-masterSubordinateSyncForClass:columnName:objectId:block:"
+         startingLineNumber = "131"
+         endingLineNumber = "131"
+         landmarkName = "-masterSubordinateSyncForClass:pointerColumnName:pointerClassName:pointerObjectId:block:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

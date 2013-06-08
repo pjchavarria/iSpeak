@@ -66,23 +66,7 @@
 }
 @end
 
-@implementation CursoAvanceDTO
-@dynamic avance;
-@dynamic palabrasComenzadas;
-@dynamic palabrasCompletas;
-@dynamic tiempoEstudiado;
-@dynamic sincronizado;
-@dynamic ultimaSincronizacion;
-@dynamic curso;
-@dynamic usuario;
-+ (NSString *)parseClassName{
-	return @"CursoAvance";
-}
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.updatedAt];
-}
-@end
+
 
 @implementation PalabraAvanceDTO
 @dynamic avance;
@@ -101,3 +85,19 @@
 }
 @end
 
+@implementation CursoAvanceDTO
+@dynamic avance;
+@dynamic palabrasComenzadas;
+@dynamic palabrasCompletas;
+@dynamic tiempoEstudiado;
+@dynamic sincronizado;
+@dynamic curso;
+@dynamic usuario;
++ (NSString *)parseClassName{
+	return @"CursoAvance";
+}
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.updatedAt];
+}
+@end

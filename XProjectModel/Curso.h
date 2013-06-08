@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSSet *cursoAvance;
 @property (nonatomic, retain) NSSet *palabras;
+@property (nonatomic, retain) NSDate * ultimaSincronizacion;
 @end
 
 @interface Curso (CoreDataGeneratedAccessors)

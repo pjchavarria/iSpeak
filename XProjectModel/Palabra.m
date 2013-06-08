@@ -22,6 +22,7 @@
 @dynamic curso;
 @dynamic oraciones;
 @dynamic palabraAvance;
+@dynamic ultimaSincronizacion;
 
 -(NSString *)description
 {

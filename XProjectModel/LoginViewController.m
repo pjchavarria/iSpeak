@@ -53,7 +53,6 @@
 {
 	[super viewDidAppear:animated];
     CoreDataController *coreDataController = [CoreDataController sharedInstance];
-    NSLog(@"%@",[coreDataController managedObjectsForClass:kPalabraClass]);
 	NSString *object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
     if (!object) {
         object = @"ninguno";

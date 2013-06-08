@@ -19,6 +19,7 @@
 @dynamic objectId;
 @dynamic cursoAvance;
 @dynamic palabras;
+@dynamic ultimaSincronizacion;
 
 -(NSString *)description
 {

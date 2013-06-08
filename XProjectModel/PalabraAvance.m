@@ -23,4 +23,9 @@
 @dynamic palabra;
 @dynamic usuario;
 
+-(NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ ,%@, %@",self.objectId,self.avance,self.ultimaSincronizacion];
+}
+
 @end

@@ -219,22 +219,14 @@ enum {
 - (void)insertCurso:(CursoDTO*)data
 {
 	Curso *curso = [NSEntityDescription insertNewObjectForEntityForName:kCursoClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	CursoDTO *cursoDTO = data;
 	
-	curso.cantidadPalabras = cursoDTO.cantidadPalabras;
-	curso.curso = cursoDTO.curso;
-	curso.nombre = cursoDTO.nombre;
-	curso.objectId = cursoDTO.objectId;
+	curso = [self updateCurso:curso withData:data];
 }
 - (void)insertOracion:(OracionDTO *)data palabra:(Palabra *)palabra
 {
 	Oracion *oracion = [NSEntityDescription insertNewObjectForEntityForName:kOracionClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	OracionDTO *oracionDTO = data;
 	
-	oracion.objectId = oracionDTO.objectId;
-	//oracion.audio = oracionDTO.audio;
-	oracion.oracion = oracionDTO.oracion;
-	oracion.traduccion = oracionDTO.traduccion;
+	oracion = [self updateOracion:oracion withData:data];
 	
 	// Relaciones
 	oracion.palabra = palabra;
@@ -242,28 +234,17 @@ enum {
 - (void)insertPalabra:(PalabraDTO*)data curso:(Curso *)curso
 {
 	Palabra *palabra = [NSEntityDescription insertNewObjectForEntityForName:kPalabraClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	PalabraDTO *palabraDTO = data;
 	
-	//palabra.audio = palabraDTO.audio;
-	palabra.objectId = palabraDTO.objectId;
-	palabra.palabra = palabraDTO.palabra;
-	palabra.tipoPalabra = palabraDTO.tipoPalabra;
-	palabra.traduccion = palabraDTO.traduccion;
+	palabra = [self updatePalabra:palabra withData:data];
+	
     // Relaciones
     palabra.curso = curso;
 }
 - (void)insertPalabraAvance:(PalabraAvanceDTO*)data palabra:(Palabra *)palabra
 {
 	PalabraAvance *palabraAvance = [NSEntityDescription insertNewObjectForEntityForName:kPalabraAvanceClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	PalabraAvanceDTO *palabraAvanceDTO = data;
 	
-	palabraAvance.objectId = palabraAvanceDTO.objectId;
-	palabraAvance.avance = palabraAvanceDTO.avance;
-	palabraAvance.estado = palabraAvanceDTO.estado;
-	palabraAvance.prioridad = palabraAvanceDTO.prioridad;
-	palabraAvance.sincronizado = palabraAvanceDTO.sincronizado;
-	palabraAvance.ultimaFechaRepaso = palabraAvanceDTO.ultimaFechaRepaso;
-	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.updatedAt;
+	palabraAvance = [self updatePalabraAvance:palabraAvance withData:data];
 	
 	// Relaciones
 	palabraAvance.usuario = self.usuarioActivo;
@@ -272,15 +253,8 @@ enum {
 - (void)insertCursoAvance:(CursoAvanceDTO*)data curso:(Curso *)curso
 {
 	CursoAvance *cursoAvance = [NSEntityDescription insertNewObjectForEntityForName:kCursoAvanceClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	CursoAvanceDTO *cursoAvanceDTO = data;
 	
-	cursoAvance.objectId = cursoAvanceDTO.objectId;
-	cursoAvance.avance = cursoAvanceDTO.avance;
-	cursoAvance.palabrasComenzadas = cursoAvanceDTO.palabrasComenzadas;
-	cursoAvance.palabrasCompletas = cursoAvanceDTO.palabrasCompletas;
-	cursoAvance.sincronizado = cursoAvanceDTO.sincronizado;
-	cursoAvance.tiempoEstudiado = cursoAvanceDTO.tiempoEstudiado;
-	cursoAvance.ultimaSincronizacion = cursoAvanceDTO.ultimaSincronizacion;
+	cursoAvance = [self updateCursoAvance:cursoAvance withData:data];
 	
 	// Relaciones
 	cursoAvance.usuario = self.usuarioActivo;
@@ -289,23 +263,29 @@ enum {
 
 #pragma mark - Update Core Data
 
-- (void)updateCurso:(Curso*)curso withData:(CursoDTO*)data
+- (Curso*)updateCurso:(Curso*)curso withData:(CursoDTO*)data
 {
 	CursoDTO *cursoDTO = data;
 	curso.cantidadPalabras = cursoDTO.cantidadPalabras;
 	curso.curso = cursoDTO.curso;
 	curso.nombre = cursoDTO.nombre;
 	curso.objectId = cursoDTO.objectId;
+	curso.ultimaSincronizacion = cursoDTO.updatedAt;
+	
+	return curso;
 }
-- (void)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data
+- (Oracion *)updateOracion:(Oracion*)oracion withData:(OracionDTO*)data
 {
 	OracionDTO *oracionDTO = data;
 	oracion.objectId = oracionDTO.objectId;
 	//oracion.audio = oracionDTO.audio;
 	oracion.oracion = oracionDTO.oracion;
 	oracion.traduccion = oracionDTO.traduccion;
+	oracion.ultimaSincronizacion = oracionDTO.updatedAt;
+	
+	return oracion;
 }
-- (void)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data
+- (Palabra *)updatePalabra:(Palabra*)palabra withData:(PalabraDTO*)data
 {
 	PalabraDTO *palabraDTO = data;
 	//palabra.audio = palabraDTO.audio;
@@ -313,8 +293,11 @@ enum {
 	palabra.palabra = palabraDTO.palabra;
 	palabra.tipoPalabra = palabraDTO.tipoPalabra;
 	palabra.traduccion = palabraDTO.traduccion;
+	palabra.ultimaSincronizacion = palabraDTO.updatedAt;
+	
+	return palabra;
 }
-- (void)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data
+- (PalabraAvance *)updatePalabraAvance:(PalabraAvance*)palabraAvance withData:(PalabraAvanceDTO*)data
 {
 	PalabraAvanceDTO *palabraAvanceDTO = data;
 	
@@ -325,8 +308,9 @@ enum {
 	palabraAvance.sincronizado = palabraAvanceDTO.sincronizado;
 	palabraAvance.ultimaFechaRepaso = palabraAvanceDTO.ultimaFechaRepaso;
 	palabraAvance.ultimaSincronizacion = palabraAvanceDTO.updatedAt;
+	return palabraAvance;
 }
-- (void)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data
+- (CursoAvance *)updateCursoAvance:(CursoAvance*)cursoAvance withData:(CursoAvanceDTO*)data
 {
 	CursoAvanceDTO *cursoAvanceDTO = data;
 	
@@ -336,7 +320,8 @@ enum {
 	cursoAvance.palabrasCompletas = cursoAvanceDTO.palabrasCompletas;
 	cursoAvance.sincronizado = cursoAvanceDTO.sincronizado;
 	cursoAvance.tiempoEstudiado = cursoAvanceDTO.tiempoEstudiado;
-	cursoAvance.ultimaSincronizacion = cursoAvanceDTO.ultimaSincronizacion;
+	cursoAvance.ultimaSincronizacion = cursoAvanceDTO.updatedAt;
+	return cursoAvance;
 }
 
 #pragma mark - Core Data Utility Methods
@@ -366,14 +351,7 @@ enum {
     __block NSArray *results = nil;
     NSManagedObjectContext *managedObjectContext = self.backgroundManagedObjectContext;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
-//    NSPredicate *predicate;
-//    if (inIds) {
-//        predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", idArray];
-//    } else {
-//        predicate = [NSPredicate predicateWithFormat:@"NOT (objectId IN %@)", idArray];
-//    }
-//    
-//    [fetchRequest setPredicate:predicate];
+
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
                                       [NSSortDescriptor sortDescriptorWithKey:@"objectId" ascending:YES]]];
     [managedObjectContext performBlockAndWait:^{

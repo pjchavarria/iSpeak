@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * password;
 @property (nonatomic, retain) NSString * username;
 @property (nonatomic, retain) NSSet *palabraAvance;
+@property (nonatomic, retain) NSDate * ultimaSincronizacion;
 @end
 
 @interface Usuario (CoreDataGeneratedAccessors)

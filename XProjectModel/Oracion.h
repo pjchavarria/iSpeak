@@ -18,5 +18,6 @@
 @property (nonatomic, retain) NSString * oracion;
 @property (nonatomic, retain) NSString * traduccion;
 @property (nonatomic, retain) Palabra *palabra;
+@property (nonatomic, retain) NSDate * ultimaSincronizacion;
 
 @end

@@ -15,5 +15,6 @@
 @dynamic password;
 @dynamic username;
 @dynamic palabraAvance;
+@dynamic ultimaSincronizacion;
 
 @end
