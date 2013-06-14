@@ -161,7 +161,14 @@ enum {
     // Obtener todos los objetos que hallan sido actualizados despues de la ultima fecha de actualizacion
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"updatedAt > %@",lastUpdatedDate];
     NSLog(@"%@",lastUpdatedDate);
-    PFQuery *query = [PFQuery queryWithClassName:class predicate:predicate];
+    PFQuery *query;
+    if (lastUpdatedDate) {
+        
+        query = [PFQuery queryWithClassName:class predicate:predicate];
+    }else{
+        query = [PFQuery queryWithClassName:class];
+    }
+    
     
 	if (key && objectId) {
         NSString *relationClassName;
