@@ -390,5 +390,20 @@ enum {
     
     return results;
 }
-
+- (NSArray *)managedObjectsForClass:(NSString *)className predicate:(NSPredicate *)predicate sortKey:(NSString *)sortKey ascending:(BOOL)ascending
+{
+	
+    __block NSArray *results = nil;
+    NSManagedObjectContext *managedObjectContext = self.backgroundManagedObjectContext;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:className];
+    fetchRequest.predicate = predicate;
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:
+                                      [NSSortDescriptor sortDescriptorWithKey:sortKey ascending:ascending]]];
+    [managedObjectContext performBlockAndWait:^{
+        NSError *error = nil;
+        results = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    }];
+    
+    return results;
+}
 @end

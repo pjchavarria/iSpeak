@@ -14,7 +14,7 @@
 - (void)syncUser:(UsuarioDTO *)data;
 
 - (void)seAcabaDeLoguear:(Usuario *)usuario completion:(void(^)())handler;
-- (void)iniciarCurso:(Curso *)curso completion:(void(^)())handler;
+- (void)iniciarCurso:(Curso *)curso createCursoPalabraAvance:(BOOL)create completion:(void(^)())handler;
 - (void)iniciarRepaso:(Curso *)curso completion:(void(^)())handler;
 - (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler;
 - (void)elInternetRegresoCompletion:(void(^)())handler;

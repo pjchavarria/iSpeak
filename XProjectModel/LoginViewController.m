@@ -52,7 +52,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-    CoreDataController *coreDataController = [CoreDataController sharedInstance];
+    //CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	NSString *object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
     if (!object) {
         object = @"ninguno";
@@ -61,8 +61,8 @@
     }
 	if (![object isEqualToString:@"ninguno"]) {
 		// skip login and show dashboard
-        [coreDataController setUsuarioActivo:[coreDataController getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",object]]];
-		[self goToDashboard:nil skipCheck:YES];
+        //[coreDataController setUsuarioActivo:[coreDataController getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"objectId like %@",object]]];
+		//[self goToDashboard:nil skipCheck:YES];
 		//[self performSelector:@selector(goToDashboard:) withObject:nil afterDelay:0.1];
 	}
 }

@@ -60,5 +60,6 @@ extern NSString * const kUsuarioClass;
 - (NSArray *)managedObjectsForClass:(NSString *)className;
 - (NSArray *)managedObjectsForClass:(NSString *)className predicate:(NSPredicate *)predicate;
 - (NSArray *)managedObjectsForClass:(NSString *)className sortKey:(NSString *)sortKey ascending:(BOOL)ascending;
+- (NSArray *)managedObjectsForClass:(NSString *)className predicate:(NSPredicate *)predicate sortKey:(NSString *)sortKey ascending:(BOOL)ascending;
 
 @end

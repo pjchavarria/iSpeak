@@ -25,7 +25,7 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ ,%@",self.objectId,self.avance];
+	return [NSString stringWithFormat:@"ID: %@ ,Tiempo estudiado: %@",self.objectId,self.tiempoEstudiado];
 }
 
 @end

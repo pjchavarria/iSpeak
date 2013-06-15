@@ -70,7 +70,15 @@ enum {
 {
     
 	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-	NSArray *storedRecords = [coreDataController managedObjectsForClass:class sortKey:@"ultimaSincronizacion" ascending:YES];
+    NSPredicate *pred;
+    if ([class isEqualToString:kPalabraClass]) {
+        
+        pred = [NSPredicate predicateWithFormat:@"curso.objectId like %@",pointerObjectId];
+    }else if ([class isEqualToString:kOracionClass]){
+        
+        pred = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",pointerObjectId];
+    }
+	NSArray *storedRecords = [coreDataController managedObjectsForClass:class predicate:pred sortKey:@"ultimaSincronizacion" ascending:YES];
 	
 	NSDate *lastUpdatedDate = ((Curso*)storedRecords.lastObject).ultimaSincronizacion;
 	
@@ -103,6 +111,12 @@ enum {
             [serverObjectsIDs addObject:object.objectId];
         }
 		int max = (storedRecords.count>serverObjects.count) ? storedRecords.count : serverObjects.count;
+        //Haciendo fetch d todas
+        if([serverObjects.lastObject isKindOfClass:[PalabraDTO class]]){
+            //fetch d todos los cursos
+        }else if([serverObjects.lastObject isKindOfClass:[OracionDTO class]]){
+            //fetch de todas las palabras
+        }
 		for (int i=0;i<max;i++) {
 			NSManagedObject *storedManagedObject = (storedRecords.count > i)? storedRecords[i] : nil;
 			
@@ -258,6 +272,7 @@ enum {
 				if ([foundObject isKindOfClass:[CursoAvanceDTO class]]) {
                     CursoAvanceDTO *cursoAvanceDTO = foundObject;
                     CursoDTO *cursoDTO = (CursoDTO *)[[cursoAvanceDTO objectForKey:@"curso"] fetchIfNeeded];
+                    
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",cursoDTO.objectId];
                     Curso *curso = [coreDataController getObjectForClass:kCursoClass predicate:predicate];
 					[coreDataController insertCursoAvance:foundObject curso:curso];
@@ -265,6 +280,7 @@ enum {
 				}else if([foundObject isKindOfClass:[PalabraAvanceDTO class]]){
                     PalabraAvanceDTO *cursoAvanceDTO = foundObject;
                     PalabraDTO *cursoDTO = (PalabraDTO *)[[cursoAvanceDTO objectForKey:@"palabra"] fetchIfNeeded];
+                    
                     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",cursoDTO.objectId];
                     Palabra *palabra = [coreDataController getObjectForClass:kPalabraClass predicate:predicate];
 					[coreDataController insertPalabraAvance:foundObject palabra:palabra];
@@ -295,7 +311,7 @@ enum {
                 NSLog(@"%@",error);
             }else{
 				for (id object in locallyCreated) {
-				((PalabraAvance*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+                    ((PalabraAvance*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
 				}
 			}
 			[coreDataController saveBackgroundContext];
@@ -352,7 +368,7 @@ enum {
 	
 	
 }
-- (void)iniciarCurso:(Curso *)curso completion:(void(^)())handler
+- (void)iniciarCurso:(Curso *)curso createCursoPalabraAvance:(BOOL)create completion:(void(^)())handler
 {
 	// Descargar palabras y oraciones del curso
 	// Insertar avances de palabras y avances del curso
@@ -368,41 +384,65 @@ enum {
 							pointerObjectId:curso.objectId
 									  block:
 		 ^{
-			 // CREATE curso/palabra avance
-             CoreDataController *coredataController = [CoreDataController sharedInstance];
-			  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@",curso.objectId];
-			  NSArray *storedPalabras = [coredataController managedObjectsForClass:kPalabraClass predicate:predicate];
-			  Usuario *usuario = [coredataController usuarioActivo];
-			  __block NSMutableArray *dataToSave = [NSMutableArray array];
-			 [dataToSave addObject:[self createCursoAvance:usuario curso:curso]];
-			  for (Palabra *palabra in storedPalabras) {
-				  [dataToSave addObject:[self createPalabraAvance:usuario palabra:palabra]];
-			  }
-			 NSLog(@"date %@",((PalabraAvanceDTO*)dataToSave.lastObject).updatedAt);
-             NSLog(@"Created %d avance d palabra",dataToSave.count-1);
-             // PUSH
-			  [PFObject saveAllInBackground:dataToSave block:
-			   ^(BOOL succeeded, NSError *error){
-				  if (succeeded) {
-                      NSLog(@"PUSHED it!");
-					  NSLog(@"date %@",((PalabraAvanceDTO*)dataToSave.lastObject).updatedAt);
-					  for (id object in dataToSave) {
-						  ((CursoAvanceDTO*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoInsertado];
-						  if ([object isKindOfClass:[CursoAvanceDTO class]]) {
-							  [coredataController insertCursoAvance:object curso:curso];
-						  }else if ([object isKindOfClass:[PalabraAvanceDTO class]]){
-                              PalabraAvanceDTO *palabraAvanceDTO = object;
-                              NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra.objectId];
-                              Palabra *palabra = [[CoreDataController sharedInstance] getObjectForClass:kPalabraClass predicate:predicate];
-							  [coredataController insertPalabraAvance:object palabra:palabra];
-						  }
-						  
-					  }
+             Usuario * usuario = [[CoreDataController sharedInstance] usuarioActivo];
+             [self masterMasterSyncForClass:kPalabraAvanceClass
+                          pointerColumnName:@"usuario"
+                           pointerClassName:kUsuarioClass
+                            pointerObjectId:usuario.objectId
+                                      block:
+              ^{
+             if (create) {
+                 // CREATE curso/palabra avance
+                 CoreDataController *coredataController = [CoreDataController sharedInstance];
+                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@",curso.objectId];
+                 NSArray *storedPalabras = [coredataController managedObjectsForClass:kPalabraClass predicate:predicate];
+                 Usuario *usuario = [coredataController usuarioActivo];
+                 __block NSMutableArray *dataToSave = [NSMutableArray array];
+                 [dataToSave addObject:[self createCursoAvance:usuario curso:curso]];
+                 for (Palabra *palabra in storedPalabras) {
+                     [dataToSave addObject:[self createPalabraAvance:usuario palabra:palabra]];
+                 }
+                 NSLog(@"date %@",((PalabraAvanceDTO*)dataToSave.lastObject).updatedAt);
+                 NSLog(@"Created %d avance d palabra",dataToSave.count-1);
+                 // PUSH
+                 [PFObject saveAllInBackground:dataToSave block:
+                  ^(BOOL succeeded, NSError *error){
+                      if (succeeded) {
+                          NSLog(@"PUSHED it!");
+                          NSLog(@"date %@",((PalabraAvanceDTO*)dataToSave.lastObject).updatedAt);
+                          for (id object in dataToSave) {
+                              ((CursoAvanceDTO*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
+                              if ([object isKindOfClass:[CursoAvanceDTO class]]) {
+                                  [coredataController insertCursoAvance:object curso:curso];
+                              }else if ([object isKindOfClass:[PalabraAvanceDTO class]]){
+                                  PalabraAvanceDTO *palabraAvanceDTO = object;
+                                  NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",palabraAvanceDTO.palabra.objectId];
+                                  Palabra *palabra = [[CoreDataController sharedInstance] getObjectForClass:kPalabraClass predicate:predicate];
+                                  [coredataController insertPalabraAvance:object palabra:palabra];
+                              }
+                              
+                          }
+                          [[CoreDataController sharedInstance] saveBackgroundContext];
+                          [[CoreDataController sharedInstance] saveMasterContext];
+                          handler();
+                      }
+                  }];
+             }else{
+                 Usuario * usuario = [[CoreDataController sharedInstance] usuarioActivo];
+                 [self masterMasterSyncForClass:kPalabraAvanceClass
+                              pointerColumnName:@"usuario"
+                               pointerClassName:kUsuarioClass
+                                pointerObjectId:usuario.objectId
+                                          block:
+                  ^{
                       [[CoreDataController sharedInstance] saveBackgroundContext];
                       [[CoreDataController sharedInstance] saveMasterContext];
-					  handler();
-				  }
-			  }];
+                      handler();
+                   }];
+                 
+             }
+            }];
+			 
 		}];
 		
     }];
@@ -412,12 +452,20 @@ enum {
 	// Descargar/Actualizar palabras y oraciones del curso ==FALTA
 	// Actualizar avances de palabras
     Usuario * usuario = [[CoreDataController sharedInstance] usuarioActivo];
-    [self masterMasterSyncForClass:kPalabraAvanceClass
+    [self masterMasterSyncForClass:kCursoAvanceClass
 				 pointerColumnName:@"usuario"
 				  pointerClassName:kUsuarioClass
 				   pointerObjectId:usuario.objectId
-							 block:^{
-        handler();
+                             block:
+     ^{
+         [self masterMasterSyncForClass:kPalabraAvanceClass
+                      pointerColumnName:@"usuario"
+                       pointerClassName:kUsuarioClass
+                        pointerObjectId:usuario.objectId
+                                  block:^{
+                                      handler();
+                                  }];
+         
     }];
 }
 - (void)finalizarLeccion:(Curso *)curso completion:(void(^)())handler

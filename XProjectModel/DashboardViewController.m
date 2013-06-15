@@ -101,15 +101,25 @@
 	CursoAvance *cursoA;
 	if(cursoAvances.count > 0)
 		cursoA = [cursoAvances lastObject];
-	
-	if(!cursoA)
-		[[SyncEngine sharedEngine] iniciarCurso:curso completion:^{
+	if (!cursoA) {
+        NSLog(@"CREANDO CURSOPALABRA AVANCE");
+        [[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:YES completion:^{
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
-	else
+    }else if(cursoA.tiempoEstudiado.doubleValue<=0)
+    {
+        
+        NSLog(@"NO CREANDO CURSOPALABRA AVANCE");
+		[[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:NO completion:^{
+			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+		}];
+	}else{
+        
+        NSLog(@"SOLO REPASO");
 		[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
+    }
 	
     
 }
