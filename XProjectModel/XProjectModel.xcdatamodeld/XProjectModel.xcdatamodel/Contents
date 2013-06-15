@@ -5,6 +5,7 @@
         <attribute name="curso" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="nombre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ultimaSincronizacion" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="cursoAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CursoAvance" inverseName="curso" inverseEntity="CursoAvance" syncable="YES"/>
         <relationship name="palabras" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Palabra" inverseName="curso" inverseEntity="Palabra" syncable="YES"/>
     </entity>
@@ -26,6 +27,7 @@
             <userInfo/>
         </attribute>
         <attribute name="traduccion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ultimaSincronizacion" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="palabra" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Palabra" inverseName="oraciones" inverseEntity="Palabra" syncable="YES"/>
         <userInfo/>
     </entity>
@@ -35,6 +37,7 @@
         <attribute name="palabra" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tipoPalabra" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="traduccion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ultimaSincronizacion" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="curso" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Curso" inverseName="palabras" inverseEntity="Curso" syncable="YES"/>
         <relationship name="oraciones" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Oracion" inverseName="palabra" inverseEntity="Oracion" syncable="YES"/>
         <relationship name="palabraAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PalabraAvance" inverseName="palabra" inverseEntity="PalabraAvance" syncable="YES"/>
@@ -53,16 +56,17 @@
     <entity name="Usuario" representedClassName="Usuario" syncable="YES">
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ultimaSincronizacion" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="cursoAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CursoAvance" inverseName="usuario" inverseEntity="CursoAvance" syncable="YES"/>
         <relationship name="palabraAvance" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PalabraAvance" inverseName="usuario" inverseEntity="PalabraAvance" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Curso" positionX="-7751" positionY="-2286" width="128" height="135"/>
+        <element name="Curso" positionX="-7751" positionY="-2286" width="128" height="150"/>
         <element name="CursoAvance" positionX="-7920" positionY="-2331" width="128" height="180"/>
-        <element name="Oracion" positionX="-7580" positionY="-2169" width="128" height="120"/>
-        <element name="Palabra" positionX="-7758" positionY="-2109" width="128" height="165"/>
+        <element name="Oracion" positionX="-7580" positionY="-2169" width="128" height="135"/>
+        <element name="Palabra" positionX="-7758" positionY="-2109" width="128" height="180"/>
         <element name="PalabraAvance" positionX="-7920" positionY="-2109" width="128" height="180"/>
-        <element name="Usuario" positionX="-8129" positionY="-2127" width="128" height="120"/>
+        <element name="Usuario" positionX="-8129" positionY="-2127" width="128" height="135"/>
     </elements>
 </model>
