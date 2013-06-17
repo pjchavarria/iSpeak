@@ -52,26 +52,25 @@
     
     int mastered = 0,started = 0, completed = 0;
     float timeStudied = 0.0;
+	Usuario *usuario = [[CoreDataController sharedInstance] usuarioActivo];
+
     for (Curso *curso in courses) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",curso.objectId];
-        NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
         
-        NSArray *palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 100"]];
-        mastered += palabrasCompletadas.count;
-        NSArray *palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance != 100 AND avance !=0"]];
-        started += palabrasEnProgreso.count;
-        NSArray *palabrasNuevas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 0"]];
-        completed += palabrasNuevas.count;
-        predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@",curso.objectId];
-        NSArray *cursoAvances = [coreDataController managedObjectsForClass:kCursoAvanceClass predicate:predicate];
-        CursoAvance *cursoAvance = [cursoAvances lastObject];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"usuario.objectId like %@",usuario.objectId];
+        NSSet *cursoAvances = [curso.cursoAvance filteredSetUsingPredicate:pred];
+        CursoAvance *cursoAvance = cursoAvances.anyObject;
+        completed += (cursoAvance.avance.intValue==100)?1:0;
         timeStudied += [cursoAvance.tiempoEstudiado floatValue];
+		started += cursoAvance.palabrasComenzadas.intValue;
+		mastered += cursoAvance.palabrasCompletas.intValue;
     }
-    
+    int as = (timeStudied/60);
+	int as2 = (as*60);
+	int as3 = timeStudied-as2;
     [self.masteredItemsLabel setText:[NSString stringWithFormat:@"%d",mastered]];
     [self.completedCoursesLabel setText:[NSString stringWithFormat:@"%d",completed]];
     [self.startedItemsLabel setText:[NSString stringWithFormat:@"%d",started]];
-    [self.timeStudiedLabel setText:[NSString stringWithFormat:@"%f",timeStudied]];
+    [self.timeStudiedLabel setText:[NSString stringWithFormat:@"%dh %dm",as,as3]];
     
 	[self.tableViewCursos reloadData];
 
@@ -113,21 +112,24 @@
 	
     
     Curso *curso = [courses objectAtIndex:indexPath.row];
-	CoreDataController *coreDataController = [CoreDataController sharedInstance];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",curso.objectId];
-    NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
-    
-    NSArray *palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 100"]];
-    NSArray *palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance != 100 AND avance !=0"]];
-    if(palabrasDelCurso.count == 0)
-    {
-        [cell initialize:0.0 mastered:0.0];
-    }
-    else
-    {
-        [cell initialize:(palabrasEnProgreso.count*1.0/palabrasDelCurso.count*1.0) mastered:(palabrasCompletadas.count*1.0/palabrasDelCurso.count*1.0)];
-    }
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"usuario.objectId like %@",[[CoreDataController sharedInstance] usuarioActivo].objectId];
+	CursoAvance *cursoAvance = ((NSSet*)[curso.cursoAvance filteredSetUsingPredicate:predicate]).anyObject;
+	if (!cursoAvance) {
+		[cell initialize:0 mastered:0];
+		cell.percentage.text = [NSString stringWithFormat:@"0%%"];
+		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered 0"];
+		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started 0"];
+	}else{
+		[cell initialize:(cursoAvance.palabrasComenzadas.doubleValue/curso.palabras.count*1.0)
+				mastered:(cursoAvance.palabrasCompletas.doubleValue/curso.palabras.count*1.0)];
+		cell.percentage.text = [NSString stringWithFormat:@"%@%%",cursoAvance.avance];
+		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered %@",cursoAvance.palabrasCompletas];
+		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started %@",cursoAvance.palabrasComenzadas];
+	}
+	
+	
     cell.title.text = curso.nombre;
+	
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

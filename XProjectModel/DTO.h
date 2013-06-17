@@ -54,8 +54,9 @@
 @property ( retain) NSNumber * prioridad;
 @property ( retain) NSDate * ultimaFechaRepaso;
 @property ( retain) NSNumber * sincronizado;
-@property ( retain) Palabra *palabra;
+@property ( retain) PalabraDTO *palabra;
 @property ( retain) UsuarioDTO *usuario;
+@property ( retain) CursoDTO *curso;
 + (NSString *)parseClassName;
 @end
 

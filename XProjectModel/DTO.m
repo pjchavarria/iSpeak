@@ -76,6 +76,7 @@
 @dynamic sincronizado;
 @dynamic usuario;
 @dynamic palabra;
+@dynamic curso;
 + (NSString *)parseClassName{
 	return @"PalabraAvance";
 }
@@ -98,6 +99,6 @@
 }
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@",self.objectId,self.updatedAt];
+	return [NSString stringWithFormat:@"%@ %@ %@",self.objectId,self.updatedAt,self.curso];
 }
 @end
