@@ -62,7 +62,8 @@
     
     self.progressPercentage.text = [NSString stringWithFormat:@"%@",self.cursoAvance.avance];
     
-    NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",self.curso.objectId];
+    NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
     
     self.palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 100"]];
     self.palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance != 100 AND avance !=0"]];

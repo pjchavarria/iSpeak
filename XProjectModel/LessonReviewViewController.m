@@ -7,6 +7,7 @@
 //
 
 #import "LessonReviewViewController.h"
+#import "CoreDataController.h"
 #import "PalabraAvance.h"
 #import "Palabra.h"
 
@@ -44,6 +45,8 @@
 @implementation LessonReviewViewController
 {
     int contador;
+    int numeroDePalabras;
+    NSString *respuestaActual;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -59,7 +62,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    numeroDePalabras = self.palabras.count;
     contador = 0;
+    self.progressImageView.image = [[UIImage imageNamed:@"dashboad-progress-bar-started.png"]
+                              resizableImageWithCapInsets:UIEdgeInsetsMake(0,3,0,3)];
+    self.progressImageView.frame = CGRectMake(self.progressImageView.frame.origin.x, self.progressImageView.frame.origin.y, 273*(contador/numeroDePalabras), self.progressImageView.frame.size.height);
+    
+    [self.txtRespuestaOracion setDelegate:self];
+    [self.txtRespuestaOracion setAutocorrectionType:UITextAutocorrectionTypeNo];
+    
     [self nextLesson];
 }
 
@@ -145,10 +156,57 @@
         default:
             break;
     }
+    respuestaActual = palabra.palabra.traduccion;
 }
 
 -(void)setLesson3WithWord:(PalabraAvance *)palabra
 {
+    [self.thirdView setHidden:NO];
+    CoreDataController *coreDataController = [CoreDataController sharedInstance];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.objectId like %@",palabra.palabra.objectId];
+    NSArray *oraciones = [coreDataController managedObjectsForClass:kOracionClass predicate:predicate];
+    
+    int random = arc4random()%oraciones.count;
+    
+    Oracion *oracion = [oraciones objectAtIndex:random];
+    NSString *oracionText = oracion.oracion;
+    int start,end;
+    for (int i=0;i<[oracionText length];i++) {
+        char ch;
+        ch = [oracionText  characterAtIndex:i];
+        if(ch == '*')
+        {
+            end = i;
+        }
+    }
+    for (int i=[oracionText length]-1;i>=0;i--) {
+        char ch;
+        ch = [oracionText  characterAtIndex:i];
+        if(ch == '*')
+        {
+            start = i;
+        }
+    }
+    NSRange theRange;
+    theRange.location = start;
+    theRange.length = end-start+1;
+    
+    int numeroDeEspacios = theRange.length-4;
+    NSString *espacios = @"";
+    for (int i=0; i<numeroDeEspacios; i++) {
+        if(i == numeroDeEspacios -1)
+        espacios =[espacios stringByAppendingString:@"_"];
+        else
+            espacios =[espacios stringByAppendingString:@"_ "];
+    }
+    
+    NSString *sub = [oracionText substringWithRange:theRange];
+    oracionText = [oracionText stringByReplacingOccurrencesOfString:sub withString:espacios];
+    
+    [self.oracionIncompletaLabel setText:oracionText];
+    theRange.location = 2;
+    theRange.length = [sub length]-4;
+    respuestaActual = [sub substringWithRange:theRange];
 }
 
 -(NSMutableArray *)getPalabrasRandom
@@ -158,7 +216,7 @@
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for(int i = 0; i < 3; i++)
     {
-        while ([array containsObject:pa] || index == contador-10) {
+        while ([array containsObject:pa] || index == contador-numeroDePalabras) {
             index = arc4random()%self.palabras.count;
             pa  = [self.palabras objectAtIndex:index];
         }
@@ -188,24 +246,31 @@
 
 -(void)nextLesson
 {
-    if(contador < 10)
+    
+    if(contador < numeroDePalabras)
     {
         [self hideLessons];
         PalabraAvance *pa = [self.palabras objectAtIndex:contador];
         [self setLesson1WithWord:pa];
         contador++;
+        float ratio = (contador*1.0/(numeroDePalabras*3.0));
+        self.progressImageView.frame = CGRectMake(self.progressImageView.frame.origin.x, self.progressImageView.frame.origin.y, 273*ratio, self.progressImageView.frame.size.height);
     }
-    else if(contador >= 10 && contador < 20)
+    else if(contador >= numeroDePalabras && contador < numeroDePalabras*2)
     {
         [self hideLessons];
-        [self setLesson2WithWord:[self.palabras objectAtIndex:contador-10]];
+        [self setLesson2WithWord:[self.palabras objectAtIndex:contador-numeroDePalabras]];
         contador++;
+        float ratio = (contador*1.0/(numeroDePalabras*3.0));
+        self.progressImageView.frame = CGRectMake(self.progressImageView.frame.origin.x, self.progressImageView.frame.origin.y, 273*ratio, self.progressImageView.frame.size.height);
     }
-    else if(contador >= 20 && contador < 30)
+    else if(contador >= numeroDePalabras*2 && contador < numeroDePalabras*3)
     {
         [self hideLessons];
-        [self setLesson3WithWord:[self.palabras objectAtIndex:contador-20]];
+        [self setLesson3WithWord:[self.palabras objectAtIndex:contador-numeroDePalabras*2]];
         contador++;
+        float ratio = (contador*1.0/(numeroDePalabras*3.0));
+        self.progressImageView.frame = CGRectMake(self.progressImageView.frame.origin.x, self.progressImageView.frame.origin.y, 273*ratio, self.progressImageView.frame.size.height);
     }
     else
     {
@@ -217,32 +282,31 @@
 }
 
 - (IBAction)palabraRespuesta1:(id)sender {
-    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta2:(id)sender {
-    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta3:(id)sender {
-    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
     [self nextLesson];
 }
 
 - (IBAction)palabraRespuesta4:(id)sender {
-    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];;
+    NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
     [self nextLesson];
 }
 -(void)checkRespuesta:(NSString *)rpta
 {
-    PalabraAvance *pa = [self.palabras objectAtIndex:contador-11];
-    if(rpta == pa.palabra.traduccion)
+    if([rpta isEqualToString:respuestaActual])
     {
         NSLog(@"bien");
     }
@@ -250,5 +314,24 @@
     {
         NSLog(@"mal");        
     }
+}
+-(void)checkOracion
+{
+    if([self.txtRespuestaOracion.text isEqualToString:respuestaActual])
+    {
+        NSLog(@"bien");
+    }
+    else
+    {
+        NSLog(@"mal");
+    }
+    [self.txtRespuestaOracion setText:@""];
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[self thirdView] endEditing:YES];
+    [self checkOracion];
+    [self nextLesson];
+    return YES;
 }
 @end

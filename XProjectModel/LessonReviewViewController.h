@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LessonReviewViewController : UIViewController
+@interface LessonReviewViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSArray *palabras;
 - (IBAction)palabraRespuesta1:(id)sender;
 - (IBAction)palabraRespuesta2:(id)sender;
 - (IBAction)palabraRespuesta3:(id)sender;
 - (IBAction)palabraRespuesta4:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextField *txtRespuestaOracion;
 
 @end
