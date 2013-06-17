@@ -17,6 +17,7 @@
 @dynamic objectId;
 @dynamic palabrasComenzadas;
 @dynamic palabrasCompletas;
+@dynamic palabrasTotales;
 @dynamic sincronizado;
 @dynamic tiempoEstudiado;
 @dynamic ultimaSincronizacion;

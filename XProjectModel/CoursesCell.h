@@ -20,4 +20,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *startedScroll;
 
 -(void)initialize:(CGFloat)started mastered:(CGFloat)mastered;
+- (void)initializeCell;
 @end

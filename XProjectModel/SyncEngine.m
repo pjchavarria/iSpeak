@@ -37,7 +37,8 @@ enum {
     cursoAvanceDTO.palabrasCompletas = [NSNumber numberWithInt:0];
     cursoAvanceDTO.tiempoEstudiado = [NSNumber numberWithInt:0];
     cursoAvanceDTO.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
-    
+    cursoAvanceDTO.palabrasTotales = [NSNumber numberWithInt:curso.palabras.count];
+	
     cursoAvanceDTO.usuario = [UsuarioDTO objectWithoutDataWithObjectId:usuario.objectId];
 	cursoAvanceDTO.curso = [CursoDTO objectWithoutDataWithObjectId:curso.objectId];
 	return cursoAvanceDTO;
@@ -162,10 +163,12 @@ enum {
 			}else if([foundObject isKindOfClass:[PalabraDTO class]]){
 				
 				PalabraDTO *palabraDTO = foundObject;
+				
+				
 				CursoDTO *cursoDTO = (CursoDTO *)[[palabraDTO objectForKey:@"curso"] fetchIfNeeded];
 				NSPredicate *predicate = [NSPredicate predicateWithFormat:@"objectId like %@",cursoDTO.objectId];
 				Curso *curso = [coreDataController getObjectForClass:kCursoClass predicate:predicate];
-				[coreDataController insertPalabra:foundObject curso:curso];
+				[coreDataController insertPalabra:palabraDTO curso:curso];
 			}else if([foundObject isKindOfClass:[OracionDTO class]]){
 				
 				OracionDTO *oracionDTO = foundObject;

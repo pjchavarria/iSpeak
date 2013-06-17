@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString * objectId;
 @property (nonatomic, retain) NSNumber * palabrasComenzadas;
 @property (nonatomic, retain) NSNumber * palabrasCompletas;
+@property (nonatomic, retain) NSNumber * palabrasTotales;
 @property (nonatomic, retain) NSNumber * sincronizado;
 @property (nonatomic, retain) NSNumber * tiempoEstudiado;
 @property (nonatomic, retain) NSDate * ultimaSincronizacion;

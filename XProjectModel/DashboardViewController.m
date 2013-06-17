@@ -109,19 +109,30 @@
 {
     NSString *cellIdentifier = @"Cell";
     CoursesCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-	
-    
+
     Curso *curso = [courses objectAtIndex:indexPath.row];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"usuario.objectId like %@",[[CoreDataController sharedInstance] usuarioActivo].objectId];
 	CursoAvance *cursoAvance = ((NSSet*)[curso.cursoAvance filteredSetUsingPredicate:predicate]).anyObject;
 	if (!cursoAvance) {
-		[cell initialize:0 mastered:0];
+		
+		[cell initializeCell];
+		[cell initialize:0 mastered:0 ];
 		cell.percentage.text = [NSString stringWithFormat:@"0%%"];
 		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered 0"];
 		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started 0"];
 	}else{
-		[cell initialize:(cursoAvance.palabrasComenzadas.doubleValue/curso.palabras.count*1.0)
-				mastered:(cursoAvance.palabrasCompletas.doubleValue/curso.palabras.count*1.0)];
+		double comenzadas = cursoAvance.palabrasComenzadas.doubleValue;
+		double completadas = cursoAvance.palabrasCompletas.doubleValue;
+		double total = cursoAvance.palabrasTotales.doubleValue;
+		double initialize = 0;
+		double mastered = 0;
+		if (total) {
+			initialize = comenzadas/total;
+			mastered = completadas/total;
+		}
+		[cell initializeCell];
+		[cell initialize:initialize
+				mastered:mastered];
 		cell.percentage.text = [NSString stringWithFormat:@"%@%%",cursoAvance.avance];
 		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered %@",cursoAvance.palabrasCompletas];
 		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started %@",cursoAvance.palabrasComenzadas];

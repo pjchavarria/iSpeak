@@ -225,7 +225,7 @@ enum {
 - (void)insertOracion:(OracionDTO *)data palabra:(Palabra *)palabra
 {
 	Oracion *oracion = [NSEntityDescription insertNewObjectForEntityForName:kOracionClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	
+	oracion.audio = [data.audio getData];
 	oracion = [self updateOracion:oracion withData:data];
 	
 	// Relaciones
@@ -234,7 +234,7 @@ enum {
 - (void)insertPalabra:(PalabraDTO*)data curso:(Curso *)curso
 {
 	Palabra *palabra = [NSEntityDescription insertNewObjectForEntityForName:kPalabraClass inManagedObjectContext:self.backgroundManagedObjectContext];
-	
+	palabra.audio = [data.audio getData];
 	palabra = [self updatePalabra:palabra withData:data];
 	
     // Relaciones
@@ -321,6 +321,8 @@ enum {
 	cursoAvance.sincronizado = cursoAvanceDTO.sincronizado;
 	cursoAvance.tiempoEstudiado = cursoAvanceDTO.tiempoEstudiado;
 	cursoAvance.ultimaSincronizacion = cursoAvanceDTO.updatedAt;
+	cursoAvance.palabrasTotales = cursoAvanceDTO.palabrasTotales;
+	
 	return cursoAvance;
 }
 

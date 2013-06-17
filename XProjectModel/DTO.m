@@ -90,6 +90,7 @@
 @dynamic avance;
 @dynamic palabrasComenzadas;
 @dynamic palabrasCompletas;
+@dynamic palabrasTotales;
 @dynamic tiempoEstudiado;
 @dynamic sincronizado;
 @dynamic curso;

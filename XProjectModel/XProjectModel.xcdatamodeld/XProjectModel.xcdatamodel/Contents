@@ -14,6 +14,7 @@
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="palabrasComenzadas" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="palabrasCompletas" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="palabrasTotales" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="sincronizado" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="tiempoEstudiado" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="ultimaSincronizacion" optional="YES" attributeType="Date" syncable="YES"/>
@@ -63,7 +64,7 @@
     </entity>
     <elements>
         <element name="Curso" positionX="-7751" positionY="-2286" width="128" height="150"/>
-        <element name="CursoAvance" positionX="-7920" positionY="-2331" width="128" height="180"/>
+        <element name="CursoAvance" positionX="-7920" positionY="-2331" width="128" height="195"/>
         <element name="Oracion" positionX="-7580" positionY="-2169" width="128" height="135"/>
         <element name="Palabra" positionX="-7758" positionY="-2109" width="128" height="180"/>
         <element name="PalabraAvance" positionX="-7920" positionY="-2109" width="128" height="180"/>

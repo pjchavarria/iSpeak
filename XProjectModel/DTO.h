@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/PFObject+Subclass.h>
+#import <Parse/Parse.h>
 @class Palabra;
 @interface DTO : NSObject
 
@@ -22,7 +23,7 @@
 
 
 @interface OracionDTO : PFObject<PFSubclassing>
-@property ( retain) NSData * audio;
+@property ( retain) PFFile * audio;
 @property ( retain) NSString * oracion;
 @property ( retain) NSString * traduccion;
 + (NSString *)parseClassName;
@@ -30,7 +31,7 @@
 
 
 @interface PalabraDTO : PFObject<PFSubclassing>
-@property ( retain) NSData * audio;
+@property ( retain) PFFile * audio;
 @property ( retain) NSString * palabra;
 @property ( retain) NSString * traduccion;
 @property ( retain) NSNumber * tipoPalabra;
@@ -65,6 +66,7 @@
 @property ( retain) NSNumber * avance;
 @property ( retain) NSNumber * palabrasComenzadas;
 @property ( retain) NSNumber * palabrasCompletas;
+@property ( retain) NSNumber * palabrasTotales;
 @property ( retain) NSNumber * tiempoEstudiado;
 @property ( retain) NSNumber * sincronizado;
 @property ( retain) CursoDTO *curso;
