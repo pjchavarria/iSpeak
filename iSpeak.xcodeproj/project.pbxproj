@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04598F0517737ACF00269A13 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04598F0417737ACF00269A13 /* AVFoundation.framework */; };
 		04BE968A17444F32006B551E /* logo-iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BE968917444F32006B551E /* logo-iphone@2x.png */; };
 		04BE968C17444F36006B551E /* logo-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 04BE968B17444F36006B551E /* logo-iphone.png */; };
 		04BE969317445342006B551E /* course-placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04BE969217445342006B551E /* course-placeholder.jpg */; };
@@ -82,6 +83,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04598F0417737ACF00269A13 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04BE968917444F32006B551E /* logo-iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-iphone@2x.png"; path = "../logo-iphone@2x.png"; sourceTree = "<group>"; };
 		04BE968B17444F36006B551E /* logo-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo-iphone.png"; path = "../logo-iphone.png"; sourceTree = "<group>"; };
 		04BE969217445342006B551E /* course-placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "course-placeholder.jpg"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04598F0517737ACF00269A13 /* AVFoundation.framework in Frameworks */,
 				3AF554221741B97F001CF36F /* SystemConfiguration.framework in Frameworks */,
 				3AF5541C1741B959001CF36F /* QuartzCore.framework in Frameworks */,
 				3AF554201741B972001CF36F /* StoreKit.framework in Frameworks */,
@@ -271,6 +274,7 @@
 		3AEEA7C017301B2B00C5FEB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04598F0417737ACF00269A13 /* AVFoundation.framework */,
 				3AF554211741B97F001CF36F /* SystemConfiguration.framework */,
 				3AF5541F1741B972001CF36F /* StoreKit.framework */,
 				3AF5541D1741B969001CF36F /* Security.framework */,

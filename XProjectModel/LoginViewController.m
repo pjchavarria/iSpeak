@@ -65,6 +65,10 @@
 		//[self goToDashboard:nil skipCheck:YES];
 		//[self performSelector:@selector(goToDashboard:) withObject:nil afterDelay:0.1];
 	}
+	
+	
+	
+	
 }
 
 - (void)didReceiveMemoryWarning
@@ -190,6 +194,8 @@
 		}
 	}
 }
+
+
 - (IBAction)loginButtonPressed:(id)sender {
 	
 	NetworkStatus netStatus = [self currentNetworkStatus];

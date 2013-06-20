@@ -11,6 +11,8 @@
 #import "PalabraAvance.h"
 #import "Palabra.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 @interface LessonReviewViewController ()
 // First excercise
 @property (strong, nonatomic) IBOutlet UIView *firstView;
@@ -47,6 +49,8 @@
     int contador;
     int numeroDePalabras;
     NSString *respuestaActual;
+	
+	AVAudioPlayer *_backgroundMusicPlayer;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -92,6 +96,12 @@
     [self.firstView setHidden:NO];
     [self.palabraLabel setText:palabra.palabra.palabra];
     [self.significadoLabel setText:palabra.palabra.traduccion];
+	
+	NSData *audio = palabra.palabra.audio;
+	NSError *error;
+	_backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithData:audio error:&error];
+	[_backgroundMusicPlayer prepareToPlay];
+	[_backgroundMusicPlayer play];
 }
 
 -(void)setLesson2WithWord:(PalabraAvance *)palabra
@@ -169,6 +179,12 @@
     int random = arc4random()%oraciones.count;
     
     Oracion *oracion = [oraciones objectAtIndex:random];
+	NSData *audio = oracion.audio;
+	NSError *error;
+	_backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithData:audio error:&error];
+	[_backgroundMusicPlayer prepareToPlay];
+	[_backgroundMusicPlayer play];
+	
     NSString *oracionText = oracion.oracion;
     int start,end;
     for (int i=0;i<[oracionText length];i++) {
