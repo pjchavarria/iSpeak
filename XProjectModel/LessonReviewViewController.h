@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class Curso;
 @interface LessonReviewViewController : UIViewController <UITextFieldDelegate>
 
+@property (strong, nonatomic) Curso *curso;
 @property (strong, nonatomic) NSArray *palabras;
 - (IBAction)palabraRespuesta1:(id)sender;
 - (IBAction)palabraRespuesta2:(id)sender;

@@ -7,6 +7,7 @@
 //
 
 #import "LessonReviewViewController.h"
+#import "LessonFinishViewController.h"
 #import "CoreDataController.h"
 #import "PalabraAvance.h"
 #import "Palabra.h"
@@ -322,8 +323,10 @@
 }
 -(void)checkRespuesta:(NSString *)rpta
 {
-    if([rpta isEqualToString:respuestaActual])
+    PalabraAvance *pa = [self.palabras objectAtIndex:contador-numeroDePalabras-1];
+    if([rpta isEqualToString:[@"  " stringByAppendingString:respuestaActual]])
     {
+        pa.prioridad = [NSNumber numberWithFloat:[pa.prioridad floatValue] +0.1];
         NSLog(@"bien");
     }
     else
@@ -349,5 +352,13 @@
     [self checkOracion];
     [self nextLesson];
     return YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"finishLesson"]) {
+        LessonFinishViewController *controller = segue.destinationViewController;
+        controller.curso = self.curso;
+    }
 }
 @end
