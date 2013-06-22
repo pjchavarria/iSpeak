@@ -14,6 +14,13 @@
 
 #import <AVFoundation/AVFoundation.h>
 
+enum {
+    kSincronizacionEstadoInsertado,
+    kSincronizacionEstadoModificado,
+    kSincronizacionEstadoEliminado,
+    kSincronizacionEstadoSincronizado
+}SincronizacionEstado;
+
 @interface LessonReviewViewController ()
 // First excercise
 @property (strong, nonatomic) IBOutlet UIView *firstView;
@@ -50,8 +57,9 @@
     int contador;
     int numeroDePalabras;
     NSString *respuestaActual;
-	
+	NSMutableArray *fallas;
 	AVAudioPlayer *_backgroundMusicPlayer;
+    NSDate *inicio;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,7 +74,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    inicio = [NSDate date];
 	// Do any additional setup after loading the view.
+    fallas = [[NSMutableArray alloc] initWithCapacity:numeroDePalabras];
+    for (int i = 0; i < numeroDePalabras; i++) {
+        [fallas addObject:[NSNumber numberWithInt:0]];
+    }
     numeroDePalabras = self.palabras.count;
     contador = 0;
     self.progressImageView.image = [[UIImage imageNamed:@"dashboad-progress-bar-started.png"]
@@ -291,6 +304,7 @@
     }
     else
     {
+        [self applyChangesPalabras];
         [self performSegueWithIdentifier:@"finishLesson" sender:self];
     }
 }
@@ -323,14 +337,13 @@
 }
 -(void)checkRespuesta:(NSString *)rpta
 {
-    PalabraAvance *pa = [self.palabras objectAtIndex:contador-numeroDePalabras-1];
     if([rpta isEqualToString:[@"  " stringByAppendingString:respuestaActual]])
     {
-        pa.prioridad = [NSNumber numberWithFloat:[pa.prioridad floatValue] +0.1];
         NSLog(@"bien");
     }
     else
     {
+        [fallas replaceObjectAtIndex:(contador-numeroDePalabras-1) withObject:[NSNumber numberWithInt:1]];
         NSLog(@"mal");        
     }
 }
@@ -342,6 +355,7 @@
     }
     else
     {
+        [fallas replaceObjectAtIndex:(contador-numeroDePalabras*2-1) withObject:[NSNumber numberWithInt:1]];
         NSLog(@"mal");
     }
     [self.txtRespuestaOracion setText:@""];
@@ -358,7 +372,96 @@
 {
     if ([segue.identifier isEqualToString:@"finishLesson"]) {
         LessonFinishViewController *controller = segue.destinationViewController;
+        controller.cursoAvance = self.cursoAvance;
         controller.curso = self.curso;
     }
+}
+-(void)applyChangesPalabras
+{
+    int i = 0;
+    for (PalabraAvance *pa in self.palabras) {
+        NSNumber *fallo = [fallas objectAtIndex:i];
+        if([fallo intValue] == 0)
+        {
+            pa.avance = [NSNumber numberWithFloat:[pa.avance floatValue] +0.2];
+        }
+        else
+        {
+            if([pa.avance floatValue] < 0.9)
+            {
+                pa.avance = [NSNumber numberWithFloat:[pa.avance floatValue] +0.05];
+            }
+            else
+            {
+                pa.avance = [NSNumber numberWithFloat:[pa.avance floatValue] +0.02];
+            }
+        }
+        
+        NSDate *ultimaFechaRepaso = pa.ultimaFechaRepaso;
+        NSDate *actual = [NSDate date];
+        
+        NSTimeInterval distanceBetweenDates = [actual timeIntervalSinceDate:ultimaFechaRepaso];
+        double secondsInAnHour = 3600;
+        NSInteger hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
+        
+        double formula = 0.0;
+        if([fallo intValue] == 0)
+        {
+            formula = hoursBetweenDates*0.5;
+        }
+        
+        formula = ((formula*10)/([pa.avance floatValue]));
+        
+        pa.prioridad = [NSNumber numberWithDouble:formula];
+        pa.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoModificado];
+        pa.ultimaFechaRepaso = [NSDate date];
+        
+        i++;
+    }
+    
+    [[CoreDataController sharedInstance] saveBackgroundContext];
+    [[CoreDataController sharedInstance] saveMasterContext];
+}
+-(void)applyChangesCurso
+{
+    CoreDataController *coreDataController = [CoreDataController sharedInstance];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@ AND usuario.objectId like %@",self.curso.objectId, self.cursoAvance.usuario.objectId];
+    NSArray *palabrasAvance = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
+    
+    double avanceCurso = 0.0;
+    int palabrasComenzadas = 0;
+    int palabrasCompletas = 0;
+    int palabrasTotales = 0;
+    
+    for (PalabraAvance *pa in palabrasAvance) {
+        avanceCurso += [pa.avance floatValue];
+        double avance = [pa.avance floatValue];
+        if(avance != 0.0 && avance != 100.0)
+        {
+            palabrasComenzadas++;
+        }
+        else if(avance != 0.0)
+        {
+            palabrasCompletas++;
+        }
+        palabrasTotales++;
+            
+    }
+
+    avanceCurso = avanceCurso/palabrasAvance.count;
+    
+    NSTimeInterval distanceBetweenDates = [inicio timeIntervalSinceDate:[NSDate date]];
+    double secondsInAnMinute = 60;
+    NSInteger tiempoEstudiado = distanceBetweenDates / secondsInAnMinute;
+    
+    [self.cursoAvance setPalabrasComenzadas:[NSNumber numberWithInt:palabrasComenzadas]];
+    [self.cursoAvance setPalabrasCompletas:[NSNumber numberWithInt:palabrasCompletas]];
+    [self.cursoAvance setPalabrasTotales:[NSNumber numberWithInt:palabrasTotales]];
+    [self.cursoAvance setAvance:[NSNumber numberWithDouble:avanceCurso]];
+    [self.cursoAvance setTiempoEstudiado:[NSNumber numberWithInt:tiempoEstudiado+[self.cursoAvance.tiempoEstudiado intValue]]];
+    [self.cursoAvance setSincronizado:[NSNumber numberWithInt:kSincronizacionEstadoModificado]];
+    
+    [[CoreDataController sharedInstance] saveBackgroundContext];
+    [[CoreDataController sharedInstance] saveMasterContext];
 }
 @end

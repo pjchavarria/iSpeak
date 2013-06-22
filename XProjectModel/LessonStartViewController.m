@@ -84,6 +84,7 @@
     if ([segue.identifier isEqualToString:@"pushLesson"]) {
         LessonReviewViewController *lrvc = segue.destinationViewController;
         lrvc.curso = self.curso;
+        lrvc.cursoAvance = self.cursoAvance;
         // Filtrar las palabras a repasar considerando cuantas palabras nuevas/a-repasar
         NSMutableArray *palabrasEnLaLeccion = [NSMutableArray array];
         int index;

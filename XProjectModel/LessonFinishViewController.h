@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Curso;
+@class Curso, CursoAvance;
 @interface LessonFinishViewController : UIViewController
 
 @property (strong, nonatomic) Curso *curso;
+@property (strong, nonatomic) CursoAvance *cursoAvance;
 
 @end
