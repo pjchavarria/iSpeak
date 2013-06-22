@@ -82,11 +82,12 @@ enum {
     [super viewDidLoad];
     inicio = [NSDate date];
 	// Do any additional setup after loading the view.
+    
+    numeroDePalabras = self.palabras.count;
     fallas = [[NSMutableArray alloc] initWithCapacity:numeroDePalabras];
     for (int i = 0; i < numeroDePalabras; i++) {
         [fallas addObject:[NSNumber numberWithInt:0]];
     }
-    numeroDePalabras = self.palabras.count;
     contador = 0;
     self.progressImageView.image = [[UIImage imageNamed:@"dashboad-progress-bar-started.png"]
                               resizableImageWithCapInsets:UIEdgeInsetsMake(0,3,0,3)];
