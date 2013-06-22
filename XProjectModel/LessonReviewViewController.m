@@ -305,6 +305,7 @@ enum {
     else
     {
         [self applyChangesPalabras];
+        [self applyChangesCurso];
         [self performSegueWithIdentifier:@"finishLesson" sender:self];
     }
 }
