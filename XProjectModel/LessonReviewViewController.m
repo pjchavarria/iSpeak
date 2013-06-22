@@ -48,6 +48,12 @@ enum {
 // Command Buttons
 @property (strong, nonatomic) IBOutlet UIButton *nextButton;
 @property (strong, nonatomic) IBOutlet UIButton *backButton;
+
+// Repeat sound actions
+- (IBAction)repeatWord:(id)sender;
+- (IBAction)repeatOracion:(id)sender;
+
+
 - (IBAction)nextButton:(id)sender;
 - (IBAction)backButton:(id)sender;
 @end
@@ -253,6 +259,20 @@ enum {
         [array addObject:pa];
     }
     return array;
+}
+
+- (IBAction)repeatWord:(id)sender {
+    
+    [_backgroundMusicPlayer stop];
+    [_backgroundMusicPlayer prepareToPlay];
+	[_backgroundMusicPlayer play];
+}
+
+- (IBAction)repeatOracion:(id)sender {
+    
+    [_backgroundMusicPlayer stop];
+    [_backgroundMusicPlayer prepareToPlay];
+	[_backgroundMusicPlayer play];
 }
 
 - (IBAction)nextButton:(id)sender {

@@ -33,6 +33,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    self.reviewedItemsLabel.text = @"12";
+    self.studiedTimeLabel.text = @"1h 30m";
 }
 
 - (void)didReceiveMemoryWarning

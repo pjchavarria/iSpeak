@@ -20,6 +20,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *itemsToReview;
 @property (strong, nonatomic) IBOutlet UILabel *currentStudyTime;
 
+// Barras
+@property (strong, nonatomic) IBOutlet UIImageView *barraMastered;
+@property (strong, nonatomic) IBOutlet UIImageView *barraStarted;
+@property (strong, nonatomic) IBOutlet UIImageView *barraNew;
 
 @property (strong, nonatomic) CursoAvance *cursoAvance;
 @property (strong, nonatomic) NSArray *palabrasCompletadas;
@@ -60,7 +64,7 @@
     self.startedItems.text = self.cursoAvance.palabrasComenzadas.stringValue;
     self.nonStartedItems.text = [NSString stringWithFormat:@"%d",50-self.cursoAvance.palabrasComenzadas.intValue-self.cursoAvance.palabrasCompletas.intValue];
     
-    self.progressPercentage.text = [NSString stringWithFormat:@"%@",self.cursoAvance.avance];
+    self.progressPercentage.text = [NSString stringWithFormat:@"%@%%",self.cursoAvance.avance];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",self.curso.objectId];
     NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
@@ -70,8 +74,30 @@
     self.palabrasNuevas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 0"]];
     
     self.itemsToReview.text = [NSString stringWithFormat:@"%d",self.palabrasNuevas.count+self.palabrasEnProgreso.count];
-    self.currentStudyTime.text = self.cursoAvance.tiempoEstudiado.stringValue;
+    double timeStudied = self.cursoAvance.tiempoEstudiado.doubleValue;
+    int as = (timeStudied/60);
+	int as2 = (as*60);
+	int as3 = timeStudied-as2;
+    [self.currentStudyTime setText:[NSString stringWithFormat:@"%dh %dm",as,as3]];
     
+    // Barras
+    UIImage *scrollBackground = [[UIImage imageNamed:@"dashboad-progress-bar-background.png"]
+                                 resizableImageWithCapInsets:UIEdgeInsetsMake(0,5,0,5)];
+    UIImage *scrollMastered = [[UIImage imageNamed:@"dashboad-progress-bar-mastered.png"]
+                               resizableImageWithCapInsets:UIEdgeInsetsMake(0,3,0,3)];
+    UIImage *scrollStarted = [[UIImage imageNamed:@"dashboad-progress-bar-started.png"]
+                              resizableImageWithCapInsets:UIEdgeInsetsMake(0,3,0,3)];
+    self.barraNew.image = scrollBackground;
+    self.barraMastered.image = scrollMastered;
+    self.barraStarted.image = scrollStarted;
+    
+    CGRect size = self.barraMastered.frame;
+    size.size.width = 274*(self.cursoAvance.palabrasCompletas.doubleValue/self.cursoAvance.palabrasTotales.doubleValue);
+    self.barraMastered.frame = size;
+    
+    size = self.barraStarted.frame;
+    size.size.width = 274*(self.cursoAvance.palabrasComenzadas.doubleValue/self.cursoAvance.palabrasTotales.doubleValue);
+    self.barraStarted.frame = size;
 }
 
 - (void)didReceiveMemoryWarning
