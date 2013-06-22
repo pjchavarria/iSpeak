@@ -34,8 +34,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.reviewedItemsLabel.text = @"12";
-    self.studiedTimeLabel.text = @"1h 30m";
+    self.reviewedItemsLabel.text = [NSString stringWithFormat:@"%d",self.palabrasRepasadas];
+    double timeStudied = self.tiempoEstudiadoTotal;
+    int as = (timeStudied/60);
+	int as2 = (as*60);
+	int as3 = timeStudied-as2;
+    self.studiedTimeLabel.text = [NSString stringWithFormat:@"%dh %dm",as,as3];
 }
 
 - (void)didReceiveMemoryWarning

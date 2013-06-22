@@ -12,5 +12,7 @@
 
 @property (strong, nonatomic) Curso *curso;
 @property (strong, nonatomic) CursoAvance *cursoAvance;
+@property (nonatomic) int palabrasRepasadas;
+@property (nonatomic) int tiempoEstudiadoTotal;
 
 @end

@@ -66,6 +66,10 @@ enum {
 	NSMutableArray *fallas;
 	AVAudioPlayer *_backgroundMusicPlayer;
     NSDate *inicio;
+    
+    // Data que le pasamos a lessonFinishViewController
+    int tiempoEstudiadoTotal;
+    int palabrasRepasadas;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -396,6 +400,8 @@ enum {
         LessonFinishViewController *controller = segue.destinationViewController;
         controller.cursoAvance = self.cursoAvance;
         controller.curso = self.curso;
+        controller.palabrasRepasadas = palabrasRepasadas;
+        controller.tiempoEstudiadoTotal = tiempoEstudiadoTotal;
     }
 }
 -(void)applyChangesPalabras
@@ -475,6 +481,8 @@ enum {
     NSTimeInterval distanceBetweenDates = [inicio timeIntervalSinceDate:[NSDate date]];
     double secondsInAnMinute = 60;
     NSInteger tiempoEstudiado = distanceBetweenDates / secondsInAnMinute;
+    tiempoEstudiadoTotal = tiempoEstudiado;
+    palabrasRepasadas = self.palabras.count;
     
     [self.cursoAvance setPalabrasComenzadas:[NSNumber numberWithInt:palabrasComenzadas]];
     [self.cursoAvance setPalabrasCompletas:[NSNumber numberWithInt:palabrasCompletas]];

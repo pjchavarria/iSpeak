@@ -29,6 +29,27 @@ enum {
     return sharedEngine;
 }
 #pragma mark - Sync Create ?
+- (CursoAvanceDTO *)updateCursoAvance:(Usuario *)usuario cursoAvance:(CursoAvance *)cursoAvance
+{
+    CursoAvanceDTO *cursoAvanceDTO = [CursoAvanceDTO objectWithoutDataWithObjectId:cursoAvance.objectId];
+	cursoAvanceDTO.avance = cursoAvance.avance;
+    cursoAvanceDTO.palabrasComenzadas = cursoAvance.palabrasComenzadas;
+    cursoAvanceDTO.palabrasCompletas = cursoAvance.palabrasCompletas;
+    cursoAvanceDTO.tiempoEstudiado = cursoAvance.tiempoEstudiado;
+    cursoAvanceDTO.palabrasTotales = cursoAvance.palabrasTotales;
+    return cursoAvanceDTO;
+    
+}
+- (PalabraAvanceDTO *)updatePalabraAvance:(Usuario *)usuario palabraAvance:(PalabraAvance *)palabraAvance
+{
+    PalabraAvanceDTO *palabraAvanceDTO = [PalabraAvanceDTO objectWithoutDataWithObjectId:palabraAvance.objectId];
+	palabraAvanceDTO.avance = palabraAvance.avance;
+    palabraAvanceDTO.estado = palabraAvance.estado;
+    palabraAvanceDTO.prioridad = palabraAvance.prioridad;
+    palabraAvanceDTO.ultimaFechaRepaso = palabraAvance.ultimaFechaRepaso;
+    return palabraAvanceDTO;
+    
+}
 - (CursoAvanceDTO *)createCursoAvance:(Usuario *)usuario curso:(Curso *)curso
 {
 	CursoAvanceDTO *cursoAvanceDTO = [CursoAvanceDTO object];
@@ -339,13 +360,26 @@ enum {
         
         for (id object in locallyCreated) {
 			
-            nCreatedServer++;
+            
             if ([object isKindOfClass:[CursoAvance class]]) {
-                
-                [objectsToPush addObject:[self createCursoAvance:coreDataController.usuarioActivo curso:object]];
+                CursoAvance* cursoAvance = object;
+                if (cursoAvance.sincronizado.intValue == kSincronizacionEstadoInsertado) {
+                    nCreatedServer++;
+                    [objectsToPush addObject:[self createCursoAvance:coreDataController.usuarioActivo curso:cursoAvance.curso]];
+                }else{
+                    nUpdatedServer++;
+                    [objectsToPush addObject:[self updateCursoAvance:coreDataController.usuarioActivo cursoAvance:cursoAvance]];
+                }
             }else if ([object isKindOfClass:[PalabraAvance class]]){
+                PalabraAvance* palabraAvance = object;
+                if (palabraAvance.sincronizado.intValue == kSincronizacionEstadoInsertado) {
+                    nCreatedServer++;
+                    [objectsToPush addObject:[self createPalabraAvance:coreDataController.usuarioActivo palabra:object curso:palabraAvance.palabra.curso.objectId]];
+                }else{
+                    nUpdatedServer++;
+                    [objectsToPush addObject:[self updatePalabraAvance:coreDataController.usuarioActivo palabraAvance:palabraAvance]];
+                }
                 
-                [objectsToPush addObject:[self createPalabraAvance:coreDataController.usuarioActivo palabra:object curso:pointerObjectId]];
             }
         }
 		if (objectsToPush.count) {
