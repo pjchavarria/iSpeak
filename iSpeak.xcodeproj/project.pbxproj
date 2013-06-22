@@ -45,6 +45,7 @@
 		3AF5541E1741B969001CF36F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF5541D1741B969001CF36F /* Security.framework */; };
 		3AF554201741B972001CF36F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF5541F1741B972001CF36F /* StoreKit.framework */; };
 		3AF554221741B97F001CF36F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AF554211741B97F001CF36F /* SystemConfiguration.framework */; };
+		CE763FDA17751BE200A0DDAF /* sound-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE763FD917751BE200A0DDAF /* sound-icon.png */; };
 		CE76F639174547D400B0A534 /* Oracion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F638174547D400B0A534 /* Oracion.m */; };
 		CE76F63F174547D500B0A534 /* Usuario.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F63E174547D500B0A534 /* Usuario.m */; };
 		CEBC98B6174405B700AE5C95 /* dashboard-bbi-logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */; };
@@ -132,6 +133,7 @@
 		3AF5541D1741B969001CF36F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3AF5541F1741B972001CF36F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3AF554211741B97F001CF36F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CE763FD917751BE200A0DDAF /* sound-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sound-icon.png"; sourceTree = "<group>"; };
 		CE76F637174547D400B0A534 /* Oracion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Oracion.h; sourceTree = "<group>"; };
 		CE76F638174547D400B0A534 /* Oracion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Oracion.m; sourceTree = "<group>"; };
 		CE76F63D174547D500B0A534 /* Usuario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Usuario.h; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 			children = (
 				CEC172101743F12200C3F8E7 /* LoginViewController.h */,
 				CEC172111743F12200C3F8E7 /* LoginViewController.m */,
+				CE763FD917751BE200A0DDAF /* sound-icon.png */,
 				CEC1720A1743F12200C3F8E7 /* DashboardViewController.h */,
 				CEC1720B1743F12200C3F8E7 /* DashboardViewController.m */,
 				CEC172081743F12200C3F8E7 /* LessonStartViewController.h */,
@@ -491,6 +494,7 @@
 				04BE969D1744631E006B551E /* dashboad-cell-background@2x.png in Resources */,
 				04BE96A0174465BF006B551E /* lesson-intro-background@2x.png in Resources */,
 				04BE96A1174465BF006B551E /* lesson-resume-background@2x.png in Resources */,
+				CE763FDA17751BE200A0DDAF /* sound-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

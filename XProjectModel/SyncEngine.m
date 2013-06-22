@@ -334,7 +334,7 @@ enum {
 		
         
         // PUSH LOCALLY CREATED FILES AND THE FUCKING ARRAY TO PUSH
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sincronizado == %d",kSincronizacionEstadoInsertado];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"sincronizado != %d",kSincronizacionEstadoSincronizado];
         NSArray *locallyCreated = [coreDataController managedObjectsForClass:class predicate:predicate];
         
         for (id object in locallyCreated) {
