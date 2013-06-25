@@ -392,7 +392,13 @@ enum {
 						((PalabraAvance*)object).sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
 					}
 				}
+                
+                [coreDataController saveBackgroundContext];
+                [coreDataController saveMasterContext];
+        
 			}];
+            
+            
 			
 		}else{
 			

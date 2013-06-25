@@ -26,7 +26,7 @@
 
 -(NSString *)description
 {
-	return [NSString stringWithFormat:@"ID: %@ ,Tiempo estudiado: %@",self.objectId,self.tiempoEstudiado];
+	return [NSString stringWithFormat:@"ID: %@ ,Tiempo estudiado: %@, comenz:%@, comp:%@, ",self.objectId,self.tiempoEstudiado,self.palabrasComenzadas,self.palabrasCompletas];
 }
 
 @end

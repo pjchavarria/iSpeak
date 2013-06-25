@@ -411,7 +411,9 @@ enum {
         NSNumber *fallo = [fallas objectAtIndex:i];
         if([fallo intValue] == 0)
         {
-            pa.avance = [NSNumber numberWithFloat:[pa.avance floatValue] +0.2];
+            float avance = pa.avance.floatValue;
+            avance = avance+0.2;
+            [pa  setAvance:[NSNumber numberWithFloat:avance]];
         }
         else
         {
@@ -478,7 +480,7 @@ enum {
 
     avanceCurso = avanceCurso/palabrasAvance.count;
     
-    NSTimeInterval distanceBetweenDates = [inicio timeIntervalSinceDate:[NSDate date]];
+    NSTimeInterval distanceBetweenDates = -1*[inicio timeIntervalSinceDate:[NSDate date]];
     double secondsInAnMinute = 60;
     NSInteger tiempoEstudiado = distanceBetweenDates / secondsInAnMinute;
     tiempoEstudiadoTotal = tiempoEstudiado;
