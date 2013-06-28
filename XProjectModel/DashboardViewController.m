@@ -46,14 +46,20 @@
 {
     [super viewDidLoad];
     
-	CoreDataController *coreDataController = [CoreDataController sharedInstance];
+	
+
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	
 	courses = [coreDataController managedObjectsForClass:@"Curso" sortKey:@"curso" ascending:YES];
     
     int mastered = 0,started = 0, completed = 0;
     float timeStudied = 0.0;
 	Usuario *usuario = [[CoreDataController sharedInstance] usuarioActivo];
-
+    
     for (Curso *curso in courses) {
         
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"usuario.objectId like %@",usuario.objectId];
@@ -73,9 +79,7 @@
     [self.timeStudiedLabel setText:[NSString stringWithFormat:@"%dh %dm",as,as3]];
     
 	[self.tableViewCursos reloadData];
-
 }
-
 -(void)fillCourses:(id)array
 {
     
@@ -127,13 +131,13 @@
 		double initialize = 0;
 		double mastered = 0;
 		if (total) {
-			initialize = comenzadas/total;
+			initialize = cursoAvance.avance.floatValue;
 			mastered = completadas/total;
 		}
 		[cell initializeCell];
 		[cell initialize:initialize
 				mastered:mastered];
-		cell.percentage.text = [NSString stringWithFormat:@"%@%%",cursoAvance.avance];
+		cell.percentage.text = [NSString stringWithFormat:@"%.0f%%",cursoAvance.avance.floatValue*100];
 		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered %@",cursoAvance.palabrasCompletas];
 		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started %@",cursoAvance.palabrasComenzadas];
 	}

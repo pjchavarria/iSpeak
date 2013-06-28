@@ -48,6 +48,8 @@
 		CE763FDA17751BE200A0DDAF /* sound-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE763FD917751BE200A0DDAF /* sound-icon.png */; };
 		CE76F639174547D400B0A534 /* Oracion.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F638174547D400B0A534 /* Oracion.m */; };
 		CE76F63F174547D500B0A534 /* Usuario.m in Sources */ = {isa = PBXBuildFile; fileRef = CE76F63E174547D500B0A534 /* Usuario.m */; };
+		CE77A6FA177A51690042F6DB /* good.png in Resources */ = {isa = PBXBuildFile; fileRef = CE77A6F8177A51690042F6DB /* good.png */; };
+		CE77A6FB177A51690042F6DB /* bad.png in Resources */ = {isa = PBXBuildFile; fileRef = CE77A6F9177A51690042F6DB /* bad.png */; };
 		CEBC98B6174405B700AE5C95 /* dashboard-bbi-logout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */; };
 		CEC172131743F12200C3F8E7 /* CoursesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172051743F12200C3F8E7 /* CoursesCell.m */; };
 		CEC172141743F12200C3F8E7 /* CoursesHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC172071743F12200C3F8E7 /* CoursesHeader.m */; };
@@ -138,6 +140,8 @@
 		CE76F638174547D400B0A534 /* Oracion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Oracion.m; sourceTree = "<group>"; };
 		CE76F63D174547D500B0A534 /* Usuario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Usuario.h; sourceTree = "<group>"; };
 		CE76F63E174547D500B0A534 /* Usuario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Usuario.m; sourceTree = "<group>"; };
+		CE77A6F8177A51690042F6DB /* good.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = good.png; sourceTree = "<group>"; };
+		CE77A6F9177A51690042F6DB /* bad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bad.png; sourceTree = "<group>"; };
 		CEBC98B5174405B700AE5C95 /* dashboard-bbi-logout@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dashboard-bbi-logout@2x.png"; path = "Resources/dashboard-bbi-logout@2x.png"; sourceTree = "<group>"; };
 		CEC172041743F12200C3F8E7 /* CoursesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoursesCell.h; sourceTree = "<group>"; };
 		CEC172051743F12200C3F8E7 /* CoursesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoursesCell.m; sourceTree = "<group>"; };
@@ -370,6 +374,8 @@
 		CEC1721B1743F12900C3F8E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE77A6F8177A51690042F6DB /* good.png */,
+				CE77A6F9177A51690042F6DB /* bad.png */,
 				04BE969C1744631E006B551E /* dashboad-cell-background@2x.png */,
 				04BE9698174457BF006B551E /* login-background@2x.png */,
 				04BE9699174457BF006B551E /* login-textbox@2x.png */,
@@ -495,6 +501,8 @@
 				04BE96A0174465BF006B551E /* lesson-intro-background@2x.png in Resources */,
 				04BE96A1174465BF006B551E /* lesson-resume-background@2x.png in Resources */,
 				CE763FDA17751BE200A0DDAF /* sound-icon.png in Resources */,
+				CE77A6FA177A51690042F6DB /* good.png in Resources */,
+				CE77A6FB177A51690042F6DB /* bad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,6 +52,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
+    [self.view endEditing:YES];
     //CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	NSString *object = [[NSUserDefaults standardUserDefaults] objectForKey:@"usuarioActivo"];
     if (!object) {
@@ -202,6 +203,16 @@
 	
 	if (netStatus == NotReachable) {
 		NSLog(@"No internet conection");
+        Usuario *usuario = [[CoreDataController sharedInstance] getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"username like %@ AND password like %@",self.txtUsername.text,self.txtPassword.text]];
+        
+        if (usuario) {
+            [[CoreDataController sharedInstance] setUsuarioActivo:usuario];
+            [self goToDashboard:nil skipCheck:YES];
+        }else{
+            [self shakeView];
+        }
+        
+        
 	}else{
 		//[selfgoToDashboard];
 		PFQuery *query = [PFQuery queryWithClassName:@"Usuario"];

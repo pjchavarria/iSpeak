@@ -36,11 +36,13 @@ enum {
 @property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta2Button;
 @property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta3Button;
 @property (strong, nonatomic) IBOutlet UIButton *palabraRespuesta4Button;
+@property (strong, nonatomic) IBOutlet UIImageView *checkOrCross2Ex;
 
 
 // Third excercise
 @property (strong, nonatomic) IBOutlet UIView *thirdView;
 @property (strong, nonatomic) IBOutlet UILabel *oracionIncompletaLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *checkOrCross3Ex;
 
 // Progress
 @property (strong, nonatomic) IBOutlet UIImageView *progressImageView;
@@ -63,6 +65,7 @@ enum {
     int contador;
     int numeroDePalabras;
     NSString *respuestaActual;
+    NSString *oracionCompleta;
 	NSMutableArray *fallas;
 	AVAudioPlayer *_backgroundMusicPlayer;
     NSDate *inicio;
@@ -211,6 +214,7 @@ enum {
 	[_backgroundMusicPlayer play];
 	
     NSString *oracionText = oracion.oracion;
+    oracionCompleta = [oracion.oracion stringByReplacingOccurrencesOfString:@"**" withString:@""];
     int start,end;
     for (int i=0;i<[oracionText length];i++) {
         char ch;
@@ -301,6 +305,9 @@ enum {
 
 -(void)nextLesson
 {
+    self.checkOrCross2Ex.image = nil;
+    self.checkOrCross3Ex.image = nil;
+    [self.txtRespuestaOracion setText:@""];
     
     if(contador < numeroDePalabras)
     {
@@ -341,34 +348,38 @@ enum {
 - (IBAction)palabraRespuesta1:(id)sender {
     NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
-    [self nextLesson];
+    [self performSelector:@selector(nextLesson) withObject:nil afterDelay:1.5];
 }
 
 - (IBAction)palabraRespuesta2:(id)sender {
     NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
-    [self nextLesson];
+    [self performSelector:@selector(nextLesson) withObject:nil afterDelay:1.5];
 }
 
 - (IBAction)palabraRespuesta3:(id)sender {
     NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
-    [self nextLesson];
+    [self performSelector:@selector(nextLesson) withObject:nil afterDelay:1.5];
 }
 
 - (IBAction)palabraRespuesta4:(id)sender {
     NSString *asd = [((UIButton *)sender) titleForState:UIControlStateNormal];
     [self checkRespuesta:asd];
-    [self nextLesson];
+    [self performSelector:@selector(nextLesson) withObject:nil afterDelay:1.5];
 }
 -(void)checkRespuesta:(NSString *)rpta
 {
     if([rpta isEqualToString:[@"  " stringByAppendingString:respuestaActual]])
     {
         NSLog(@"bien");
+        self.checkOrCross2Ex.image = [UIImage imageNamed:@"good"];
+        
     }
     else
     {
+        
+        self.checkOrCross2Ex.image = [UIImage imageNamed:@"bad"];
         [fallas replaceObjectAtIndex:(contador-numeroDePalabras-1) withObject:[NSNumber numberWithInt:1]];
         NSLog(@"mal");        
     }
@@ -377,20 +388,22 @@ enum {
 {
     if([self.txtRespuestaOracion.text isEqualToString:respuestaActual])
     {
+        self.checkOrCross3Ex.image = [UIImage imageNamed:@"good"];
         NSLog(@"bien");
     }
     else
     {
+        self.checkOrCross3Ex.image = [UIImage imageNamed:@"bad"];
         [fallas replaceObjectAtIndex:(contador-numeroDePalabras*2-1) withObject:[NSNumber numberWithInt:1]];
         NSLog(@"mal");
     }
-    [self.txtRespuestaOracion setText:@""];
+self.oracionIncompletaLabel.text = oracionCompleta;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [[self thirdView] endEditing:YES];
     [self checkOracion];
-    [self nextLesson];
+    [self performSelector:@selector(nextLesson) withObject:nil afterDelay:1.5];
     return YES;
 }
 
@@ -458,7 +471,7 @@ enum {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@ AND usuario.objectId like %@",self.curso.objectId, self.cursoAvance.usuario.objectId];
     NSArray *palabrasAvance = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
     
-    double avanceCurso = 0.0;
+    float avanceCurso = 0.0;
     int palabrasComenzadas = 0;
     int palabrasCompletas = 0;
     int palabrasTotales = 0;
@@ -489,7 +502,7 @@ enum {
     [self.cursoAvance setPalabrasComenzadas:[NSNumber numberWithInt:palabrasComenzadas]];
     [self.cursoAvance setPalabrasCompletas:[NSNumber numberWithInt:palabrasCompletas]];
     [self.cursoAvance setPalabrasTotales:[NSNumber numberWithInt:palabrasTotales]];
-    [self.cursoAvance setAvance:[NSNumber numberWithDouble:avanceCurso]];
+    [self.cursoAvance setAvance:[NSNumber numberWithFloat:avanceCurso]];
     [self.cursoAvance setTiempoEstudiado:[NSNumber numberWithInt:tiempoEstudiado+[self.cursoAvance.tiempoEstudiado intValue]]];
     [self.cursoAvance setSincronizado:[NSNumber numberWithInt:kSincronizacionEstadoModificado]];
     
