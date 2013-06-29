@@ -53,7 +53,7 @@ enum {
 - (CursoAvanceDTO *)createCursoAvance:(Usuario *)usuario curso:(Curso *)curso
 {
 	CursoAvanceDTO *cursoAvanceDTO = [CursoAvanceDTO object];
-	cursoAvanceDTO.avance = [NSNumber numberWithInt:0];
+	cursoAvanceDTO.avance = [NSNumber numberWithFloat:0];
     cursoAvanceDTO.palabrasComenzadas = [NSNumber numberWithInt:0];
     cursoAvanceDTO.palabrasCompletas = [NSNumber numberWithInt:0];
     cursoAvanceDTO.tiempoEstudiado = [NSNumber numberWithInt:0];
@@ -67,9 +67,9 @@ enum {
 - (PalabraAvanceDTO *)createPalabraAvance:(Usuario *)usuario palabra:(Palabra *)palabra curso:(NSString*)curso
 {
 	PalabraAvanceDTO *palabraAvanceDTO = [PalabraAvanceDTO object];
-    palabraAvanceDTO.avance = [NSNumber numberWithInt:0];
+    palabraAvanceDTO.avance = [NSNumber numberWithFloat:0.0];
     palabraAvanceDTO.estado = [NSNumber numberWithInt:0];
-    palabraAvanceDTO.prioridad = [NSNumber numberWithInt:0];
+    palabraAvanceDTO.prioridad = [NSNumber numberWithFloat:0.0];
     palabraAvanceDTO.ultimaFechaRepaso = [NSDate date];
     palabraAvanceDTO.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoSincronizado];
 	
@@ -288,12 +288,12 @@ enum {
 				NSString *idObject = [storedManagedObject valueForKey:@"objectId"];
 				id foundObject = [serverObjects objectAtIndex:[serverObjectsIDs indexOfObject:idObject]];
 				
-                int avanceLocal = ((CursoAvance *)storedRecords[i]).avance.intValue;
-                int avanceServidor = ((CursoAvanceDTO *)foundObject).avance.intValue;
+                float avanceLocal = ((CursoAvance *)storedRecords[i]).avance.floatValue;
+                float avanceServidor = ((CursoAvanceDTO *)foundObject).avance.floatValue;
                 
                 // SI GANA SERVIDOR, guardamos
                 if (avanceServidor>=avanceLocal) {
-                    ((CursoAvanceDTO *)foundObject).avance = [NSNumber numberWithInt:avanceServidor];
+                    ((CursoAvanceDTO *)foundObject).avance = [NSNumber numberWithFloat:avanceServidor];
                     
                     if ([foundObject isKindOfClass:[CursoAvanceDTO class]]) {
                         [coreDataController updateCursoAvance:storedRecords[i] withData:foundObject];

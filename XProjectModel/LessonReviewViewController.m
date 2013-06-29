@@ -426,7 +426,7 @@ self.oracionIncompletaLabel.text = oracionCompleta;
         {
             float avance = pa.avance.floatValue;
             avance = avance+0.2;
-            [pa  setAvance:[NSNumber numberWithFloat:avance]];
+            [pa setAvance:[NSNumber numberWithFloat:avance]];
         }
         else
         {
@@ -444,18 +444,21 @@ self.oracionIncompletaLabel.text = oracionCompleta;
         NSDate *actual = [NSDate date];
         
         NSTimeInterval distanceBetweenDates = [actual timeIntervalSinceDate:ultimaFechaRepaso];
-        double secondsInAnHour = 3600;
-        NSInteger hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
+        double secondsInAnHour = 3600.0;
+        double hoursBetweenDates = distanceBetweenDates / secondsInAnHour;
         
         double formula = 0.0;
         if([fallo intValue] == 0)
         {
             formula = hoursBetweenDates*0.5;
         }
+        else
+        {
+            formula = hoursBetweenDates;
+        }
+        formula = ((formula*10)/([pa.avance floatValue]*100));
         
-        formula = ((formula*10)/([pa.avance floatValue]));
-        
-        pa.prioridad = [NSNumber numberWithDouble:formula];
+        pa.prioridad = [NSNumber numberWithFloat:formula];
         pa.sincronizado = [NSNumber numberWithInt:kSincronizacionEstadoModificado];
         pa.ultimaFechaRepaso = [NSDate date];
         
