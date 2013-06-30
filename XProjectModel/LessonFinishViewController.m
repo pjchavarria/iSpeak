@@ -49,15 +49,17 @@
 }
 
 - (IBAction)finishLessonPressed:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
-		
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
 		[self dismissViewControllerAnimated:YES completion:nil];
 	}];
 }
 
 - (IBAction)goToCourseViewPressed:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
-		
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	}];
 }

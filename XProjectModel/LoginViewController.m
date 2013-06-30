@@ -24,6 +24,7 @@
 {
     BOOL subio;
     BOOL keepUp;
+    BOOL logged;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,7 +46,7 @@
 	self.txtPassword.text = @"";
     [self.txtPassword setSecureTextEntry:YES];
     subio = NO;
-	
+	logged = NO;
 	
 	
 }
@@ -169,12 +170,14 @@
         }
     }];
 }
-- (void)goToDashboard:(UsuarioDTO *)usuario skipCheck:(BOOL)skip{
-	
+- (void)goToDashboard:(UsuarioDTO *)usuario skipCheck:(BOOL)skip skipAnythingElse:(BOOL)skipAnything{
+	if(!skipAnything)
+    {
 	NetworkStatus netStatus = [self currentNetworkStatus];
 	
 	if (netStatus == NotReachable) {
 		NSLog(@"No internet conection");
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
 		[self performSegueWithIdentifier:@"login" sender:nil];
 	}else{
 		if (!skip) {
@@ -185,29 +188,59 @@
 			[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
 				[self.view endEditing:YES];
 				subio = NO;
+                logged = YES;
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
 				[self performSegueWithIdentifier:@"login" sender:nil];
 				
 			}];
 		}else {
 			[self.view endEditing:YES];
 			subio = NO;
+            logged = YES;
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
 			[self performSegueWithIdentifier:@"login" sender:nil];
 		}
 	}
+    }
+    else
+    {
+        NSLog(@"logged no matter what");
+        [self.view endEditing:YES];
+        subio = NO;
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self performSegueWithIdentifier:@"login" sender:nil];
+    }
 }
 
+-(void)loginNoMatterWhat
+{
+    if(!logged && self.isViewLoaded && self.view.window)
+    {
+    Usuario *usuario = [[CoreDataController sharedInstance] getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"username like %@ AND password like %@",self.txtUsername.text,self.txtPassword.text]];
+    
+    if (usuario) {
+        [[CoreDataController sharedInstance] setUsuarioActivo:usuario];
+        [self goToDashboard:nil skipCheck:YES skipAnythingElse:YES];
+        logged = YES;        
+    }else{
+        [self shakeView];
+    }
+    }
+}
 
 - (IBAction)loginButtonPressed:(id)sender {
-	
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self performSelector:@selector(loginNoMatterWhat) withObject:nil afterDelay:2.5];
 	NetworkStatus netStatus = [self currentNetworkStatus];
-	
+	if(logged == NO)
+    {
 	if (netStatus == NotReachable) {
 		NSLog(@"No internet conection");
         Usuario *usuario = [[CoreDataController sharedInstance] getObjectForClass:kUsuarioClass predicate:[NSPredicate predicateWithFormat:@"username like %@ AND password like %@",self.txtUsername.text,self.txtPassword.text]];
         
         if (usuario) {
             [[CoreDataController sharedInstance] setUsuarioActivo:usuario];
-            [self goToDashboard:nil skipCheck:YES];
+            [self goToDashboard:nil skipCheck:YES skipAnythingElse:NO];
         }else{
             [self shakeView];
         }
@@ -223,13 +256,14 @@
 			if (!error && array.count == 1) {
 				UsuarioDTO *user = array[0];
 				subio = NO;
-				[self goToDashboard:user skipCheck:NO];
+				[self goToDashboard:user skipCheck:NO skipAnythingElse:NO];
 			} else {
 				NSLog(@"Error: %@ %@", error, [error userInfo]);
 				[self shakeView];
 			}
 		}];
 	}
+    }
 }
 
 - (NetworkStatus)currentNetworkStatus

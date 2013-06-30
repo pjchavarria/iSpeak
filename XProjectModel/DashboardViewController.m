@@ -49,9 +49,8 @@
 	
 
 }
-- (void)viewWillAppear:(BOOL)animated
+-(void)setUpView
 {
-    [super viewWillAppear:animated];
     CoreDataController *coreDataController = [CoreDataController sharedInstance];
 	
 	courses = [coreDataController managedObjectsForClass:@"Curso" sortKey:@"curso" ascending:YES];
@@ -79,6 +78,12 @@
     [self.timeStudiedLabel setText:[NSString stringWithFormat:@"%dh %dm",as,as3]];
     
 	[self.tableViewCursos reloadData];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setUpView];
+    
 }
 -(void)fillCourses:(id)array
 {
@@ -149,6 +154,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];	
 	NSArray *cursoAvances = [[CoreDataController sharedInstance] managedObjectsForClass:kCursoAvanceClass predicate:predicate];
@@ -158,18 +164,21 @@
 	if (!cursoA) {
         NSLog(@"CREANDO CURSOPALABRA AVANCE");
         [[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:YES completion:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
     }else if(cursoA.tiempoEstudiado.doubleValue<=0)
     {
         
         NSLog(@"NO CREANDO CURSOPALABRA AVANCE");
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
 		[[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:NO completion:^{
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
 	}else{
         
         NSLog(@"SOLO REPASO");
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
 		[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
@@ -181,5 +190,19 @@
 - (IBAction)logoutPressed:(id)sender {
 	[[CoreDataController sharedInstance] setUsuarioActivo:nil];
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)refreshButtonTapped:(id)sender {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    int i = 0;
+    for (Curso *curso in courses) {
+        i++;
+        [[SyncEngine sharedEngine] finalizarLeccion:curso completion:^{
+            if(i==courses.count)
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            }
+            [self setUpView];
+        }];
+    }
 }
 @end

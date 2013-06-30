@@ -11,5 +11,6 @@
 @interface DashboardViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
+- (IBAction)refreshButtonTapped:(id)sender;
 
 @end

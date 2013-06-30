@@ -138,8 +138,7 @@ enum {
     [self.palabraEnunciadoLabel setText:palabra.palabra.palabra];
     
     int random = arc4random()%4;
-    if(random == 0)
-        random ++;
+    random++;
     
     switch (random) {
         case 1:
