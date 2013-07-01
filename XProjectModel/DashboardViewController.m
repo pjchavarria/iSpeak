@@ -13,6 +13,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SyncEngine.h"
 #import "CoreDataController.h"
+#import "Reachability.h"
 
 
 @interface DashboardViewController () <UITableViewDataSource,UITableViewDelegate>
@@ -153,6 +154,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NetworkStatus netStatus = [self currentNetworkStatus];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	Curso *curso = [courses objectAtIndex:[self.myTableView indexPathForSelectedRow].row];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"curso.objectId like %@ AND usuario.objectId like %@",curso.objectId,[[CoreDataController sharedInstance] usuarioActivo].objectId];	
@@ -183,11 +185,17 @@
 		}else{
 			
 			NSLog(@"SOLO REPASO");
-			
+			if (netStatus != NotReachable) {
 			[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
 				[MBProgressHUD hideHUDForView:self.view animated:YES];
 				[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 			}];
+            }
+            else
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+				[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+            }
 		}
 	}
 	
@@ -199,6 +207,8 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)refreshButtonTapped:(id)sender {
+    NetworkStatus netStatus = [self currentNetworkStatus];
+    if (netStatus != NotReachable) {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     int i = 0;
     for (Curso *curso in courses) {
@@ -211,5 +221,32 @@
             [self setUpView];
         }];
     }
+    }
+}
+- (NetworkStatus)currentNetworkStatus
+{
+	Reachability* wifiReach = [Reachability reachabilityWithHostName: @"www.apple.com"];
+	NetworkStatus netStatus = [wifiReach currentReachabilityStatus];
+	
+	switch (netStatus)
+	{
+		case NotReachable:
+		{
+			NSLog(@"Access Not Available");
+			break;
+		}
+			
+		case ReachableViaWWAN:
+		{
+			NSLog(@"Reachable WWAN");
+			break;
+		}
+		case ReachableViaWiFi:
+		{
+			NSLog(@"Reachable WiFi");
+			break;
+		}
+	}
+	return netStatus;
 }
 @end

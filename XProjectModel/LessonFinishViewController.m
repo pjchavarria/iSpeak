@@ -9,6 +9,7 @@
 #import "LessonFinishViewController.h"
 #import "SyncEngine.h"
 #import "CoreDataController.h"
+#import "Reachability.h"
 
 @interface LessonFinishViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *reviewedItemsLabel;
@@ -49,18 +50,61 @@
 }
 
 - (IBAction)finishLessonPressed:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-		[self dismissViewControllerAnimated:YES completion:nil];
-	}];
+    NetworkStatus netStatus = [self currentNetworkStatus];
+    if(netStatus != NotReachable)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)goToCourseViewPressed:(id)sender {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-		[self.navigationController popToRootViewControllerAnimated:YES];
-	}];
+    NetworkStatus netStatus = [self currentNetworkStatus];
+    if(netStatus != NotReachable)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [[SyncEngine sharedEngine] finalizarLeccion:self.curso completion:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+    }
+    else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (NetworkStatus)currentNetworkStatus
+{
+	Reachability* wifiReach = [Reachability reachabilityWithHostName: @"www.apple.com"];
+	NetworkStatus netStatus = [wifiReach currentReachabilityStatus];
+	
+	switch (netStatus)
+	{
+		case NotReachable:
+		{
+			NSLog(@"Access Not Available");
+			break;
+		}
+			
+		case ReachableViaWWAN:
+		{
+			NSLog(@"Reachable WWAN");
+			break;
+		}
+		case ReachableViaWiFi:
+		{
+			NSLog(@"Reachable WiFi");
+			break;
+		}
+	}
+	return netStatus;
 }
 @end
