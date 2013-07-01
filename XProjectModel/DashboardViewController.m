@@ -130,7 +130,6 @@
 		cell.masteredItemsLabel.text = [NSString stringWithFormat:@"Mastered 0"];
 		cell.startedItemsLabel.text = [NSString stringWithFormat:@"Started 0"];
 	}else{
-		double comenzadas = cursoAvance.palabrasComenzadas.doubleValue;
 		double completadas = cursoAvance.palabrasCompletas.doubleValue;
 		double total = cursoAvance.palabrasTotales.doubleValue;
 		double initialize = 0;
@@ -167,22 +166,30 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
 			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
 		}];
-    }else if(cursoA.tiempoEstudiado.doubleValue<=0)
-    {
-        
-        NSLog(@"NO CREANDO CURSOPALABRA AVANCE");
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-		[[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:NO completion:^{
-			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
-		}];
-	}else{
-        
-        NSLog(@"SOLO REPASO");
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-		[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
-			[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
-		}];
-    }
+    }else{
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",
+								  curso.objectId];
+		NSArray *palabrasDelCurso = [[CoreDataController sharedInstance] managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
+		
+		if(palabrasDelCurso.count<=0)
+		{
+			
+			NSLog(@"NO CREANDO CURSOPALABRA AVANCE");
+			
+			[[SyncEngine sharedEngine] iniciarCurso:curso createCursoPalabraAvance:NO completion:^{
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
+				[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+			}];
+		}else{
+			
+			NSLog(@"SOLO REPASO");
+			
+			[[SyncEngine sharedEngine] iniciarRepaso:curso completion:^{
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
+				[self performSegueWithIdentifier:@"modalLessonNavigationController" sender:nil];
+			}];
+		}
+	}
 	
     
 }

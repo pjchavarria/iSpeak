@@ -171,44 +171,49 @@
     }];
 }
 - (void)goToDashboard:(UsuarioDTO *)usuario skipCheck:(BOOL)skip skipAnythingElse:(BOOL)skipAnything{
+	
+	
 	if(!skipAnything)
     {
-	NetworkStatus netStatus = [self currentNetworkStatus];
-	
-	if (netStatus == NotReachable) {
-		NSLog(@"No internet conection");
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-		[self performSegueWithIdentifier:@"login" sender:nil];
-	}else{
-		if (!skip) {
-			if (usuario) {
-				[[SyncEngine sharedEngine] syncUser:usuario];
-			}
-			
-			[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
+		NetworkStatus netStatus = [self currentNetworkStatus];
+		
+		if (netStatus == NotReachable) {
+			NSLog(@"No internet conection");
+			[MBProgressHUD hideHUDForView:self.view animated:YES];
+			[self performSegueWithIdentifier:@"login" sender:nil];
+			self.txtPassword.text = @"";
+		}else{
+			if (!skip) {
+				if (usuario) {
+					[[SyncEngine sharedEngine] syncUser:usuario];
+				}
+				
+				[[SyncEngine sharedEngine] seAcabaDeLoguear:[[CoreDataController sharedInstance] usuarioActivo] completion:^{
+					[self.view endEditing:YES];
+					subio = NO;
+					logged = YES;
+					[MBProgressHUD hideHUDForView:self.view animated:YES];
+					[self performSegueWithIdentifier:@"login" sender:nil];
+					self.txtPassword.text = @"";
+					
+				}];
+			}else {
 				[self.view endEditing:YES];
 				subio = NO;
-                logged = YES;
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+				logged = YES;
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
 				[self performSegueWithIdentifier:@"login" sender:nil];
-				
-			}];
-		}else {
-			[self.view endEditing:YES];
-			subio = NO;
-            logged = YES;
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-			[self performSegueWithIdentifier:@"login" sender:nil];
+				self.txtPassword.text = @"";
+			}
 		}
-	}
-    }
-    else
-    {
+    }else{
+		
         NSLog(@"logged no matter what");
         [self.view endEditing:YES];
         subio = NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self performSegueWithIdentifier:@"login" sender:nil];
+		self.txtPassword.text = @"";
     }
 }
 
@@ -230,7 +235,7 @@
 
 - (IBAction)loginButtonPressed:(id)sender {
 	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self performSelector:@selector(loginNoMatterWhat) withObject:nil afterDelay:2.5];
+    //[self performSelector:@selector(loginNoMatterWhat) withObject:nil afterDelay:2.5];
 	NetworkStatus netStatus = [self currentNetworkStatus];
 	if(logged == NO)
     {

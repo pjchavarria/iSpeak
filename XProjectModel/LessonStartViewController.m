@@ -64,14 +64,14 @@
     self.startedItems.text = self.cursoAvance.palabrasComenzadas.stringValue;
     self.nonStartedItems.text = [NSString stringWithFormat:@"%d",50-self.cursoAvance.palabrasComenzadas.intValue-self.cursoAvance.palabrasCompletas.intValue];
     
-    self.progressPercentage.text = [NSString stringWithFormat:@"%@%%",self.cursoAvance.avance];
+    self.progressPercentage.text = [NSString stringWithFormat:@"%.0f%%",self.cursoAvance.avance.floatValue*100];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"palabra.curso.objectId like %@",self.curso.objectId];
     NSArray *palabrasDelCurso = [coreDataController managedObjectsForClass:kPalabraAvanceClass predicate:predicate];
     
-    self.palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 100"]];
-    self.palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance != 100 AND avance !=0"]];
-    self.palabrasNuevas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance == 0"]];
+    self.palabrasCompletadas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance >= 1"]];
+    self.palabrasEnProgreso = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance < 1 AND avance > 0"]];
+    self.palabrasNuevas = [palabrasDelCurso filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"avance <= 0"]];
     
     self.itemsToReview.text = [NSString stringWithFormat:@"%d",self.palabrasNuevas.count+self.palabrasEnProgreso.count];
     double timeStudied = self.cursoAvance.tiempoEstudiado.doubleValue;
@@ -96,7 +96,7 @@
     self.barraMastered.frame = size;
     
     size = self.barraStarted.frame;
-    size.size.width = 274*(self.cursoAvance.palabrasComenzadas.doubleValue/self.cursoAvance.palabrasTotales.doubleValue);
+    size.size.width = 274*(self.cursoAvance.avance.floatValue);
     self.barraStarted.frame = size;
 }
 
