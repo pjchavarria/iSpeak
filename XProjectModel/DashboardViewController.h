@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboardViewController : UIViewController
+@interface DashboardViewController : UIViewController <UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 - (IBAction)refreshButtonTapped:(id)sender;

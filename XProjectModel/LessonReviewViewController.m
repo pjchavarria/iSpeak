@@ -481,7 +481,7 @@ self.oracionIncompletaLabel.text = oracionCompleta;
     for (PalabraAvance *pa in palabrasAvance) {
         avanceCurso += [pa.avance floatValue];
         double avance = [pa.avance floatValue];
-        if(avance != 0.0 && avance != 100.0)
+        if(avance != 0.0 && avance != 1.0)
         {
             palabrasComenzadas++;
         }

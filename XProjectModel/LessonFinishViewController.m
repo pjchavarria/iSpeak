@@ -61,6 +61,8 @@
     }
     else
     {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"Y" forKey:@"progress"];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -77,6 +79,8 @@
     }
     else
     {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@"Y" forKey:@"progress"];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }

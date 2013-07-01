@@ -84,7 +84,26 @@
 {
     [super viewWillAppear:animated];
     [self setUpView];
-    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        [self refreshContent];
+    }
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NetworkStatus netStatus = [self currentNetworkStatus];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *progress = [defaults objectForKey:@"progress"];
+    if(netStatus != NotReachable && [progress isEqualToString:@"Y"])
+    {
+        [defaults removeObjectForKey:@"progress"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Upload your progress!" message:@"We suggest you to upload your progress now that you are abck online!" delegate:self cancelButtonTitle:@"Pass" otherButtonTitles:@"Upload!", nil];
+        [alert show];
+    }
 }
 -(void)fillCourses:(id)array
 {
@@ -207,20 +226,24 @@
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)refreshButtonTapped:(id)sender {
+    [self refreshContent];
+}
+-(void)refreshContent
+{
     NetworkStatus netStatus = [self currentNetworkStatus];
     if (netStatus != NotReachable) {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    int i = 0;
-    for (Curso *curso in courses) {
-        i++;
-        [[SyncEngine sharedEngine] finalizarLeccion:curso completion:^{
-            if(i==courses.count)
-            {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            }
-            [self setUpView];
-        }];
-    }
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        int i = 0;
+        for (Curso *curso in courses) {
+            i++;
+            [[SyncEngine sharedEngine] finalizarLeccion:curso completion:^{
+                if(i==courses.count)
+                {
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                }
+                [self setUpView];
+            }];
+        }
     }
 }
 - (NetworkStatus)currentNetworkStatus
