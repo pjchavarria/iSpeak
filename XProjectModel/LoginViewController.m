@@ -247,6 +247,8 @@
             [[CoreDataController sharedInstance] setUsuarioActivo:usuario];
             [self goToDashboard:nil skipCheck:YES skipAnythingElse:NO];
         }else{
+			
+			[MBProgressHUD hideHUDForView:self.view animated:YES];
             [self shakeView];
         }
         
@@ -263,6 +265,8 @@
 				subio = NO;
 				[self goToDashboard:user skipCheck:NO skipAnythingElse:NO];
 			} else {
+				
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
 				NSLog(@"Error: %@ %@", error, [error userInfo]);
 				[self shakeView];
 			}
